@@ -1,0 +1,32 @@
+/*
+FoxPaw Entertainment proprietary code.
+*/
+
+/*
+FoxPaw Entertainment proprietary code.
+*/
+
+html{
+    height: 100%;
+}
+
+body{
+    font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
+    margin: 0;
+    min-width: 1200px;
+    background-color: #191919;
+}
+
+a{
+    text-decoration: none;
+}
+
+p, h1{
+    margin: 0px;
+}
+
+button:focus{
+    outline: 0;
+}
+
+

@@ -136,8 +136,23 @@ button:focus{
     border: 0px;
 }
 
+.koboldadventurebutton:hover{
+    border: 2px #191919 solid;
+}
+
+.koboldadventurebutton:active{
+    background-color: #191919;
+}
+
 .koboldadventuredisclaimer{
     position: absolute;
     bottom: 0;
     left: 0;
+    width: 300px;
+    margin-bottom: 5px;
+    margin-left: 5px; 
+}
+
+.koboldadventuredisclaimertext{
+    font-size: 12px;
 }
