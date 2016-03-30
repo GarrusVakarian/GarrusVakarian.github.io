@@ -1,0 +1,143 @@
+/*
+FoxPaw Entertainment proprietary code.
+*/
+
+html{
+    height: 100%;
+}
+
+body{
+    font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
+    margin: 0;
+    min-width: 1200px;
+    background-color: #191919;
+}
+
+a{
+    text-decoration: none;
+}
+
+p, h1{
+    margin: 0px;
+}
+
+button:focus{
+    outline: 0;
+}
+
+.fasttransition{
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.transition{
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+.slowtransition{
+    -webkit-transition: all 0.8s ease;
+    -moz-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+}
+
+
+.koboldadventure{
+    width: 1200px;
+    height: 800px;
+    margin: auto;
+    margin-top: 50px;
+    background-color: #005AA1;
+    position: relative;
+    color: white;
+}
+
+.koboldadventureleftbar{
+    width: 300px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.koboldadventuretitlepanel{
+    width: 300px;
+    height: 100px;
+}
+
+.koboldadventurelogo{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.koboldadventuretitle{
+    width: 200px;
+    height: 100px;
+    position: absolute;
+    top: 0px;
+    left: 100px;
+    text-align: center;
+    font-size: 40px;
+}
+
+.koboldadventuretabpanel{
+    width: 300px;
+    height: 480px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.koboldadventuretab{
+    width: 200px;
+    height: 64px;
+    margin-bottom: 15px;
+    border: 0px;
+    font-size: 30px;
+    color: white;
+    border-radius: 9px 60px 10px 30px;
+    background-color: #003C6C;
+}
+
+.koboldadventuretab:hover{
+    border-width: 4px 0px 3px 0px;
+    border-color: white;
+    border-style: solid;
+}
+
+.koboldadventuretabactive{
+    border-width: 4px 0px 3px 0px;
+    border-color: white;
+    border-style: solid;
+    background-color: #005AA1;
+}
+
+.koboldadventurebuttonpanel{
+    width: 300px;
+    height: 120px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.koboldadventurebutton{
+    width: 100px;
+    height: 35px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background-color: #003C6C;
+    color: white;
+    border: 0px;
+}
+
+.koboldadventuredisclaimer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
