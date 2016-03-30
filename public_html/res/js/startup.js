@@ -1,4 +1,0 @@
-/* 
- * FoxPaw Entertainment proprietary code.
- */
-
