@@ -48,12 +48,15 @@ button:focus{
 
 
 .koboldadventure{
+    position: absolute;
     width: 1200px;
     height: 800px;
     margin: auto;
-    margin-top: 50px;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    margin-top: -400px;
     background-color: #005AA1;
-    position: relative;
     color: white;
 }
 
