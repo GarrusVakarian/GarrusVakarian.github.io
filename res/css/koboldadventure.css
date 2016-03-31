@@ -134,6 +134,8 @@ button:focus{
     background-color: #003C6C;
     color: white;
     border: 0px;
+    font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
 }
 
 .koboldadventurebutton:hover{
@@ -155,4 +157,49 @@ button:focus{
 
 .koboldadventuredisclaimertext{
     font-size: 12px;
+}
+
+.koboldadventureinvisibledisclaimer{
+    display: none;
+}
+
+.koboldadventuremain{
+    position: absolute;
+    width: 900px;
+    height: 800px;
+    left: 300px;
+    top: 0px;
+    background-color: #003C6C;
+    color: white;
+    overflow-y: auto;
+}
+
+.koboldadventuremain::-webkit-scrollbar{
+    width: 8px;
+}
+
+.koboldadventuremain::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+
+.koboldadventuremain::-webkit-scrollbar-thumb{
+    background-color: #005AA1;
+}
+
+.koboldadventurecontent{
+    position: absolute;
+    width: 800px;
+    height: 700px;
+    top: 50px;
+    left: 50px;
+    font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.koboldadventuretextarea{
+    text-align: justify;
+}
+
+.koboldadventurefinish{
+    height: 50px;
+    width: 700px;
 }
