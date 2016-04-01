@@ -1,20 +1,164 @@
 <!DOCTYPE html>
-<!--
-FoxPaw Entertainment proprietary code.
--->
 <html>
     <head>
         <title>Encounters</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../res/css/koboldadventurehelp.css" rel="stylesheet">
+        <script src="../res/js/lib/jquery-2.2.0.min.js"></script>
     </head>
     <body>
-        <div>
-            <h2>
-                This page will offer a comprehensive guide on how to contribute
-                to Kobold Adventure.
-            </h2>
+
+        <div class="koboldadventurehelppage">
+
+            <h1 class="koboldadventurehelppagetitle">
+                Contributing
+            </h1>
+
+            <hr class="koboldadventurehelppagetitleline">
+
+            <div class="koboldadventurehelppagemain">
+
+                <h1 class="koboldadventurehelppagesubtitle">
+                    Useful functions
+                </h1>
+
+                <p class="koboldadventurehelppagetext">
+                    Here are a few JavaScript functions which may be called from
+                    anywhere within your scene. They provide basic functionality
+                    such as animation, description fetching and theme changing.
+                </p>
+
+                <h2 class="koboldadventurehelppagesubsubtitle">
+                    Animation
+                </h2>
+
+                <p class="koboldadventurehelppagetext">
+                    There are two main methods used for animation: <span class="bold">animateAddClass</span> and <span class="bold">animateRemoveClass</span>.
+                    Both of these methods have five different levels of speed: <span class="bold">very fast</span>, <span class="bold">fast</span>, 
+                    <span class="bold">regular</span>, <span class="bold">slow</span> and <span class="bold">very slow</span>. This gives us the
+                    following ten functions to work with:
+                </p>
+
+                <div class="koboldadventurehelppagehalf">
+                    <ul class="koboldadventurehelppagesummation">
+                        <li><code>animateRemoveClassVeryFast(elements, toRemove)</code></li>
+                        <li><code>animateRemoveClassFast(elements, toRemove)</code></li>
+                        <li><code>animateRemoveClass(elements, toRemove)</code></li>
+                        <li><code>animateRemoveClassSlow(elements, toRemove)</code></li>
+                        <li><code>animateRemoveClassVerySlow(elements, toRemove)</code></li>
+                    </ul>
+                </div>
+                <div class="koboldadventurehelppagehalf">
+                    <ul class="koboldadventurehelppagesummation">
+                        <li><code>animateAddClassVeryFast(elements, toAdd)</code></li>
+                        <li><code>animateAddClassFast(elements, toAdd)</code></li>
+                        <li><code>animateAddClass(elements, toAdd)</code></li>
+                        <li><code>animateAddClassSlow(elements, toAdd)</code></li>
+                        <li><code>animateAddClassVerySlow(elements, toAdd)</code></li>
+                    </ul>
+                </div>
+
+                <p class="koboldadventurehelppagetext">
+                    As you may have noticed, each of these functions has exactly two arguments. The former is always the set of elements to which to apply the 
+                    change. The latter indicates the CSS class which should be added or removed. Note that certain CSS attributes, such as font-weight, can
+                    <span class="bold">not</span> be animated.
+                </p>
+
+                <h3 class="koboldadventurehelppagesubsubsubtitle">
+                    Example
+                </h3>
+
+                <p class="koboldadventurehelppagetext">
+                    Say we have a <code>&lt;div&gt;</code> with id <code>animateclasschange</code> and class <code>whitebg</code>. Something like this:
+                </p>
+                
+                <div class="koboldadventurehelppagecodeblock">
+                    <code>
+                        &lt;div id="animateclasschange" class="whitebg"&gt;<br>
+                        &emsp;&emsp;&emsp;&emsp;content<br>
+                        &lt;/div&gt;<br>
+                    </code>
+                </div>
+
+                <p class="koboldadventurehelppagetext">
+                    We want to remove the <code>whitebg</code> class, whilst animating the changes. We can do this easily using the 
+                    <code>animateRemoveClass</code> function.
+                </p>
+
+                <div class="koboldadventurehelppagecodeblock">
+                    <code>
+                        <span class="codevarkeyword">var</span> <span class="codevar">elements</span> = $(<span class="codestring">"#animateclasschange"</span>); <span class="codecomment">// Select the element using jQuery</span><br>
+                        <span class="codevarkeyword">var</span> <span class="codevar">classToRemove</span> = <span class="codestring">"whitebg"</span>; <span class="codecomment">// Specify the class to remove</span><br>
+                        <span class=codefunction>animateRemoveClass</span>(<span class="codevar">elements</span>, <span class="codevar">classToRemove</span>); <span class="codecomment">// Call the function</span><br>
+                    </code>
+                </div>
+                
+                <p class="koboldadventurehelppagetext">
+                    We can easily add the class once more by calling the <code>animateAddClass</code> function in a very similar manner.
+                </p>
+                
+                <div class="koboldadventurehelppagecodeblock">
+                    <code>
+                        <span class="codevarkeyword">var</span> <span class="codevar">elements</span> = $(<span class="codestring">"#animateclasschange"</span>); <span class="codecomment">// Select the element using jQuery</span><br>
+                        <span class="codevarkeyword">var</span> <span class="codevar">classToAdd</span> = <span class="codestring">"whitebg"</span>; <span class="codecomment">// Specify the class to add</span><br>
+                        <span class=codefunction>animateAddClass</span>(<span class="codevar">elements</span>, <span class="codevar">classToAdd</span>); <span class="codecomment">// Call the function</span><br>
+                    </code>
+                </div>
+                
+                <h3 class="koboldadventurehelppagesubsubsubtitle">
+                    Interactive example
+                </h3>
+                
+                <div id="animateclasschange" class="whitebg">
+                    content
+                </div>
+                
+                <button class="koboldadventurehelppagebutton" onclick="removeWhiteBG()">
+                    Remove whitebg class
+                </button>
+                
+                <button class="koboldadventurehelppagebutton" onclick="addWhiteBG()">
+                    Add whitebg class
+                </button>
+                
+                <script>
+                    function removeWhiteBG(){
+                        var elements = $("#animateclasschange"); // Select the element using jQuery
+                        var classToRemove = "whitebg"; // Specify the class to remove
+                        animateRemoveClass(elements, classToRemove); // Call the function
+                    }
+                    
+                    function addWhiteBG(){
+                        var elements = $("#animateclasschange"); // Select the element using jQuery
+                        var classToAdd = "whitebg"; // Specify the class to add
+                        animateAddClass(elements, classToAdd); // Call the function
+                    }
+                </script>
+                
+                <h3 class="koboldadventurehelppagesubsubsubtitle">
+                    Final notes
+                </h3>
+                
+                <p class="koboldadventurehelppagetext">
+                    While transitions are undoubtedly a neat feature, and they can spruce up a scene quite a bit, try not to overuse them.
+                    They are time consuming, and if you cram too many of them in a single page, they might begin to annoy the user.
+                </p>
+                
+                <p class="koboldadventurehelppagetext">
+                    Note that in the above example, the animation breaks when you rapidly mash both of the buttons in quick succession.
+                    This is due to the way that class transitions are handled by the Kobold Adventure framework. While the animation
+                    breaking isn't a big deal, it is advised to not allow these functions to be called in quick succession on the same
+                    element. In other words: don't allow the users to toggle a class on and off like in the example above. Instead, 
+                    only allow them to do either one or the other.
+                </p>
+                
+            </div>
+
         </div>
+
+        <script src="../res/js/lowlevel.js"></script>
+        <script src="../res/js/useful.js"></script>
+        
     </body>
 </html>

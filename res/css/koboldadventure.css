@@ -17,7 +17,7 @@ a{
     text-decoration: none;
 }
 
-p, h1{
+p, h1, h2, h3, h4, h5, h6{
     margin: 0px;
 }
 
@@ -25,18 +25,25 @@ button:focus{
     outline: 0;
 }
 
-.fasttransition{
+.veryfasttransition{
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
 
-.transition{
+.fasttransition{
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
     -o-transition: all 0.4s ease;
     transition: all 0.4s ease;
+}
+
+.transition{
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
 }
 
 .slowtransition{
@@ -44,6 +51,13 @@ button:focus{
     -moz-transition: all 0.8s ease;
     -o-transition: all 0.8s ease;
     transition: all 0.8s ease;
+}
+
+.veryslowtransition{
+    -webkit-transition: all 1.0s ease;
+    -moz-transition: all 1.0s ease;
+    -o-transition: all 1.0s ease;
+    transition: all 1.0s ease;
 }
 
 
@@ -68,7 +82,7 @@ button:focus{
     top: 0;
 }
 
-.koboldadventuretitlepanel{
+.koboldadventurelogopanel{
     width: 300px;
     height: 100px;
 }
@@ -81,7 +95,7 @@ button:focus{
     left: 0px;
 }
 
-.koboldadventuretitle{
+.koboldadventurelogotext{
     width: 200px;
     height: 100px;
     position: absolute;
@@ -198,11 +212,38 @@ button:focus{
     font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-.koboldadventuretextarea{
+.koboldadventuretitle{
+    font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
+    font-size: 50px;
+    text-align: center;
+}
+
+.koboldadventuresubtitle{
+    font-size: 24px;
+}
+
+.koboldadventuresubsubtitle{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.koboldadventuresubsubsubtitle{
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.koboldadventuretext{
     text-align: justify;
+    font-size: 16px;
 }
 
 .koboldadventurefinish{
     height: 50px;
     width: 700px;
+}
+
+.koboldadventurestorage{
+    display: none;
 }

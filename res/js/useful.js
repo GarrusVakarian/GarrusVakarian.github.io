@@ -1,0 +1,139 @@
+/**
+ * This JavaScript file defines a few useful functions which may be called from 
+ * anywhere within your scene. Most, if not all of these functions are
+ * documented in the Contributing page, so if you're looking for something you
+ * should probably look there first.
+ */
+
+
+/** ANIMATION **/
+
+// VERY FAST
+
+/**
+ * Animates the removal of a CSS class from a set of elements. This animation
+ * doesn't take long at all to complete. It is near instantaneous.
+ * @param elements The elements of which to remove the CSS class.
+ * @param toRemove The CSS class to remove.
+ */
+function animateRemoveClassVeryFast(elements, toRemove){
+    addFastTransition(elements);
+    removeClass(elements, toRemove);
+    removeFastTransitionLater(elements);
+}
+
+/**
+ * Animates the addition of a CSS class from a set of elements. This animation
+ * doesn't take long at all to complete. It is neaar instantaneous.
+ * @param elements The elements to which to add the CSS class.
+ * @param toAdd The CSS class to add.
+ */
+function animateAddClassVeryFast(elements, toAdd){
+    addVeryFastTransition(elements);
+    addClass(elements, toAdd);
+    removeVeryFastTransitionLater(elements);
+}
+
+// FAST
+
+/**
+ * Animates the removal of a CSS class from a set of elements. This animation
+ * doesn't take long to complete.
+ * @param elements The elements of which to remove the CSS class.
+ * @param toRemove The CSS class to remove.
+ */
+function animateRemoveClassFast(elements, toRemove){
+    addFastTransition(elements);
+    removeClass(elements, toRemove);
+    removeFastTransitionLater(elements);
+}
+
+/**
+ * Animates the addition of a CSS class from a set of elements. This animation
+ * doesn't take long to complete.
+ * @param elements The elements to which to add the CSS class.
+ * @param toAdd The CSS class to add.
+ */
+function animateAddClassFast(elements, toAdd){
+    addFastTransition(elements);
+    addClass(elements, toAdd);
+    removeFastTransitionLater(elements);
+}
+
+// REGULAR
+
+/**
+ * Animates the removal of a CSS class from a set of elements. This animation
+ * takes a mediocre amount of time to complete.
+ * @param elements The elements of which to remove the CSS class.
+ * @param toRemove The CSS class to remove.
+ */
+function animateRemoveClass(elements, toRemove){
+    addTransition(elements);
+    removeClass(elements, toRemove);
+    removeTransitionLater(elements);
+}
+
+/**
+ * Animates the addition of a CSS class from a set of elements. This animation
+ * takes a mediocre amount of time to complete.
+ * @param elements The elements to which to add the CSS class.
+ * @param toAdd The CSS class to add.
+ */
+function animateAddClass(elements, toAdd){
+    addTransition(elements);
+    addClass(elements, toAdd);
+    removeTransitionLater(elements);
+}
+
+// SLOW
+
+/**
+ * Animates the removal of a CSS class from a set of elements. This animation
+ * is rather slow.
+ * @param elements The elements of which to remove the CSS class.
+ * @param toRemove The CSS class to remove.
+ */
+function animateRemoveClassSlow(elements, toRemove){
+    addTransitionSlow(elements);
+    removeClass(elements, toRemove);
+    removeSlowTransitionLater(elements);
+}
+
+/**
+ * Animates the addition of a CSS class from a set of elements. This animation
+ * is rather slow.
+ * @param elements The elements to which to add the CSS class.
+ * @param toAdd The CSS class to add.
+ */
+function animateAddClassSlow(elements, toAdd){
+    addTransitionSlow(elements);
+    addClass(elements, toAdd);
+    removeSlowTransitionLater(elements);
+}
+
+// VERY SLOW
+
+/**
+ * Animates the removal of a CSS class from a set of elements. This animation
+ * is VERY slow. It takes forever!
+ * @param elements The elements of which to remove the CSS class.
+ * @param toRemove The CSS class to remove.
+ */
+function animateRemoveClassVerySlow(elements, toRemove){
+    addTransitionVerySlow(elements);
+    removeClass(elements, toRemove);
+    removeVerySlowTransitionLater(elements);
+}
+
+/**
+ * Animates the addition of a CSS class from a set of elements. This animation
+ * is VERY slow. It takes forever!
+ * @param elements The elements to which to add the CSS class.
+ * @param toAdd The CSS class to add.
+ */
+function animateAddClassVerySlow(elements, toAdd){
+    addTransitionVerySlow(elements);
+    addClass(elements, toAdd);
+    removeVerySlowTransitionLater(elements);
+}
