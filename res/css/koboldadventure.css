@@ -77,6 +77,11 @@ button:focus{
     margin-left: 40px !important;
 }
 
+.todo{
+    color: red;
+    background-color: yellow;
+}
+
 .koboldadventure{
     position: absolute;
     width: 1200px;
@@ -159,7 +164,7 @@ button:focus{
     text-align: center;
 }
 
-.koboldadventurebutton{
+.koboldadventureuibutton{
     width: 100px;
     height: 35px;
     margin-bottom: 5px;
@@ -171,12 +176,35 @@ button:focus{
     font-size: 16px;
 }
 
-.koboldadventurebutton:hover{
+.koboldadventureuibutton:hover{
     border: 2px #191919 solid;
 }
 
-.koboldadventurebutton:active{
+.koboldadventureuibutton:active{
     background-color: #191919;
+}
+
+.koboldadventurebigbutton{
+    border-radius: 5px;
+    border: 0px;
+    padding: 20px;
+    background-color: #191919;
+    color: white;
+    font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
+    font-size: 32px;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    display: block;
+}
+
+.koboldadventurebigbutton:hover{
+    border: 10px #191919 solid;
+}
+
+.koboldadventurebigbutton:active{
+    background-color: #005AA1;
 }
 
 .koboldadventuredisclaimer{
@@ -262,7 +290,7 @@ button:focus{
 }
 
 .koboldadventuresummation{
-    
+
 }
 
 .koboldadventurefinish{

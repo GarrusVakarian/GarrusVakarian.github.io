@@ -98,6 +98,12 @@ button:focus{
     
 }
 
+.todo{
+    color: red !important;
+    background-color: yellow !important;
+    font-weight: bold;
+}
+
 .koboldadventurehelppage{
     font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
     width: 1200px;
