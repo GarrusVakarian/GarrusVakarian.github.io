@@ -96,8 +96,7 @@ button:focus{
     margin: auto;
     background-color: #003C6C;
     min-height: 100%;
-    border-left: 10px solid #005AA1;
-    border-right: 10px solid #005AA1;
+    border: 10px solid #005AA1;
     padding-bottom: 50px;
 }
 
