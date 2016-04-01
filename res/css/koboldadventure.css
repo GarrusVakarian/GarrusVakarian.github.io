@@ -200,7 +200,8 @@ button:focus{
 }
 
 .koboldadventurebigbutton:hover{
-    border: 10px #191919 solid;
+    padding: 30px;
+    margin-top: 30px;
 }
 
 .koboldadventurebigbutton:active{
