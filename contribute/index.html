@@ -19,15 +19,37 @@
             <hr class="koboldadventurehelppagetitleline">
 
             <div class="koboldadventurehelppagemain">
-
+                
+                <h1 class="koboldadventurehelppagesubtitle">
+                    Writing scenes
+                </h1>
+                
+                <p class="koboldadventurehelppagetext">
+                    Writing scenes for Kobold Adventure is rather easy. Scenes are a combination of HTML, CSS and JavaScript. If you are at all familiar
+                    with creating simple websites, then making a Kobold Adventure scene will be a piece of cake. Let's get started, shall we?
+                </p>
+                
+                <h2 class="koboldadventurehelppagesubsubtitle">
+                    The basics
+                </h2>
+                
+                <p class="koboldadventurehelppagetext">
+                    A very basic scene needs only four things. First off, it must begin with 
+                    <code><span class="codehtmltag">&lt;div</span> <span class="codehtmlattribute">class=</span><span class="codestring">"koboldadventurecontent"</span><span class="codehtmltag">&gt;</span></code>,
+                    and it must end with 
+                    <code><span class="codehtmltag">&lt;div</span> <span class="codehtmlattribute">class=</span><span class="codestring">"koboldadventurefinish"</span><span class="codehtmltag">&gt;</span><span class="codehtmltag">&lt;/div&gt;</span><span class="codehtmltag">&lt;/div&gt;</span></code>. 
+                    These are what we call the begin and end tags of the scene. All of the scene's content, including JavaScript and CSS styles will go in between these two tags.
+                </p>
+                
+                <hr class="koboldadventurehelppagecontentseparator">
+                
                 <h1 class="koboldadventurehelppagesubtitle">
                     Useful functions
                 </h1>
 
                 <p class="koboldadventurehelppagetext">
-                    Here are a few JavaScript functions which may be called from
-                    anywhere within your scene. They provide basic functionality
-                    such as animation, description fetching and theme changing.
+                    Here are a few JavaScript functions which may be called from anywhere within your scene. They provide basic functionality such as animation, 
+                    description fetching and theme changing.
                 </p>
 
                 <h2 class="koboldadventurehelppagesubsubtitle">
@@ -43,20 +65,20 @@
 
                 <div class="koboldadventurehelppagehalf">
                     <ul class="koboldadventurehelppagesummation">
-                        <li><code>animateRemoveClassVeryFast(elements, toRemove)</code></li>
-                        <li><code>animateRemoveClassFast(elements, toRemove)</code></li>
-                        <li><code>animateRemoveClass(elements, toRemove)</code></li>
-                        <li><code>animateRemoveClassSlow(elements, toRemove)</code></li>
-                        <li><code>animateRemoveClassVerySlow(elements, toRemove)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClassVeryFast</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClassFast</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClass</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClassSlow</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClassVerySlow</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
                     </ul>
                 </div>
                 <div class="koboldadventurehelppagehalf">
                     <ul class="koboldadventurehelppagesummation">
-                        <li><code>animateAddClassVeryFast(elements, toAdd)</code></li>
-                        <li><code>animateAddClassFast(elements, toAdd)</code></li>
-                        <li><code>animateAddClass(elements, toAdd)</code></li>
-                        <li><code>animateAddClassSlow(elements, toAdd)</code></li>
-                        <li><code>animateAddClassVerySlow(elements, toAdd)</code></li>
+                        <li><code><span class=codefunction>animateAddClassVeryFast</span>(<span class="codevar">elements</span>, <span class="codevar">toAdd</span>)</code></li>
+                        <li><code><span class=codefunction>animateAddClassFast</span>(<span class="codevar">elements</span>, <span class="codevar">toAdd</span>)</code></li>
+                        <li><code><span class=codefunction>animateAddClass</span>(<span class="codevar">elements</span>, <span class="codevar">toAdd</span>)</code></li>
+                        <li><code><span class=codefunction>animateAddClassSlow</span>(<span class="codevar">elements</span>, <span class="codevar">toAdd</span>)</code></li>
+                        <li><code><span class=codefunction>animateAddClassVerySlow</span>(<span class="codevar">elements</span>, <span class="codevar">toAdd</span>)</code></li>
                     </ul>
                 </div>
 
@@ -71,25 +93,25 @@
                 </h3>
 
                 <p class="koboldadventurehelppagetext">
-                    Say we have a <code>&lt;div&gt;</code> with id <code>animateclasschange</code> and class <code>whitebg</code>. Something like this:
+                    Say we have a <code><span class="codehtmltag">&lt;div&gt;</span></code> with <code><span class="codehtmlattribute">id=</span><span class="codestring">"animateclasschange"</span></code> and <code><span class="codehtmlattribute">class=</span><span class="codestring">"whitebg"</span></code>. Something like this:
                 </p>
                 
                 <div class="koboldadventurehelppagecodeblock">
                     <code>
-                        &lt;div id="animateclasschange" class="whitebg"&gt;<br>
+                        <span class="codehtmltag">&lt;div</span> <span class="codehtmlattribute">id=</span><span class="codestring">"animateclasschange"</span> <span class="codehtmlattribute">class=</span><span class="codestring">"whitebg"</span><span class="codehtmltag">&gt;</span><br>
                         &emsp;&emsp;&emsp;&emsp;content<br>
-                        &lt;/div&gt;<br>
+                        <span class="codehtmltag">&lt;/div&gt;</span><br>
                     </code>
                 </div>
 
                 <p class="koboldadventurehelppagetext">
-                    We want to remove the <code>whitebg</code> class, whilst animating the changes. We can do this easily using the 
-                    <code>animateRemoveClass</code> function.
+                    We want to remove the <code><span class="codestring">whitebg</span></code> class, whilst animating the changes. We do this by using the 
+                    <code><span class=codefunction>animateRemoveClass</span></code> function.
                 </p>
 
                 <div class="koboldadventurehelppagecodeblock">
                     <code>
-                        <span class="codevarkeyword">var</span> <span class="codevar">elements</span> = $(<span class="codestring">"#animateclasschange"</span>); <span class="codecomment">// Select the element using jQuery</span><br>
+                        <span class="codevarkeyword">var</span> <span class="codevar">elements</span> = <span class=codefunction>$</span>(<span class="codestring">"#animateclasschange"</span>); <span class="codecomment">// Select the element using jQuery</span><br>
                         <span class="codevarkeyword">var</span> <span class="codevar">classToRemove</span> = <span class="codestring">"whitebg"</span>; <span class="codecomment">// Specify the class to remove</span><br>
                         <span class=codefunction>animateRemoveClass</span>(<span class="codevar">elements</span>, <span class="codevar">classToRemove</span>); <span class="codecomment">// Call the function</span><br>
                     </code>
@@ -101,7 +123,7 @@
                 
                 <div class="koboldadventurehelppagecodeblock">
                     <code>
-                        <span class="codevarkeyword">var</span> <span class="codevar">elements</span> = $(<span class="codestring">"#animateclasschange"</span>); <span class="codecomment">// Select the element using jQuery</span><br>
+                        <span class="codevarkeyword">var</span> <span class="codevar">elements</span> = <span class=codefunction>$</span>(<span class="codestring">"#animateclasschange"</span>); <span class="codecomment">// Select the element using jQuery</span><br>
                         <span class="codevarkeyword">var</span> <span class="codevar">classToAdd</span> = <span class="codestring">"whitebg"</span>; <span class="codecomment">// Specify the class to add</span><br>
                         <span class=codefunction>animateAddClass</span>(<span class="codevar">elements</span>, <span class="codevar">classToAdd</span>); <span class="codecomment">// Call the function</span><br>
                     </code>

@@ -69,6 +69,14 @@ button:focus{
     text-align: center;
 }
 
+.codehtmltag{
+    color: #FF7256;
+}
+
+.codehtmlattribute{
+    color: #FFE600;
+}
+
 .codevarkeyword{
     color: #BF5FFF;
 }
@@ -130,6 +138,14 @@ button:focus{
     height: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.koboldadventurehelppagecontentseparator{
+    border: 0px;
+    background-color: #005AA1;
+    height: 2px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .koboldadventurehelppagemain{

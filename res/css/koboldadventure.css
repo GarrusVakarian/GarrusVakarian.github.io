@@ -15,6 +15,11 @@ body{
 
 a{
     text-decoration: none;
+    font-weight: bold;
+}
+
+a:link, a:visited{
+    color: white;
 }
 
 p, h1, h2, h3, h4, h5, h6{
@@ -60,6 +65,17 @@ button:focus{
     transition: all 1.0s ease;
 }
 
+.bold{
+    font-weight: bold;
+}
+
+.nowhitespaceafter{
+    margin-bottom: 0px !important;
+}
+
+.indented{
+    margin-left: 40px !important;
+}
 
 .koboldadventure{
     position: absolute;
@@ -216,27 +232,37 @@ button:focus{
     font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
     font-size: 50px;
     text-align: center;
+    margin-bottom: 25px;
 }
 
 .koboldadventuresubtitle{
     font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .koboldadventuresubsubtitle{
     font-size: 20px;
     font-weight: bold;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .koboldadventuresubsubsubtitle{
     font-size: 16px;
     font-weight: bold;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .koboldadventuretext{
     text-align: justify;
     font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.koboldadventuresummation{
+    
 }
 
 .koboldadventurefinish{
