@@ -95,7 +95,7 @@ function animateAddClass(elements, toAdd){
  * @param toRemove The CSS class to remove.
  */
 function animateRemoveClassSlow(elements, toRemove){
-    addTransitionSlow(elements);
+    addSlowTransition(elements);
     removeClass(elements, toRemove);
     removeSlowTransitionLater(elements);
 }
@@ -107,7 +107,7 @@ function animateRemoveClassSlow(elements, toRemove){
  * @param toAdd The CSS class to add.
  */
 function animateAddClassSlow(elements, toAdd){
-    addTransitionSlow(elements);
+    addSlowTransition(elements);
     addClass(elements, toAdd);
     removeSlowTransitionLater(elements);
 }
@@ -121,7 +121,7 @@ function animateAddClassSlow(elements, toAdd){
  * @param toRemove The CSS class to remove.
  */
 function animateRemoveClassVerySlow(elements, toRemove){
-    addTransitionVerySlow(elements);
+    addVerySlowTransition(elements);
     removeClass(elements, toRemove);
     removeVerySlowTransitionLater(elements);
 }
@@ -133,7 +133,70 @@ function animateRemoveClassVerySlow(elements, toRemove){
  * @param toAdd The CSS class to add.
  */
 function animateAddClassVerySlow(elements, toAdd){
-    addTransitionVerySlow(elements);
+    addVerySlowTransition(elements);
     addClass(elements, toAdd);
     removeVerySlowTransitionLater(elements);
+}
+
+
+/** THEMES **/
+
+/**
+ * Changes the theme to the passed CSS class. Animates the changes very slowly.
+ * @param theme The CSS class to change to.
+ */
+function changeTheme(theme){
+    suspendAnimationVeryLong();
+    addVerySlowTransition($("body, body *"));
+    setClass($("body"), theme);
+    removeVerySlowTransitionLater($("body, body *"));
+}
+
+/**
+ * Changes the theme to the passed CSS class. Animates the changes very slowly.
+ * @param theme The CSS class to change to.
+ * @param callback The function to call after the theme has been changed.
+ */
+function changeTheme(theme, callback){
+    suspendAnimationVeryLongCallback(callback);
+    addVerySlowTransition($("body, body *"));
+    setClass($("body"), theme);
+    removeVerySlowTransitionLater($("body, body *"));
+}
+
+/**
+ * Removes the current theme. Must be called prior to changing scenes. It is 
+ * recommended you do not use this function, and instead use the version which 
+ * accepts a callback.
+ */
+function removeTheme(){
+    // If we have no theme, just exit
+    if(typeof $("body").attr("class") === 'undefined' || $("body").attr("class") === ""){
+        return;
+    }
+    
+    // Else we animate the removal of the theme
+    suspendAnimationVeryLong();
+    addVerySlowTransition($("body, body *"));
+    resetClass($("body"));
+    removeVerySlowTransitionLater($("body, body *"));
+    
+}
+
+/**
+ * Removes the current theme. Must be called prior to changing scenes.
+ * @param callback The function to call after removing the theme.
+ */
+function removeThemeCallback(callback){
+    // If we have no theme, just call the callback function and exit
+    if(typeof $("body").attr("class") === 'undefined' || $("body").attr("class") === ""){
+        callback();
+        return;
+    }
+    
+    // Else we animate the removal of the theme
+    suspendAnimationVeryLongCallback(callback);
+    addVerySlowTransition($("body, body *"));
+    resetClass($("body"));
+    removeVerySlowTransitionLater($("body, body *"));
 }

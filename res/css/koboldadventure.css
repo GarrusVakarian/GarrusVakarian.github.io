@@ -1,6 +1,10 @@
-/*
-FoxPaw Entertainment proprietary code.
-*/
+/**
+* COLOR SCHEME
+* Background:   #191919
+* Detail:       #005AA1
+* Main:         #003C6C
+* Text:         white
+**/
 
 html{
     height: 100%;
@@ -10,7 +14,7 @@ body{
     font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
     margin: 0;
     min-width: 1200px;
-    background-color: #191919;
+    background-color: #191919;  /* Background */
 }
 
 a{
@@ -19,7 +23,7 @@ a{
 }
 
 a:link, a:visited{
-    color: white;
+    color: white;               /* Text */
 }
 
 p, h1, h2, h3, h4, h5, h6{
@@ -73,8 +77,17 @@ button:focus{
     margin-bottom: 0px !important;
 }
 
-.indented{
+.indent{
     margin-left: 40px !important;
+}
+
+.rightindent{
+    margin-right: 40px !important;
+}
+
+.smaller{
+    margin-left: 40px !important;
+    margin-right: 40px !important;
 }
 
 .todo{
@@ -91,8 +104,8 @@ button:focus{
     right: 0px;
     top: 50%;
     margin-top: -400px;
-    background-color: #005AA1;
-    color: white;
+    background-color: #005AA1;  /* Detail */
+    color: white;               /* Text */
 }
 
 .koboldadventureleftbar{
@@ -139,9 +152,9 @@ button:focus{
     margin-bottom: 15px;
     border: 0px;
     font-size: 30px;
-    color: white;
+    color: white;               /* Text */
     border-radius: 9px 60px 10px 30px;
-    background-color: #003C6C;
+    background-color: #003C6C;  /* Main */
 }
 
 .koboldadventuretab:hover{
@@ -154,7 +167,7 @@ button:focus{
     border-width: 4px 0px 3px 0px;
     border-color: white;
     border-style: solid;
-    background-color: #005AA1;
+    background-color: #005AA1;  /* Detail */
 }
 
 .koboldadventurebuttonpanel{
@@ -169,43 +182,21 @@ button:focus{
     height: 35px;
     margin-bottom: 5px;
     border-radius: 5px;
-    background-color: #003C6C;
-    color: white;
+    background-color: #003C6C;  /* Main */
+    color: white;               /* Text */
     border: 0px;
     font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
     font-size: 16px;
 }
 
 .koboldadventureuibutton:hover{
-    border: 2px #191919 solid;
+    border-width: 2px; 
+    border-color: #191919;      /* Background */
+    border-style: solid;
 }
 
 .koboldadventureuibutton:active{
-    background-color: #191919;
-}
-
-.koboldadventurebigbutton{
-    border-radius: 5px;
-    border: 0px;
-    padding: 20px;
-    background-color: #191919;
-    color: white;
-    font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
-    font-size: 32px;
-    font-weight: bold;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
-    display: block;
-}
-
-.koboldadventurebigbutton:hover{
-    padding: 30px;
-    margin-top: 30px;
-}
-
-.koboldadventurebigbutton:active{
-    background-color: #005AA1;
+    background-color: #191919;  /* Background */
 }
 
 .koboldadventuredisclaimer{
@@ -231,8 +222,8 @@ button:focus{
     height: 800px;
     left: 300px;
     top: 0px;
-    background-color: #003C6C;
-    color: white;
+    background-color: #003C6C;  /* Main */
+    color: white;               /* Text */
     overflow-y: auto;
 }
 
@@ -245,7 +236,7 @@ button:focus{
 }
 
 .koboldadventuremain::-webkit-scrollbar-thumb{
-    background-color: #005AA1;
+    background-color: #005AA1;  /* Detail */
 }
 
 .koboldadventurecontent{
@@ -290,8 +281,44 @@ button:focus{
     margin-bottom: 20px;
 }
 
+.koboldadventurebigbutton{
+    border-radius: 5px;
+    border: 0px;
+    padding: 20px;
+    background-color: #191919;  /* Background */
+    color: white;               /* Text */
+    font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
+    font-size: 32px;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    display: block;
+}
+
+.koboldadventurebigbutton:hover{
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.koboldadventurebigbutton:active{
+    background-color: #005AA1;  /* Detail */
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
 .koboldadventuresummation{
 
+}
+
+.koboldadventuresmallseparator{
+    border: 0px;
+    background-color: #005AA1;  /* Detail */
+    height: 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .koboldadventurefinish{

@@ -1,0 +1,68 @@
+/**
+* This file contains the Forest theme for Kobold Adventure.
+**/
+
+/**
+* COLOR SCHEME
+* Background:   #3B5323
+* Detail:       #008B00
+* Main:         #5E2612
+* Text:         white
+**/
+
+a:link, a:visited{
+    color: white;               /* Text */
+}
+
+.koboldadventureforest{
+    background-color: #3B5323;  /* Background */
+}
+
+.koboldadventureforest .koboldadventure{
+    background-color: #008B00;  /* Detail */
+    color: white;               /* Text */
+}
+
+.koboldadventureforest .koboldadventuretab{
+    background-color: #5E2612;  /* Main */
+    color: white;               /* Text */
+}
+
+.koboldadventureforest .koboldadventuretabactive{
+    background-color: #008B00;  /* Detail */
+}
+
+.koboldadventureforest .koboldadventureuibutton{
+    background-color: #5E2612;  /* Main */
+    color: white;               /* Text */
+}
+
+.koboldadventureforest .koboldadventureuibutton:hover{
+    border-color: #3B5323;      /* Background */
+}
+
+.koboldadventureforest .koboldadventureuibutton:active{
+    background-color: #3B5323;  /* Background */
+}
+
+.koboldadventureforest .koboldadventuremain{
+    background-color: #5E2612;  /* Main */
+    color: white;               /* Text */
+}
+
+.koboldadventureforest .koboldadventuremain::-webkit-scrollbar-thumb{
+    background-color: #008B00;  /* Detail */
+}
+
+.koboldadventureforest .koboldadventurebigbutton{
+    background-color: #3B5323;  /* Background */
+    color: white;               /* Text */
+}
+
+.koboldadventureforest .koboldadventurebigbutton:active{
+    background-color: #008B00;  /* Detail */   
+}
+
+.koboldadventureforest .koboldadventuresmallseparator{
+    background-color: #008B00;  /* Detail */
+}

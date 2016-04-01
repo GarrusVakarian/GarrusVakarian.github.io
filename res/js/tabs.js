@@ -131,7 +131,7 @@ function saveScrollPosition(tab){
 function loadScrollPosition(tab){
     var loc = tab.attr("id");
     var scrollamount = koboldAdventureStorageManagerScrollPositions[loc];
-    if(scrollamount !== undefined)
+    if(typeof scrollamount !== 'undefined')
         $(".koboldadventuremain").scrollTop(scrollamount);
 }
 
