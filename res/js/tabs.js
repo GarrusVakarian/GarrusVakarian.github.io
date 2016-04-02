@@ -103,7 +103,12 @@ function inventoryTabOnclick() {
  * The onclick function for the save tab.
  */
 function saveTabOnclick() {
-
+    // If cancelled, do nothing.
+    if(koboldAdventureStorageManagerCancelFurtherOnclicks)
+        return;
+    
+    // Else, we need to populate the saveslots in storage before they get moved.
+    populateSaveSlots($("#koboldadventuresavetabstorage .koboldadventuresaveslot"));
 }
 
 /**

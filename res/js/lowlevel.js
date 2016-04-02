@@ -500,23 +500,32 @@ function hideLoadIcon(){
 /**
  * Function to be used as callback for successful afterload loading.
  * Appends the loaded javascript to the script storage. It will immediately be
- * executed.
+ * executed. Then the sceneParams object will be emptied.
  * Will hide the loading icon after execution.
  * @param data The fetched Javascript.
  */
 function doneLoadingAfterload(data){
     $("#koboldadventurescriptstorage script").append(data);
+    sceneParams = new Object();
     hideLoadIcon();
 }
 
 /**
  * Discards the old scene, replacing it with the new one. Then makes the new one
- * visible. Afterwords, fetches the scene's afterload.js.
+ * visible. Calls the scene-defined init() or load() functions depending on 
+ * whether the scene was loaded from another scene or from a save. Afterwords, 
+ * fetches the scene's afterload.js.
  * @param data The new scene.
  */
 function switchAndShowSceneContent(data){
     $(".koboldadventuremain").html(data);
     $("#koboldadventurescenetabstorage").html(data);
+    
+    if(koboldAdventureSceneLoaderFromSave)
+        load();
+    else
+        init();
+    
     $(".koboldadventuremain .koboldadventurecontent").fadeOut(0);
     $(".koboldadventuremain .koboldadventurecontent").fadeIn(400);
     $.get(buildSceneFilePath("/js/afterload.js"))
@@ -694,9 +703,44 @@ function loadCommentFromSlot(slotName){
     return fetched;
 }
 
+/**
+ * Loads all the required data for the game to properly be initiated from the
+ * specified save slot.
+ * @param slotName The name of the slot from which to load.
+ * @returns True if successful, false otherwise.
+ */
+function loadEverythingFromSlot(slotName){
+    var foundKobold = loadKoboldFromSlot(slotName);
+    var foundScene = loadSceneFromSlot(slotName);
+    var foundSceneName = loadSceneNameFromSlot(slotName);
+    
+    if(foundKobold === null || foundScene === null || foundSceneName === null)
+        return false;
+    
+    kobold = foundKobold;
+    scene = foundScene;
+    currentScene = foundSceneName;
+    return true;
+}
 
-function loadGameFromSlot(){
+/**
+ * Loads a game from the specified save slot slot.
+ * @param slotNumber The number of the save slot to load.
+ */
+function loadGameFromSlot(slotNumber){
+    showLoadIcon();
+    
+    var slotName = "slot" + slotNumber;
+    
+    if(!loadEverythingFromSlot(slotName)){
+        alert("Save slot loading failed! Perhaps the save slot is empty, or maybe the data is corrupted.");
+        hideLoadIcon();
+        return;
+    }
+    
     makeMyKoboldDoStuff();
+    
+    loadScene(currentScene, true);
 }
 
 // READ BASIC INFORMATION ABOUT A SAVE FROM A SLOT
@@ -709,19 +753,19 @@ function loadGameFromSlot(){
  * @returns An object containing the save slot data.
  */
 function readSaveSlot(slotName){
-    var kobold = loadKoboldFromSlot(slotName);
-    var sceneName = loadSceneNameFromSlot(slotName);
-    var comment = loadCommentFromSlot(slotName);
+    var foundKobold = loadKoboldFromSlot(slotName);
+    var foundSceneName = loadSceneNameFromSlot(slotName);
+    var foundComment = loadCommentFromSlot(slotName);
     
-    if(kobold === null || scene === null || sceneName === null || comment === null){
+    if(foundKobold === null || foundSceneName === null || foundComment === null){
         return null;
     }
     
     var data = new Object();
-    data.name = kobold.name;
-    data.gender = kobold.gender;
-    data.sceneName = sceneName;
-    data.comment = comment;
+    data.name = foundKobold.name;
+    data.gender = foundKobold.gender;
+    data.sceneName = foundSceneName;
+    data.comment = foundComment;
     
     return data;
 }

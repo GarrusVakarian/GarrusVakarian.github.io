@@ -8,17 +8,28 @@
 
 /** SCENE LOADING **/
 
+var koboldAdventureSceneLoaderFromSave;
 
 /**
  * Loads the scene, specified by the scenePath, to the main game window.
- * Discards the current scene in the process. Clears the current scene object.
+ * Discards the current scene in the process. 
  * If you wish to pass parameters to the new scene, use the sceneParams object.
  * Sets the global variable currentScenePath.
  * @param scenePath The scene folder name.
+ * @param fromSave Boolean. Whether or not the scene is being loaded from a 
+ * save. Defaults to false.
  */
-function loadScene(scenePath) {
+function loadScene(scenePath, fromSave) {
+    if(typeof fromSave === 'undefined')
+        fromSave = false;
+    
+    koboldAdventureSceneLoaderFromSave = fromSave;
+    
     showLoadIcon();
-    scene = new Object();
+    
+    if(!koboldAdventureSceneLoaderFromSave)
+        scene = new Object();
+    
     currentScene = scenePath;
     $.get(buildSceneFilePath("js/init.js"))
             .done(doneLoadingInit)
@@ -227,4 +238,19 @@ function removeThemeCallback(callback) {
     addVerySlowTransition($("body, body *"));
     resetClass($("body"));
     removeVerySlowTransitionLater($("body, body *"));
+}
+
+
+/** TAB MANAGEMENT **/
+
+
+/**
+ * Switches to the specified tab.
+ * @param tabName The name of the tab. "scene", "statss", "status", etc.
+ */
+function changeTab(tabName){
+    tabName = tabName.toLowerCase();
+    var tabid = "koboldadventure" + tabName + "tab";
+    var tab = $("#" + tabid);
+    tab.click();
 }

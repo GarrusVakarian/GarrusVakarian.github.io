@@ -16,12 +16,23 @@ function makeMyKoboldDoStuff(){
 
 var scene = new Object();
 
-function makeMySceneDoStuff(){
-    
-}
-
 var sceneParams = new Object();
 
 var currentScene = "";
-
 var sceneFolder = "scenes/";
+
+function init(){
+    
+}
+
+function load(){
+    
+}
+
+function ontabout(){
+    
+}
+
+function ontabin(){
+    
+}
