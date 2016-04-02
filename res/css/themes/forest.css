@@ -72,9 +72,16 @@ a:link, a:visited{
 }
 
 .koboldadventureforest .koboldadventuresaveslotfilled{
+    background-color: #3B5323;  /* Background */
+}
+
+.koboldadventureforest .koboldadventuresaveslotfilled:hover{
     background-color: #008B00;  /* Detail */
 }
 
-.koboldadventureforest .koboldadventuresaveslotnumber{
+.koboldadventureforest .koboldadventuresaveslotfield{
     color: white;               /* Text */
+}
+.koboldadventureforest .koboldadventuresaveslotdivider{
+    background-color: white;    /* Text */
 }

@@ -584,6 +584,7 @@ function buildSceneFilePath(file){
 
 /** SAVING AND LOADING **/
 
+
 // CONSTANT DEFINITION
 
 var koboldAdventureSaveManagerKoboldLocation = "kobold";
@@ -596,7 +597,7 @@ var koboldAdventureSaveManagerCommentLocation = "comment";
 
 /**
  * Saves the kobold object to the appropriate location.
- * @param slotName The slot to which to save.
+ * @param slotName The name of the slot to which to save.
  */
 function saveKoboldToSlot(slotName){
     localStorage.setItem(slotName + koboldAdventureSaveManagerKoboldLocation, JSON.stringify(kobold));
@@ -604,7 +605,7 @@ function saveKoboldToSlot(slotName){
 
 /**
  * Saves the scene object to the appropriate location.
- * @param slotName The slot to which to save.
+ * @param slotName The name of the slot to which to save.
  */
 function saveSceneToSlot(slotName){
     localStorage.setItem(slotName + koboldAdventureSaveManagerSceneLocation, JSON.stringify(scene));
@@ -612,7 +613,7 @@ function saveSceneToSlot(slotName){
 
 /**
  * Saves the currentScene variable to the appropriate location.
- * @param slotName The slot to which to save.
+ * @param slotName The name of the slot to which to save.
  */
 function saveSceneNameToSlot(slotName){
     localStorage.setItem(slotName + koboldAdventureSaveManagerSceneNameLocation, currentScene);
@@ -620,7 +621,7 @@ function saveSceneNameToSlot(slotName){
 
 /**
  * Saves the user's comment to the appropriate location.
- * @param slotName The slot to which to save.
+ * @param slotName The name of the slot to which to save.
  * @param comment The user's comment.
  */
 function saveCommentToSlot(slotName, comment){
@@ -645,12 +646,154 @@ function saveGameToSlot(slotNumber, comment){
 
 // LOAD FROM A SLOT
 
+/**
+ * Loads the kobold object from the appropriate location.
+ * @param slotName The name of the slot from which to load.
+ * @returns The requested kobold object, or null if the save file does not exist or is corrupted.
+ */
+function loadKoboldFromSlot(slotName){
+    var fetched = localStorage.getItem(slotName + koboldAdventureSaveManagerKoboldLocation);
+    
+    if(fetched === null)
+        return fetched;
+    
+    return JSON.parse(fetched);
+}
+
+/**
+ * Loads the scene object from the appropriate location.
+ * @param slotName The name of the slot from which to load.
+ * @returns The requested scene object, or null if the save file does not exist or is corrupted.
+ */
+function loadSceneFromSlot(slotName){
+    var fetched = localStorage.getItem(slotName + koboldAdventureSaveManagerSceneLocation);
+    
+    if(fetched === null)
+        return fetched;
+    
+    return JSON.parse(fetched);
+}
+
+/**
+ * Loads the scene name from the appropriate location.
+ * @param slotName The name of the slot from which to load.
+ * @returns The requested scene name, or null if the save file does not exist or is corrupted.
+ */
+function loadSceneNameFromSlot(slotName){
+    var fetched = localStorage.getItem(slotName + koboldAdventureSaveManagerSceneNameLocation);
+    return fetched;
+}
+
+/**
+ * Loads the comment from the appropriate location.
+ * @param slotName The name of the slot from which to load.
+ * @returns The requested comment, or null if the save file does not exist or is corrupted.
+ */
+function loadCommentFromSlot(slotName){
+    var fetched = localStorage.getItem(slotName + koboldAdventureSaveManagerCommentLocation);
+    return fetched;
+}
+
+
 function loadGameFromSlot(){
+    makeMyKoboldDoStuff();
+}
+
+// READ BASIC INFORMATION ABOUT A SAVE FROM A SLOT
+
+/**
+ * This function reads basic information about a save slot, and returns it in
+ * the form of an object. It returns undefined if the save slot is not currently
+ * being used.
+ * @param slotName The name of the slot from which to load
+ * @returns An object containing the save slot data.
+ */
+function readSaveSlot(slotName){
+    var kobold = loadKoboldFromSlot(slotName);
+    var sceneName = loadSceneNameFromSlot(slotName);
+    var comment = loadCommentFromSlot(slotName);
+    
+    if(kobold === null || scene === null || sceneName === null || comment === null){
+        return null;
+    }
+    
+    var data = new Object();
+    data.name = kobold.name;
+    data.gender = kobold.gender;
+    data.sceneName = sceneName;
+    data.comment = comment;
+    
+    return data;
+}
+
+// POPULATE SAVE SLOTS
+
+/**
+ * Will populate the passed saveslots by reading data from permanent storage.
+ * @param slots The slots to populate.
+ */
+function populateSaveSlots(slots){
+    slots.each(populateSaveSlot);
+}
+
+/**
+ * Populates the saveslot passed internally by reading data from permanent 
+ * storage.
+ */
+function populateSaveSlot(){
+    // Strip each save slot of its contents.
+    stripSaveSlot(this);
+    // Grab the final letter of the id. That's our slot number.
+    var slotNumber = $(this).attr('id').slice(-1);
+    // The slot name is the slot number with "slot" in front of it.
+    var slotName = "slot" + slotNumber;
+    // Read the slot's contents.
+    var data = readSaveSlot(slotName);
+    // If the save slot had contents, populate the element with them.
+    if(data !== null)
+        populateSaveSlotWithData(this, data);
+    // Else, set the element to empty.
+    else{
+        makeSaveSlotInactive(this);
+    }
     
 }
 
-// READ BASIC INFORMATION ABOUT SAVES FROM SLOTS
+/**
+ * Populates the passed save slot with elements from the passed data object.
+ * @param slot The save slot to populate.
+ * @param data The data object received from the readSaveSlot function.
+ */
+function populateSaveSlotWithData(slot, data){
+    $(slot).addClass("koboldadventuresaveslotfilled");
+    $(slot).find(".koboldadventuresaveslotname").html(data.name);
+    $(slot).find(".koboldadventuresaveslotgender").html(data.gender);
+    $(slot).find(".koboldadventuresaveslotscene").html(data.sceneName);
+    $(slot).find(".koboldadventuresaveslotcomment").html(data.comment);
+}
 
-function readSaveSlots(){
-    
+/**
+ * Makes the passed save slot inactive.
+ * @param slot The save slot to inactivate.
+ */
+function makeSaveSlotInactive(slot){
+    $(slot).addClass("koboldadventuresaveslotempty");
+    $(slot).find(".koboldadventuresaveslotcorner").addClass("hidden");
+}
+
+/**
+ * Strips a saveslot of all content, reducing it to its base.
+ * @param slot The save slot to strip.
+ */
+function stripSaveSlot(slot){
+    // Remove filled and empty classes from the slot itself.
+    $(slot).removeClass("koboldadventuresaveslotfilled");
+    $(slot).removeClass("koboldadventuresaveslotempty");
+    // Remove hidden class from the corner adornments.
+    $(slot).find(".koboldadventuresaveslotcorner").removeClass("hidden");
+    // Remove any stored names, genders, scenes and comments.
+    $(slot).find(".koboldadventuresaveslotname").html("");
+    $(slot).find(".koboldadventuresaveslotgender").html("");
+    $(slot).find(".koboldadventuresaveslotscene").html("");
+    $(slot).find(".koboldadventuresaveslotcomment").html("");
 }

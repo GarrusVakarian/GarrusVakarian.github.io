@@ -91,6 +91,10 @@ button:focus{
     margin-right: 40px !important;
 }
 
+.hidden{
+    display: none;
+}
+
 .todo{
     color: red;
     background-color: yellow;
@@ -268,11 +272,48 @@ button:focus{
 }
 
 .koboldadventuresaveslot{
-    padding-left: 20px;
     width: 800px;
-    height: 50px;
+    height: 200px;
     border-radius: 15px;
-    font-weight: bold;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.koboldadventurehorizontalcornertoptrigger{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 202px;
+    height: 45px;
+}
+
+.koboldadventureverticalcornertoptrigger{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 45px;
+    height: 200px;
+}
+
+.koboldadventuresaveslotcorner{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 190px;
+}
+
+.koboldadventuresaveslotcornerhover{
+    display: none;
+}
+
+.koboldadventuresaveslotcornerclick{
+    display: none;
+}
+
+.koboldadventuresaveslotfield{
+    position: absolute;
+    font-size: 24px;
+    color: white;               /* Text */
 }
 
 .koboldadventuresaveslotempty{
@@ -280,16 +321,90 @@ button:focus{
 }
 
 .koboldadventuresaveslotfilled{
+    background-color: #191919;  /* Background */
+}
+
+.koboldadventuresaveslotfilled:hover{
     background-color: #005AA1;  /* Detail */
 }
 
+.koboldadventuresaveslotdivider{
+    position: absolute;
+    border: 0px;
+    top: 65px;
+    height: 2px;
+    width: 80px;
+    background-color: white;    /* Text */
+}
+
 .koboldadventuresaveslotnumber{
-    width: 50px;
-    text-align: center;
-    float: left;
-    font-size: 24px;
-    color: white;               /* Text */
-    line-height: 50px;
+    left: 10px;
+    top: 5px;
+    font-weight: bold;
+}
+
+.koboldadventuresaveslotnameheader{
+    left: 100px;
+    top: 40px;
+}
+
+.koboldadventuresaveslotnamedivider{
+    left: 100px;
+}
+
+.koboldadventuresaveslotname{
+    left: 100px;
+    top: 80px;
+}
+
+.koboldadventuresaveslotgenderheader{
+    left: 250px;
+    top: 40px;
+}
+
+.koboldadventuresaveslotgenderdivider{
+    left: 250px;
+}
+
+.koboldadventuresaveslotgender{
+    left: 250px;
+    top: 80px;
+}
+
+.koboldadventuresaveslotsceneheader{
+    left: 400px;
+    top: 40px;
+}
+
+.koboldadventuresaveslotscenedivider{
+    left: 400px;
+}
+
+.koboldadventuresaveslotscene{
+    left: 400px;
+    top: 80px;
+}
+
+.koboldadventuresaveslotcommentheader{
+    left: 20px;
+    top: 135px;
+}
+
+.koboldadventuresaveslotcommentdivider{
+    left: 135px;
+    top: 115px;
+    width: 2px;
+    height: 60px;
+}
+
+.koboldadventuresaveslotcomment{
+    left: 150px;
+    top: 123px;
+    width: 580px;
+    height: 60px;
+    font-size: 20px;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .koboldadventurecontent{

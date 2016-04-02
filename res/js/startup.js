@@ -8,12 +8,20 @@
 var kobold = new Object();
 
 kobold.name = "";
+kobold.gender = "";
+
+function makeMyKoboldDoStuff(){
+    
+}
 
 var scene = new Object();
+
+function makeMySceneDoStuff(){
+    
+}
 
 var sceneParams = new Object();
 
 var currentScene = "";
 
 var sceneFolder = "scenes/";
-
