@@ -13,6 +13,7 @@ html{
 body{
     font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
     margin: 0;
+    min-height: 800px;
     min-width: 1200px;
     background-color: #191919;  /* Background */
 }
@@ -102,10 +103,15 @@ button:focus{
     margin: auto;
     left: 0px;
     right: 0px;
-    top: 50%;
-    margin-top: -400px;
     background-color: #005AA1;  /* Detail */
     color: white;               /* Text */
+}
+
+@media screen and ( min-height: 800px ){
+    .koboldadventure{
+        top: 50%;
+        margin-top: -400px;
+    }
 }
 
 .koboldadventureleftbar{
@@ -259,6 +265,31 @@ button:focus{
 .koboldadventuresaving{
     left: 300px;
     bottom: 0px;
+}
+
+.koboldadventuresaveslot{
+    padding-left: 20px;
+    width: 800px;
+    height: 50px;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.koboldadventuresaveslotempty{
+    background-color: #191919;  /* Background */
+}
+
+.koboldadventuresaveslotfilled{
+    background-color: #005AA1;  /* Detail */
+}
+
+.koboldadventuresaveslotnumber{
+    width: 50px;
+    text-align: center;
+    float: left;
+    font-size: 24px;
+    color: white;               /* Text */
+    line-height: 50px;
 }
 
 .koboldadventurecontent{

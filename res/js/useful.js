@@ -25,9 +25,13 @@ function loadScene(scenePath) {
             .fail(failedLoadingResource);
 }
 
+
 /** SAVING **/
 
 
+function autoSave(){
+    
+}
 
 
 /** ANIMATION **/

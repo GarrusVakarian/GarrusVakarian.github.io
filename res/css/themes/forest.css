@@ -66,3 +66,15 @@ a:link, a:visited{
 .koboldadventureforest .koboldadventuresmallseparator{
     background-color: #008B00;  /* Detail */
 }
+
+.koboldadventureforest .koboldadventuresaveslotempty{
+    background-color: #3B5323;  /* Background */
+}
+
+.koboldadventureforest .koboldadventuresaveslotfilled{
+    background-color: #008B00;  /* Detail */
+}
+
+.koboldadventureforest .koboldadventuresaveslotnumber{
+    color: white;               /* Text */
+}

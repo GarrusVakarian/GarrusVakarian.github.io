@@ -580,3 +580,77 @@ function buildScenePath(){
 function buildSceneFilePath(file){
     return buildScenePath() + file;
 }
+
+
+/** SAVING AND LOADING **/
+
+// CONSTANT DEFINITION
+
+var koboldAdventureSaveManagerKoboldLocation = "kobold";
+var koboldAdventureSaveManagerSceneLocation = "scene";
+var koboldAdventureSaveManagerSceneNameLocation = "scenename";
+var koboldAdventureSaveManagerCommentLocation = "comment";
+
+
+// SAVE TO A SLOT
+
+/**
+ * Saves the kobold object to the appropriate location.
+ * @param slotName The slot to which to save.
+ */
+function saveKoboldToSlot(slotName){
+    localStorage.setItem(slotName + koboldAdventureSaveManagerKoboldLocation, JSON.stringify(kobold));
+}
+
+/**
+ * Saves the scene object to the appropriate location.
+ * @param slotName The slot to which to save.
+ */
+function saveSceneToSlot(slotName){
+    localStorage.setItem(slotName + koboldAdventureSaveManagerSceneLocation, JSON.stringify(scene));
+}
+
+/**
+ * Saves the currentScene variable to the appropriate location.
+ * @param slotName The slot to which to save.
+ */
+function saveSceneNameToSlot(slotName){
+    localStorage.setItem(slotName + koboldAdventureSaveManagerSceneNameLocation, currentScene);
+}
+
+/**
+ * Saves the user's comment to the appropriate location.
+ * @param slotName The slot to which to save.
+ * @param comment The user's comment.
+ */
+function saveCommentToSlot(slotName, comment){
+    localStorage.setItem(slotName + koboldAdventureSaveManagerCommentLocation, comment);
+}
+
+/**
+ * Saves the current game state to a slot.
+ * @param slotNumber The number of the slot to save the game to.
+ * @param comment An optional user specified comment.
+ */
+function saveGameToSlot(slotNumber, comment){
+    if(typeof comment === 'undefined')
+        comment = "";
+    
+    var slotName = "slot" + slotNumber;
+    saveKoboldToSlot(slotName);
+    saveSceneToSlot(slotName);
+    saveSceneNameToSlot(slotName);
+    saveCommentToSlot(slotName, comment);
+}
+
+// LOAD FROM A SLOT
+
+function loadGameFromSlot(){
+    
+}
+
+// READ BASIC INFORMATION ABOUT SAVES FROM SLOTS
+
+function readSaveSlots(){
+    
+}

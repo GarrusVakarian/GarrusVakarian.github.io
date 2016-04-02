@@ -162,7 +162,7 @@
                         creator of Kobold Adventure is not liable for any psychological trauma you may sustain while playing.
                     </p>
                     
-                    <button class="koboldadventurebigbutton slowtransition" onclick="loadScene('genderselect');">
+                    <button class="koboldadventurebigbutton slowtransition" onclick="loadScene('introduction');">
                         Begin your adventure
                     </button>
                     
@@ -208,6 +208,17 @@
                         <h1 class="koboldadventuretitle">
                             Save
                         </h1>
+                        <div class="koboldadventuresaveslot koboldadventuresaveslotempty">
+                            <div class="koboldadventuresaveslotnumber">
+                                1.
+                            </div>
+                            <div class="koboldadventuresaveslotname">
+                                
+                            </div>
+                            <div class="koboldadventuresaveslotscene">
+                                
+                            </div>
+                        </div>
                         <div class="koboldadventurefinish"></div>
                     </div>
                 </div>
@@ -235,6 +246,12 @@
         <script src="res/js/useful.js"></script>
         <script src="res/js/tabs.js"></script>
         <script src="res/js/startup.js"></script>
+        
+        <script>
+            function load(){
+                alert("load");
+            }
+        </script>
 
     </body>
 </html>

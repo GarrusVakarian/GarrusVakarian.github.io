@@ -7,6 +7,8 @@
 
 var kobold = new Object();
 
+kobold.name = "";
+
 var scene = new Object();
 
 var sceneParams = new Object();
