@@ -517,6 +517,7 @@ function doneLoadingAfterload(data){
 function switchAndShowSceneContent(data){
     $(".koboldadventuremain").html(data);
     $("#koboldadventurescenetabstorage").html(data);
+    $(".koboldadventuremain .koboldadventurecontent").fadeOut(0);
     $(".koboldadventuremain .koboldadventurecontent").fadeIn(400);
     $.get(buildSceneFilePath("/js/afterload.js"))
             .done(doneLoadingAfterload)
