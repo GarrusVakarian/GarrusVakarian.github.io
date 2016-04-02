@@ -55,8 +55,17 @@
                     <p class="koboldadventuredisclaimertext koboldadventureinvisibledisclaimer">Made by TinkeringTurian</p>
                 </div>
             </div>
+            
+            <div class='koboldadventureicon koboldadventuresaving'>
+                <img src='res/img/saving.gif' alt='savingicon'>
+            </div>
+            
+            <div class='koboldadventureicon koboldadventureloading'>
+                <img src='res/img/loading.gif' alt='loadingicon'>
+            </div>
 
             <div class="koboldadventuremain">
+                
                 <div class="koboldadventurecontent">
                     
                     <div class="koboldadventuretitle">
@@ -153,7 +162,7 @@
                         creator of Kobold Adventure is not liable for any psychological trauma you may sustain while playing.
                     </p>
                     
-                    <button class="koboldadventurebigbutton slowtransition">
+                    <button class="koboldadventurebigbutton slowtransition" onclick="loadScene('genderselect');">
                         Begin your adventure
                     </button>
                     
@@ -210,6 +219,12 @@
                         </h1>
                         <div class="koboldadventurefinish"></div>
                     </div>
+                </div>
+                
+                <div id="koboldadventurescriptstorage">
+                    <script>
+                        
+                    </script>
                 </div>
 
             </div>

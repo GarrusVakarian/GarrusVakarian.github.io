@@ -239,6 +239,28 @@ button:focus{
     background-color: #005AA1;  /* Detail */
 }
 
+.koboldadventureicon{
+    height: 100px;
+    width: 100px;
+    z-index: 10;
+    display: none;
+    position: absolute;
+}
+
+.koboldadventureicon img{
+    width: 100%;
+}
+
+.koboldadventureloading{
+    right: 0px;
+    bottom: 0px;
+}
+
+.koboldadventuresaving{
+    left: 300px;
+    bottom: 0px;
+}
+
 .koboldadventurecontent{
     position: absolute;
     width: 800px;

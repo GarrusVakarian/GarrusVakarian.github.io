@@ -10,7 +10,7 @@
         <script src="../res/js/lib/jquery-2.2.0.min.js"></script>
     </head>
     
-    <body class="forest">
+    <body>
 
         <div class="koboldadventurehelppage">
 
@@ -69,11 +69,11 @@
 
                 <div class="koboldadventurehelppagehalf">
                     <ul class="koboldadventurehelppagesummation">
-                        <li><code><span class=codefunction>animateRemoveClassVeryFast</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
-                        <li><code><span class=codefunction>animateRemoveClassFast</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
-                        <li><code><span class=codefunction>animateRemoveClass</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
-                        <li><code><span class=codefunction>animateRemoveClassSlow</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
-                        <li><code><span class=codefunction>animateRemoveClassVerySlow</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClassVeryFast</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove</span>)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClassFast</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove</span>)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClass</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove</span>)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClassSlow</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove</span>)</code></li>
+                        <li><code><span class=codefunction>animateRemoveClassVerySlow</span>(<span class="codevar">elements</span>, <span class="codevar">toRemove</span>)</code></li>
                     </ul>
                 </div>
                 <div class="koboldadventurehelppagehalf">
@@ -179,6 +179,40 @@
                     on the same element. In other words: don't allow the users to toggle a class on and off like in the example above. 
                     Instead, only allow them to do either one or the other.
                 </p>
+                
+                <h2 class="koboldadventurehelppagesubsubtitle">
+                    Changing themes
+                </h2>
+                
+                <p class="koboldadventurehelppagetext">
+                    In order to change the entire color scheme of the game for the duration of your scene, you can make use of a theme.
+                    Themes are a collection of CSS rules that define four colors: the <span class="bold">main</span> color, the 
+                    <span class="bold">detail</span> color, the <span class="bold">background</span> color and the 
+                    <span class="bold">text</span> color. Making use of a theme can make your scene a lot more immersive,
+                    yet care should be taken to avoid <span class="italic">overdoing</span> it.
+                </p>
+                
+                <p class="koboldadventurehelppagetext">
+                    Applying a theme is rather easy. All you have to do is call the JavaScript function <code><span class=codefunction>changeTheme</span></code>.
+                    It takes only one parameter: the theme you wish to change to. Note that this function takes over a second to completely change
+                    the theme, and during that duration no animations will be available. This function is rather unsafe to use, because you can't
+                    guarantee the user won't change tabs, press buttons or do other stuff during the transition, which might lead to certain 
+                    animations breaking for the remainder of the session.
+                </p>
+                
+                <p class="koboldadventurehelppagetext">
+                    So why would you ever use <code><span class=codefunction>changeTheme</span></code>? Because it's simple. There is, however, a more complex
+                    alternative called <code><span class=codefunction>changeThemeCallback</span></code>. This function takes two parameters: the theme you wish
+                    to change to, and a callback function that will be called once the theme change is complete. While inherently having the same
+                    issues as <code><span class=codefunction>changeTheme</span></code>, you can manually disable UI elements prior to calling it, and then 
+                    re-enable them in the callback function. In a later version of Kobold Adventure, a simpler way of doing this will be provided.
+                </p>
+                
+                <h3 class="koboldadventurehelppagesubsubsubtitle">
+                    Writing your own theme
+                </h3>
+                
+                <code class="todo">TODO: FINISH THIS SECTION</code>
                 
             </div>
 

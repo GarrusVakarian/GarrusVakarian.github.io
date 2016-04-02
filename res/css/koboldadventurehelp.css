@@ -61,6 +61,10 @@ button:focus{
     font-weight: bold;
 }
 
+.italic{
+    font-style: italic;
+}
+
 .whitebg{
     background-color: white;
 }

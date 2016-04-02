@@ -442,3 +442,140 @@ function setClass(elements, toSet){
 function resetClass(elements){
     $(elements).attr("class", "");
 }
+
+
+/** PROGRESS ICONS **/
+
+
+// SHOW SAVE
+
+/**
+ * This function shows the save icon, stopping any animation it is currently
+ * undergoing prior to revealing it.
+ */
+function showSaveIcon(){
+    $(".koboldadventuresaving").stop(true);
+    $(".koboldadventuresaving").show(400);
+}
+
+// HIDE SAVE
+
+/**
+ * This function hides the save icon, stopping any animation it is currently
+ * undergoing prior to hiding it.
+ */
+function hideSaveIcon(){
+    $(".koboldadventuresaving").stop(true);
+    $(".koboldadventuresaving").hide(400);
+}
+
+// SHOW LOAD
+
+/**
+ * This function shows the load icon, stopping any animation it is currently
+ * undergoing prior to revealing it.
+ */
+function showLoadIcon(){
+    $(".koboldadventureloading").stop(true);
+    $(".koboldadventureloading").show(400);
+}
+
+// HIDE LOAD
+
+/**
+ * This function hides the load icon, stopping any animation it is currently
+ * undergoing prior to hiding it.
+ */
+function hideLoadIcon(){
+    $(".koboldadventureloading").stop(true);
+    $(".koboldadventureloading").hide(400);
+}
+
+
+/** SCENE LOADING **/
+
+
+// SUCCESSFULLY
+
+/**
+ * Function to be used as callback for successful afterload loading.
+ * Appends the loaded javascript to the script storage. It will immediately be
+ * executed.
+ * Will hide the loading icon after execution.
+ * @param data The fetched Javascript.
+ */
+function doneLoadingAfterload(data){
+    $("#koboldadventurescriptstorage script").append(data);
+    hideLoadIcon();
+}
+
+/**
+ * Discards the old scene, replacing it with the new one. Then makes the new one
+ * visible. Afterwords, fetches the scene's afterload.js.
+ * @param data The new scene.
+ */
+function switchAndShowSceneContent(data){
+    $(".koboldadventuremain").html(data);
+    $("#koboldadventurescenetabstorage").html(data);
+    $(".koboldadventuremain .koboldadventurecontent").fadeIn(400);
+    $.get(buildSceneFilePath("/js/afterload.js"))
+            .done(doneLoadingAfterload)
+            .fail(failedLoadingResource);
+}
+
+/**
+ * Function to be used as callback for successful scene loading. 
+ * Will first fade out the current content, then replace it with the new content,
+ * then show it once more.
+ * @param data The fetched scene.
+ */
+function doneLoadingScene(data){
+    $(".koboldadventuremain .koboldadventurecontent").fadeOut(400, function(){switchAndShowSceneContent(data);});  // Needs to be called in an anonymous callback to avoid trouble
+}
+
+/**
+ * Function to be used as callback for successful init script loading.
+ * Will place the init script inside of script tags in the script storage. It
+ * will immediately be executed.
+ * Will then continue by loading the scene.
+ * @param data The loaded JavaScript.
+ */
+function doneLoadingInit(data){
+    $("#koboldadventurescriptstorage script").html(data);
+    $.get(buildSceneFilePath("index.html"))
+            .done(doneLoadingScene)
+            .fail(failedLoadingResource);
+}
+
+// UNSUCCESSFULLY
+
+/**
+ * Function to be used as callback for unsuccessful scene loading.
+ * Will notify the user that something broke, then hide the loading icon.
+ */
+function failedLoadingResource(){
+    alert("Loading failed! This probably broke everything. Please reload the page and try again. If the problem persists," +
+            " please do notify TinkeringTurian. Keep in mind that it may just be your internet connection acting up!");
+    hideLoadIcon();
+}
+
+// SCENE PATH BUILDING
+
+/**
+ * Builds a scene path using the current scene's name and the global sceneFolder
+ * variable.
+ * @returns A path to the root directory of the current scene.
+ */
+function buildScenePath(){
+    return sceneFolder + currentScene + '/';
+}
+
+/**
+ * Builds a path to a specified file within the current scene.
+ * @param file The path to the file, relative to the root directory of the scene
+ * you wish to have a path to.
+ * @returns A path to the requested file within the current scene.
+ */
+function buildSceneFilePath(file){
+    return buildScenePath() + file;
+}

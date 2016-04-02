@@ -6,6 +6,30 @@
  */
 
 
+/** SCENE LOADING **/
+
+
+/**
+ * Loads the scene, specified by the scenePath, to the main game window.
+ * Discards the current scene in the process. Clears the current scene object.
+ * If you wish to pass parameters to the new scene, use the sceneParams object.
+ * Sets the global variable currentScenePath.
+ * @param scenePath The scene folder name.
+ */
+function loadScene(scenePath) {
+    showLoadIcon();
+    scene = new Object();
+    currentScene = scenePath;
+    $.get(buildSceneFilePath("js/init.js"))
+            .done(doneLoadingInit)
+            .fail(failedLoadingResource);
+}
+
+/** SAVING **/
+
+
+
+
 /** ANIMATION **/
 
 // VERY FAST
@@ -16,7 +40,7 @@
  * @param elements The elements of which to remove the CSS class.
  * @param toRemove The CSS class to remove.
  */
-function animateRemoveClassVeryFast(elements, toRemove){
+function animateRemoveClassVeryFast(elements, toRemove) {
     addFastTransition(elements);
     removeClass(elements, toRemove);
     removeFastTransitionLater(elements);
@@ -28,7 +52,7 @@ function animateRemoveClassVeryFast(elements, toRemove){
  * @param elements The elements to which to add the CSS class.
  * @param toAdd The CSS class to add.
  */
-function animateAddClassVeryFast(elements, toAdd){
+function animateAddClassVeryFast(elements, toAdd) {
     addVeryFastTransition(elements);
     addClass(elements, toAdd);
     removeVeryFastTransitionLater(elements);
@@ -42,7 +66,7 @@ function animateAddClassVeryFast(elements, toAdd){
  * @param elements The elements of which to remove the CSS class.
  * @param toRemove The CSS class to remove.
  */
-function animateRemoveClassFast(elements, toRemove){
+function animateRemoveClassFast(elements, toRemove) {
     addFastTransition(elements);
     removeClass(elements, toRemove);
     removeFastTransitionLater(elements);
@@ -54,7 +78,7 @@ function animateRemoveClassFast(elements, toRemove){
  * @param elements The elements to which to add the CSS class.
  * @param toAdd The CSS class to add.
  */
-function animateAddClassFast(elements, toAdd){
+function animateAddClassFast(elements, toAdd) {
     addFastTransition(elements);
     addClass(elements, toAdd);
     removeFastTransitionLater(elements);
@@ -68,7 +92,7 @@ function animateAddClassFast(elements, toAdd){
  * @param elements The elements of which to remove the CSS class.
  * @param toRemove The CSS class to remove.
  */
-function animateRemoveClass(elements, toRemove){
+function animateRemoveClass(elements, toRemove) {
     addTransition(elements);
     removeClass(elements, toRemove);
     removeTransitionLater(elements);
@@ -80,7 +104,7 @@ function animateRemoveClass(elements, toRemove){
  * @param elements The elements to which to add the CSS class.
  * @param toAdd The CSS class to add.
  */
-function animateAddClass(elements, toAdd){
+function animateAddClass(elements, toAdd) {
     addTransition(elements);
     addClass(elements, toAdd);
     removeTransitionLater(elements);
@@ -94,7 +118,7 @@ function animateAddClass(elements, toAdd){
  * @param elements The elements of which to remove the CSS class.
  * @param toRemove The CSS class to remove.
  */
-function animateRemoveClassSlow(elements, toRemove){
+function animateRemoveClassSlow(elements, toRemove) {
     addSlowTransition(elements);
     removeClass(elements, toRemove);
     removeSlowTransitionLater(elements);
@@ -106,7 +130,7 @@ function animateRemoveClassSlow(elements, toRemove){
  * @param elements The elements to which to add the CSS class.
  * @param toAdd The CSS class to add.
  */
-function animateAddClassSlow(elements, toAdd){
+function animateAddClassSlow(elements, toAdd) {
     addSlowTransition(elements);
     addClass(elements, toAdd);
     removeSlowTransitionLater(elements);
@@ -120,7 +144,7 @@ function animateAddClassSlow(elements, toAdd){
  * @param elements The elements of which to remove the CSS class.
  * @param toRemove The CSS class to remove.
  */
-function animateRemoveClassVerySlow(elements, toRemove){
+function animateRemoveClassVerySlow(elements, toRemove) {
     addVerySlowTransition(elements);
     removeClass(elements, toRemove);
     removeVerySlowTransitionLater(elements);
@@ -132,7 +156,7 @@ function animateRemoveClassVerySlow(elements, toRemove){
  * @param elements The elements to which to add the CSS class.
  * @param toAdd The CSS class to add.
  */
-function animateAddClassVerySlow(elements, toAdd){
+function animateAddClassVerySlow(elements, toAdd) {
     addVerySlowTransition(elements);
     addClass(elements, toAdd);
     removeVerySlowTransitionLater(elements);
@@ -145,7 +169,7 @@ function animateAddClassVerySlow(elements, toAdd){
  * Changes the theme to the passed CSS class. Animates the changes very slowly.
  * @param theme The CSS class to change to.
  */
-function changeTheme(theme){
+function changeTheme(theme) {
     suspendAnimationVeryLong();
     addVerySlowTransition($("body, body *"));
     setClass($("body"), theme);
@@ -157,7 +181,7 @@ function changeTheme(theme){
  * @param theme The CSS class to change to.
  * @param callback The function to call after the theme has been changed.
  */
-function changeTheme(theme, callback){
+function changeThemeCallback(theme, callback) {
     suspendAnimationVeryLongCallback(callback);
     addVerySlowTransition($("body, body *"));
     setClass($("body"), theme);
@@ -169,31 +193,31 @@ function changeTheme(theme, callback){
  * recommended you do not use this function, and instead use the version which 
  * accepts a callback.
  */
-function removeTheme(){
+function removeTheme() {
     // If we have no theme, just exit
-    if(typeof $("body").attr("class") === 'undefined' || $("body").attr("class") === ""){
+    if (typeof $("body").attr("class") === 'undefined' || $("body").attr("class") === "") {
         return;
     }
-    
+
     // Else we animate the removal of the theme
     suspendAnimationVeryLong();
     addVerySlowTransition($("body, body *"));
     resetClass($("body"));
     removeVerySlowTransitionLater($("body, body *"));
-    
+
 }
 
 /**
  * Removes the current theme. Must be called prior to changing scenes.
  * @param callback The function to call after removing the theme.
  */
-function removeThemeCallback(callback){
+function removeThemeCallback(callback) {
     // If we have no theme, just call the callback function and exit
-    if(typeof $("body").attr("class") === 'undefined' || $("body").attr("class") === ""){
+    if (typeof $("body").attr("class") === 'undefined' || $("body").attr("class") === "") {
         callback();
         return;
     }
-    
+
     // Else we animate the removal of the theme
     suspendAnimationVeryLongCallback(callback);
     addVerySlowTransition($("body, body *"));
