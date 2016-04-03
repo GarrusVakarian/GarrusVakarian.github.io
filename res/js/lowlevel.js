@@ -892,3 +892,26 @@ function changeTabInstantNoStore(tabName){
     saveScrollPosition(oldTab);
     fromStorage(newTab);
 }
+
+
+/** GENERAL **/
+
+
+/**
+ * Returns true if the passed variable exists. Returns false otherwise.
+ * @param variable The variable to check.
+ * @returns True if the passed variable exists. Returns false otherwise.
+ */
+function exists(variable){
+    return typeof variable !== "undefined";
+}
+
+/**
+ * Returns true if the passed variable exists and is not null. Returns false 
+ * otherwise.
+ * @param variable The variable to check.
+ * @returns True if the passed variable exists. Returns false otherwise.
+ */
+function notNull(variable){
+    return exists(variable) && variable !== null;
+}

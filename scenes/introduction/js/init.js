@@ -12,6 +12,11 @@
  *  Besides the four required functions, init.js should include all definitions
  *  for functions that you have need of. In order not to clutter the namespace,
  *  it is requested that you only declare functions within the scene object.
+ *  
+ *  As its name implies, init.js should be used for initialization. Any code in 
+ *  this file is executed once prior to loading your scene. If you require any
+ *  custom stylesheets, you should include them here via the loadStyleSheet
+ *  function.
  */
 
 
@@ -30,9 +35,9 @@
  * create a separate function for this, as you will also need to do this in the 
  * load() and the ontabin() functions.
  */
-function init(){
+function init() {
     scene.registerListeners();
-    //scene.passedParams = sceneParams; // If you wish to store scene parameters, uncomment this line.
+    // scene.passedParams = sceneParams; // If you wish to store scene parameters, uncomment this line.
 }
 
 /**
@@ -46,8 +51,12 @@ function init(){
  * create a separate function for this, as you will also need to do this in the 
  * init() and the ontabin() functions.
  */
-function load(){
+function load() {
     scene.registerListeners();
+    
+    // If our gender selection choice is not empty, we have passed gender selection
+    if(notEmpty(scene.introductiongenderchoice))
+        loadSimpleChoice("introductiongenderchoice", scene.genderSelectionFetchNext); // And thus we may load the choice.
 }
 
 /**
@@ -57,7 +66,7 @@ function load(){
  * is ready to be tabbed out. Pause any realtime JavaScript application you may
  * be running, and ensure that everything is ready to be stored.
  */
-function ontabout(){
+function ontabout() {
 
 }
 
@@ -68,13 +77,49 @@ function ontabout(){
  * listeners. It is best to create a separate function for this, as you will
  * also need to do this in the init() and the load() functions.
  */
-function ontabin(){
+function ontabin() {
     scene.registerListeners();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // END MANDATORY FUNCTIONS                                                    //
 ////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * Fetches the next scene once a gender has been selected. Doesn't need any
+ * parameters. Takes the value it needs from the scene object directly. The
+ * value was put there by the simpleChoice framework.
+ */
+scene.genderSelectionFetchNext = function(){
+    // Fetch value
+    var value = scene.introductiongenderchoice;
+    
+    if(value === "M")
+        getFromSceneStorageAnimated("introductionmale");
+    else
+        getFromSceneStorageAnimated("introductionfemale");
+};
+
+/**
+ * Processes a selected gender based on its value. Doesn't need any parameters.
+ * Takes the value it needs from the scene object directly. The value was put
+ * there by the simpleChoice framework.
+ */
+scene.genderSelectionProcessChoice = function() {
+    // Fetch value
+    var value = scene.introductiongenderchoice;
+    
+    // Update kobold object to reflect choice
+    if(value === "M")
+        kobold.gender = "Male";
+    else
+        kobold.gender = "Female";
+    
+    // Save the game
+    autoSave("Gender picked.");
+};
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // HIGHLY RECOMMENDED FUNCTIONS                                               //
@@ -83,9 +128,22 @@ function ontabin(){
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Registers all requires object listeners for this scene to function.
+ * Registers all required object listeners for this scene to function.
  */
-scene.registerListeners = function(){
-
+scene.registerListeners = function () {
+    registerSimpleChoice("introductiongenderchoice", scene.genderSelectionProcessChoice, scene.genderSelectionFetchNext);
 };
 
+/**
+ * Cleans up any resource you used that wasn't contained in the scene object.
+ * Prime candidates that come to mind are custom stylesheets, activated themes
+ * and whatever function or variable you may have declared outside of the 
+ * scene object. Remember to call this function prior to changing scenes.
+ */
+scene.cleanup = function () {
+    unloadStyleSheet(scene.cssPath); // Uncomment this if you load a custom CSS file.
+};
+
+// If you wish to load a custom CSS file, uncomment these lines, as well as the one in scene.cleanup.
+scene.cssPath = "scenes/introduction/css/custom.css";
+loadStyleSheet(scene.cssPath);  

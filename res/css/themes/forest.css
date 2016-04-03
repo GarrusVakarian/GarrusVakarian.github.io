@@ -4,10 +4,11 @@
 
 /**
 * COLOR SCHEME
-* Background:   #3B5323
-* Detail:       #008B00
-* Main:         #5E2612
-* Text:         white
+* Background:   #3B5323     rgb(59, 83, 35)
+* Detail:       #008B00     rgb(0, 139, 0)
+* Main:         #5E2612     rgb(94, 38, 18)
+* Text:         white       rgb(255, 255, 255)
+* Rare:         #FCD116     rgb(252, 209, 22)
 **/
 
 a:link, a:visited{
@@ -55,17 +56,30 @@ a:link, a:visited{
 }
 
 .koboldadventureforest .koboldadventurebutton{
-    background-color: #3B5323;  /* Background */
-    border-color: #3B5323;      /* Background */
+    background-color: #008B00;  /* Detail */
+    border-color: #5E2612;      /* Main */
     color: white;               /* Text */
 }
 
 .koboldadventureforest .koboldadventurebutton:hover{
-    background-color: #008B00;  /* Detail */   
+    border-color: #3B5323;      /* Background */   
 }
 
 .koboldadventureforest .koboldadventurebutton:active{
-    background-color: #008B00;  /* Detail */   
+    background-color: #3B5323;  /* Background */   
+}
+
+.koboldadventureforest .koboldadventurebutton:disabled{
+    background-color: #3B5323;  /* Background */   
+    border-color: #5E2612;      /* Main */
+}
+
+.koboldadventureforest .koboldadventurebigbutton{
+    background-color: #3B5323;  /* Background */
+}
+
+.koboldadventureforest .koboldadventureselectedoption{
+    border-color: #FCD116 !important;      /* Rare */
 }
 
 .koboldadventureforest .koboldadventuredualchoiceseparator{

@@ -272,3 +272,179 @@ function changeTab(tabName){
     var tab = $("#" + tabid);
     tab.click();
 }
+
+
+/** STYLESHEET MANAGEMENT **/
+
+
+/**
+ * Loads a CSS stylesheet. Note that the location passed to this function is 
+ * relative to the root of the website. Be sure to unload it once you're done.
+ * Avoid loading the same style sheet multiple times.
+ * @param href The location of the stylesheet.
+ */
+function loadStyleSheet(href){
+    $("head").append('<link rel="stylesheet" type="text/css" href="' + href + '">');
+}
+
+
+/**
+ * Unloads all copies of a CSS stylesheet. Note that the location passed to this 
+ * function is relative to the root of the website.
+ * @param href The location of the stylesheet.
+ */
+function unloadStyleSheet(href){
+    $('link[href="' + href + '"]').remove();
+}
+
+
+/** SIMPLE CHOICE FRAMEWORK **/
+
+
+/**
+ * Loads a simple choice group. Will automatically update the UI, and then call
+ * fetchNext to allow the user to fetch the next segment.
+ * @param choiceGroup The mutual class of the choicegroup.
+ * @param fetchNext The scene-defined function to call to fetch the next segment
+ * of the scene, depending on the choice that was made.
+ */
+function loadSimpleChoice(choiceGroup, fetchNext){
+    var value = scene[choiceGroup]; // Fetch the value
+    var clicked = getChoiceByClassAndValue(choiceGroup, value); // Get the clicked element
+    $(".koboldadventuremain ." + choiceGroup).prop('disabled', true); // Disable the buttons
+    selectedOptionStyling(clicked); // Style the clicked element
+    fetchNext(); // Fetch the next segment
+}
+
+/**
+ * Executes a simple choice selection. Will automatically update the UI to indicate
+ * what was chosen. Calls fetchNext to allow the user to fetch the next segment.
+ * Calls processChoice to allow the user to update the scene and kobold elements.
+ * 
+ * Sets scene[choiceGroup] to the selected value. This value can later be 
+ * accessed via scene.choiceGroup. Note: do not change this value after it is 
+ * set. If you must alter it, use a different field for that.
+ * 
+ * @param clicked The clicked object.
+ * @param choiceGroup The mutual class of the choicegroup.
+ * @param processChoice The scene-defined function to call to update the scene
+ * and kobold objects, and potentially to autosave.
+ * @param fetchNext The scene-defined function to call to fetch the next segment
+ * of the scene, depending on the choice that was made.
+ */
+function simpleChoice(clicked, choiceGroup, processChoice, fetchNext){
+    $(".koboldadventuremain ." + choiceGroup).prop('disabled', true); // Disable the buttons
+    selectedOptionStyling(clicked); // Style the selected option
+    scene[choiceGroup] = clicked.attr("value"); // Store value of the clicked element in scene object
+    processChoice(); // Process the choice
+    fetchNext(); // Fetch the next segment
+}
+
+/**
+ * Registers a simple choice group. Will automatically update the UI to indicate
+ * what was chosen. Calls fetchNext to allow the user to fetch the next segment.
+ * Calls processChoice to allow the user to update the scene and kobold elements.
+ * 
+ * Sets scene[choiceGroup] to the selected value. This value can later be 
+ * accessed via scene.choiceGroup.Note: do not change this value after it is 
+ * set. If you must alter it, use a different field for that.
+ * 
+ * Should be called from registerListeners.
+ * @param choiceGroup The mutual class of the choicegroup.
+ * @param processChoice The scene-defined function to call to update the scene
+ * and kobold objects, and potentially to autosave.
+ * @param fetchNext The scene-defined function to call to fetch the next segment
+ * of the scene, depending on the choice that was made.
+ */
+function registerSimpleChoice(choiceGroup, processChoice, fetchNext){
+    $(".koboldadventuremain ." + choiceGroup).click(function(){simpleChoice($(this), choiceGroup, processChoice, fetchNext);});
+}
+
+/**
+ * Fetches the choice of the specified choicegroup (indicated by a CSS class), 
+ * with the specified value. Usually used to fetch fhe choice which was selected
+ * during choice processing.
+ * @param choicegroup The class shared by all choices in this group.
+ * @param value The value of the choice you are looking for.
+ * @returns The requested element or an empty array.
+ */
+function getChoiceByClassAndValue(choicegroup, value){
+    return $('.koboldadventuremain .' + choicegroup + '[value="' + value + '"]');
+}
+
+/**
+ * Styles a selected option by adding the koboldadventureselectedoption CSS class.
+ * @param element The option that was selected.
+ */
+function selectedOptionStyling(element){
+    $(element).addClass("koboldadventureselectedoption");
+}
+
+
+/** FETCH FROM STORAGE **/
+
+
+/**
+ * Fetch the contents from a specified scene storage container and appends them
+ * to the current scene. A scene storage container can only be gotten once
+ * using this method. If you wish to fetch a scene storage container multiple
+ * times, use the Copy version of this function.
+ * @param containerClass The class of the container to fetch.
+ */
+function getFromSceneStorage(containerClass){
+    $(".koboldadventuremain .koboldadventurestorage").before($(".koboldadventuremain .koboldadventurestorage ." + containerClass));
+}
+
+/**
+ * Fetch the contents from a specified scene storage container and appends them
+ * to the current scene, animating changes. A scene storage container can only 
+ * be gotten once using this method. If you wish to fetch a scene storage 
+ * container multiple times, use the Copy version of this function.
+ * @param containerClass The class of the container to fetch.
+ */
+function getFromSceneStorageAnimated(containerClass){
+    $(".koboldadventuremain .koboldadventurestorage").before($(".koboldadventuremain .koboldadventurestorage ." + containerClass)); 
+    $(".koboldadventuremain ." + containerClass).fadeOut(0);
+    $(".koboldadventuremain ." + containerClass).fadeIn(400);
+}
+
+/**
+ * Fetch the contents from a specified scene storage container and appends them
+ * to the current scene. Copies instead of cutting and pasting, preserving the
+ * original scene object in storage. This allows it to be fetched repeatedly,
+ * but consumes more memory. It also makes selecting the fetched scene fragment
+ * a lot harder.
+ * @param containerClass The class of the container to fetch.
+ */
+function getFromSceneStorageCopy(containerClass){
+    $(".koboldadventuremain .koboldadventurestorage").before($(".koboldadventuremain .koboldadventurestorage ." + containerClass).clone());
+}
+
+/**
+ * Fetch the contents from a specified scene storage container and appends them
+ * to the current scene, animating changes. Copies instead of cutting and 
+ * pasting, preserving the original scene object in storage. This allows it to 
+ * be fetched repeatedly, but consumes more memory. It also makes selecting the
+ * fetched scene fragment a lot harder.
+ * @param containerClass The class of the container to fetch.
+ */
+function getFromSceneStorageAnimatedCopy(containerClass){
+    $(".koboldadventuremain .koboldadventurestorage").before($(".koboldadventuremain .koboldadventurestorage ." + containerClass).clone()); 
+    $(".koboldadventuremain ." + containerClass).not($(".koboldadventuremain .koboldadventurestorage ." + containerClass)).fadeOut(400);
+    $(".koboldadventuremain ." + containerClass).not($(".koboldadventuremain .koboldadventurestorage ." + containerClass)).fadeIn(400);
+}
+
+
+/** GENERAL **/
+
+
+/**
+ * Returns true if the passed variable is not null and is not empty. Returns 
+ * false otherwise. Can be used to check whether or not a scene has passed a
+ * certain point by testing the selected option value for that point.
+ * @param variable The variable to check.
+ * @returns True if the passed variable exists. Returns false otherwise.
+ */
+function notEmpty(variable){
+    return notNull(variable) && variable !== "";
+}

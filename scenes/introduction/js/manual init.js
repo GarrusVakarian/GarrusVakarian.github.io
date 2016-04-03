@@ -35,7 +35,7 @@
  * create a separate function for this, as you will also need to do this in the 
  * load() and the ontabin() functions.
  */
-function init(){
+function init() {
     scene.registerListeners();
     // scene.passedParams = sceneParams; // If you wish to store scene parameters, uncomment this line.
 }
@@ -51,7 +51,7 @@ function init(){
  * create a separate function for this, as you will also need to do this in the 
  * init() and the ontabin() functions.
  */
-function load(){
+function load() {
     scene.registerListeners();
 }
 
@@ -62,7 +62,7 @@ function load(){
  * is ready to be tabbed out. Pause any realtime JavaScript application you may
  * be running, and ensure that everything is ready to be stored.
  */
-function ontabout(){
+function ontabout() {
 
 }
 
@@ -73,13 +73,69 @@ function ontabout(){
  * listeners. It is best to create a separate function for this, as you will
  * also need to do this in the init() and the load() functions.
  */
-function ontabin(){
+function ontabin() {
     scene.registerListeners();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // END MANDATORY FUNCTIONS                                                    //
 ////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * Updates the kobold object based on the selected gender. Doesn't need any
+ * parameters. Takes the value it needs from the scene object directly.
+ */
+scene.genderSelectionUpdateKobold = function(){
+    if(scene.chosenGender === "M")
+        kobold.gender = "Male";
+    else
+        kobold.gender = "Female";
+};
+
+/**
+ * Updates the scene's UI based on what gender what was picked.
+ */
+scene.genderSelectionUIupdate = function(){
+    var selectedObject;
+    
+    if(scene.chosenGender === "M")
+        selectedObject = $("#introductionmalebutton");
+    else
+        selectedObject = $("#introductionfemalebutton");
+    
+    scene.disableGenderSelection(); // Disable further gender selection
+    selectedOptionStyling($(this)); // Style the selected option accordingly
+};
+
+/**
+ * Processes a selected gender based on its value. Doesn't need any parameters.
+ * Takes the value it needs from the scene object directly.
+ */
+scene.genderSelectionProcessing = function() {
+    var value = scene.chosenGender;
+    
+};
+
+/**
+ * Disables both gender selection buttons.
+ */
+scene.disableGenderSelection = function(){
+    $("#introductionmalebutton, #introductionfemalebutton").prop('disabled', true); // Disable both buttons
+};
+
+/**
+ * Onclick function for gender selection.
+ */
+scene.genderSelection = function () {
+    var clicked = $(this); // The button that got clicked on
+    var value = clicked.attr("value"); // The value of that button
+    scene.chosenGender = value; // Set the value in our scene object
+    scene.genderSelectionProcessing(); // Process the gender selection
+    scene.genderSelectionUpdateKobold(); // Update the kobold
+    autoSave("Gender chosen."); // Save our progress
+};
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // HIGHLY RECOMMENDED FUNCTIONS                                               //
@@ -88,10 +144,10 @@ function ontabin(){
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Registers all required object listeners for this scene to function.
+ * Registers all requires object listeners for this scene to function.
  */
-scene.registerListeners = function(){
-    
+scene.registerListeners = function () {
+    $("#introductionmalebutton, #introductionfemalebutton").click(scene.genderSelection);
 };
 
 /**
@@ -100,10 +156,10 @@ scene.registerListeners = function(){
  * and whatever function or variable you may have declared outside of the 
  * scene object. Remember to call this function prior to changing scenes.
  */
-scene.cleanup = function(){
-    // unloadStyleSheet(scene.cssPath); // Uncomment this if you load a custom CSS file.
+scene.cleanup = function () {
+    unloadStyleSheet(scene.cssPath); // Uncomment this if you load a custom CSS file.
 };
 
 // If you wish to load a custom CSS file, uncomment these lines, as well as the one in scene.cleanup.
-// scene.cssPath = "scenes/pathtomyscene/css/custom.css";
-// loadStyleSheet(scene.cssPath);  
+scene.cssPath = "scenes/introduction/css/custom.css";
+loadStyleSheet(scene.cssPath);  

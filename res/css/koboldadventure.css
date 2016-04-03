@@ -1,9 +1,10 @@
 /**
 * COLOR SCHEME
-* Background:   #191919
-* Detail:       #005AA1
-* Main:         #003C6C
-* Text:         white
+* Background:   #191919     rgb(25, 25, 25)
+* Detail:       #005AA1     rgb(0, 90, 161)
+* Main:         #003C6C     rgb(0, 60, 108)
+* Text:         white       rgb(255, 255, 255)
+* Rare:         #FF6EC7     rgb(255, 110, 199)
 **/
 
 html{
@@ -466,6 +467,7 @@ button:focus, textarea:focus{
     font-weight: bold;
     margin-bottom: 10px;
     float: left;
+    margin-right: 10px;
 }
 
 .koboldadventuretext{
@@ -475,27 +477,41 @@ button:focus, textarea:focus{
 }
 
 .koboldadventurebutton{
-    background-color: #191919;  /* Background */
+    background-color: #005AA1;  /* Detail */
     color: white;               /* Text */
     font-size: 20px;
-    border: 5px;
+    border-width: 3px;
     border-style: solid;
-    border-color: #191919;      /* Background */
+    border-color: #003C6C;      /* Main */
 }
 
 .koboldadventurebutton:hover{
-    border-color: #005AA1;      /* Detail */
+    border-color: #191919;      /* Background */
 }
 
 .koboldadventurebutton:active{
-    background-color: #005AA1;  /* Detail */
+    background-color: #191919;  /* Background */
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
 
+.koboldadventurebutton:disabled{
+    background-color: #191919;  /* Background */
+    border-color: #003C6C;      /* Main */
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.koboldadventureselectedoption{
+    border-color: #FF6EC7 !important;      /* Rare */
+}
+
 .koboldadventurebigbutton{
+    background-color: #191919;  /* Background */
     border-radius: 5px;
     padding: 20px;
     border: 0px;
@@ -513,6 +529,21 @@ button:focus, textarea:focus{
     margin-top: 30px;
 }
 
+.koboldadventuredualchoicecontainer{
+    width: 100%;
+    overflow: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.koboldadventuredualchoiceheader{
+    font-size: 20px;
+    font-weight: bold;
+    float: left;
+    margin-right: 40px;
+    line-height: 50px;
+}
+
 .koboldadventuredualchoice{
     width: 100px;
     height: 50px;
@@ -520,14 +551,14 @@ button:focus, textarea:focus{
 }
 
 .koboldadventuredualchoiceseparator{
-    width: 5px;
-    height: 50px;
+    width: 3px;
+    height: 40px;
     border: none;
     background-color: white;    /* Text */
     float: left;
     margin-left: 30px;
     margin-right: 30px;
-    margin-top: 0px;
+    margin-top: 5px;
     margin-bottom: 0px;
 }
 
