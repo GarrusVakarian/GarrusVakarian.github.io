@@ -891,6 +891,11 @@ function changeTabInstantNoStore(tabName){
     var newTab = koboldAdventureStorageManagerCurrentTab;
     saveScrollPosition(oldTab);
     fromStorage(newTab);
+    
+    // If the next tab is the scene tab, then we need to call the scene's own ontabin function.
+    if(koboldAdventureStorageManagerCurrentTab.attr("id") === 'koboldadventurescenetab'){
+        ontabin();
+    }
 }
 
 

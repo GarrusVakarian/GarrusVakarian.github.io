@@ -74,11 +74,6 @@ function genericTabOnclick() {
     if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventurescenetab'){
         ontabout();
     }
-    
-    // If the next tab is the scene tab, then we need to call the scene's own ontabin function.
-    if(koboldAdventureStorageManagerCurrentTab.attr("id") === 'koboldadventurescenetab'){
-        ontabin();
-    }
 }
 
 /**
@@ -156,6 +151,8 @@ function loadScrollPosition(tab) {
     var scrollamount = koboldAdventureStorageManagerScrollPositions[loc];
     if (typeof scrollamount !== 'undefined')
         $(".koboldadventuremain").scrollTop(scrollamount);
+    else
+        $(".koboldadventuremain").scrollTop(0);
 }
 
 /**
@@ -204,6 +201,11 @@ function genericTabPostOnclick() {
     toStorage(oldTab);
     fromStorage(newTab);
     loadScrollPosition(newTab);
+    
+    // If the next tab is the scene tab, then we need to call the scene's own ontabin function.
+    if(koboldAdventureStorageManagerCurrentTab.attr("id") === 'koboldadventurescenetab'){
+        ontabin();
+    }
 }
 
 /**
