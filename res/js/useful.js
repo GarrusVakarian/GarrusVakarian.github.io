@@ -14,6 +14,8 @@ var koboldAdventureSceneLoaderFromSave;
  * Loads the scene, specified by the scenePath, to the main game window.
  * Discards the current scene in the process. 
  * If you wish to pass parameters to the new scene, use the sceneParams object.
+ * Note that in save loading mode, the sceneParams object will be emptied, 
+ * making it unavailable.
  * Sets the global variable currentScenePath.
  * @param scenePath The scene folder name.
  * @param fromSave Boolean. Whether or not the scene is being loaded from a 
@@ -23,12 +25,20 @@ function loadScene(scenePath, fromSave) {
     if(typeof fromSave === 'undefined')
         fromSave = false;
     
+    // Set whether we're loading from a save or not in a global variable so
+    // we don't have to pass it down the entire chain of function calls.
     koboldAdventureSceneLoaderFromSave = fromSave;
     
     showLoadIcon();
     
-    if(!koboldAdventureSceneLoaderFromSave)
-        scene = new Object();
+    // Empty script storage
+    $("#koboldadventurescriptstorage script").html("");
+    
+    // If we're loading from a save, clear sceneParams. Else clear scene.
+    if(koboldAdventureSceneLoaderFromSave)
+        sceneParams = new Object();
+    else
+        scene= new Object();
     
     currentScene = scenePath;
     $.get(buildSceneFilePath("js/init.js"))
@@ -40,10 +50,18 @@ function loadScene(scenePath, fromSave) {
 /** SAVING **/
 
 
-function autoSave(){
+/**
+ * Saves the game to slot0, the autosave slot. Should be used frequently, to 
+ * avoid progress loss for whatever reason.
+ * @param comment The comment of the autosave. Should be indicative of the 
+ * progress in the current scene.
+ */
+function autoSave(comment){
+    if(typeof comment === 'undefined')
+        comment = "";
     
+    saveGameToSlot(0, comment);
 }
-
 
 /** ANIMATION **/
 

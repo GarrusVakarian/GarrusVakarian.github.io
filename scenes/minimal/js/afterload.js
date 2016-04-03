@@ -6,4 +6,4 @@
  * optional.
  */
 
-autoSave("Started introduction.");
+// autosave("Entered my scene."); // Uncomment this line if you want the game to autosave once your scene has been correctly loaded.

@@ -86,6 +86,6 @@ function ontabin(){
  * Registers all requires object listeners for this scene to function.
  */
 scene.registerListeners = function(){
-
+    
 };
 

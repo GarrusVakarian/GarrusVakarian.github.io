@@ -54,13 +54,22 @@ a:link, a:visited{
     background-color: #008B00;  /* Detail */
 }
 
-.koboldadventureforest .koboldadventurebigbutton{
+.koboldadventureforest .koboldadventurebutton{
     background-color: #3B5323;  /* Background */
+    border-color: #3B5323;      /* Background */
     color: white;               /* Text */
 }
 
-.koboldadventureforest .koboldadventurebigbutton:active{
+.koboldadventureforest .koboldadventurebutton:hover{
     background-color: #008B00;  /* Detail */   
+}
+
+.koboldadventureforest .koboldadventurebutton:active{
+    background-color: #008B00;  /* Detail */   
+}
+
+.koboldadventureforest .koboldadventuredualchoiceseparator{
+    background-color: white;    /* Text */
 }
 
 .koboldadventureforest .koboldadventuresmallseparator{

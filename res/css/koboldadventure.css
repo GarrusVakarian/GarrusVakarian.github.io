@@ -455,18 +455,50 @@ button:focus, textarea:focus{
     margin-bottom: 10px;
 }
 
+.koboldadventurechoiceheader{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.koboldadventureinlinechoiceheader{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    float: left;
+}
+
 .koboldadventuretext{
     text-align: justify;
     font-size: 16px;
     margin-bottom: 20px;
 }
 
-.koboldadventurebigbutton{
-    border-radius: 5px;
-    border: 0px;
-    padding: 20px;
+.koboldadventurebutton{
     background-color: #191919;  /* Background */
     color: white;               /* Text */
+    font-size: 20px;
+    border: 5px;
+    border-style: solid;
+    border-color: #191919;      /* Background */
+}
+
+.koboldadventurebutton:hover{
+    border-color: #005AA1;      /* Detail */
+}
+
+.koboldadventurebutton:active{
+    background-color: #005AA1;  /* Detail */
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.koboldadventurebigbutton{
+    border-radius: 5px;
+    padding: 20px;
+    border: 0px;
     font-family: "wf_SegoeUILight","wf_SegoeUI","Segoe UI Light","Segoe WP Light","Segoe UI","Segoe","Segoe WP","Tahoma","Verdana","Arial","sans-serif";
     font-size: 32px;
     font-weight: bold;
@@ -481,12 +513,22 @@ button:focus, textarea:focus{
     margin-top: 30px;
 }
 
-.koboldadventurebigbutton:active{
-    background-color: #005AA1;  /* Detail */
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease;
+.koboldadventuredualchoice{
+    width: 100px;
+    height: 50px;
+    float: left;
+}
+
+.koboldadventuredualchoiceseparator{
+    width: 5px;
+    height: 50px;
+    border: none;
+    background-color: white;    /* Text */
+    float: left;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .koboldadventuresummation{

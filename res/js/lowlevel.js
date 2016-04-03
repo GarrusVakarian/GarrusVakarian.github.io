@@ -511,13 +511,18 @@ function doneLoadingAfterload(data){
 }
 
 /**
- * Discards the old scene, replacing it with the new one. Then makes the new one
- * visible. Calls the scene-defined init() or load() functions depending on 
- * whether the scene was loaded from another scene or from a save. Afterwords, 
- * fetches the scene's afterload.js.
+ * Switches tabs, discards the old scene, replacing it with the new one. Then 
+ * makes the new one visible. 
+ * Then, the scene-defined init() or load() function will be called depending on
+ * whether the scene was loaded from another scene or from a save. 
+ * Then clears the sceneParams object, as it is no longer needed. 
+ * Afterwards, fetches the scene's afterload.js.
  * @param data The new scene.
  */
 function switchAndShowSceneContent(data){
+    // Switch to the scene tab
+    changeTabInstantNoStore("scene");
+    
     $(".koboldadventuremain").html(data);
     $("#koboldadventurescenetabstorage").html(data);
     
@@ -525,6 +530,8 @@ function switchAndShowSceneContent(data){
         load();
     else
         init();
+    
+    sceneParams = new Object();
     
     $(".koboldadventuremain .koboldadventurecontent").fadeOut(0);
     $(".koboldadventuremain .koboldadventurecontent").fadeIn(400);
@@ -546,8 +553,7 @@ function doneLoadingScene(data){
 /**
  * Function to be used as callback for successful init script loading.
  * Will place the init script inside of script tags in the script storage. It
- * will immediately be executed.
- * Will then continue by loading the scene.
+ * will immediately be executed. Continues by loading the scene.
  * @param data The loaded JavaScript.
  */
 function doneLoadingInit(data){
@@ -860,4 +866,29 @@ function stripSaveSlot(slot){
     $(slot).find(".koboldadventuresaveslotgender").html("");
     $(slot).find(".koboldadventuresaveslotscene").html("");
     $(slot).find(".koboldadventuresaveslotcomment").html("");
+}
+
+
+/** TAB MANAGEMENT **/
+
+
+/**
+ * Instantly switches to the specified tab. Doesn't store the current tab in 
+ * storage. For reasons. You probably shouldn't be using this function.
+ * @param tabName The name of the tab. "scene", "statss", "status", etc.
+ */
+function changeTabInstantNoStore(tabName){
+    tabName = tabName.toLowerCase();
+    var tabid = "koboldadventure" + tabName + "tab";
+    var tab = $("#" + tabid);
+    
+    storePreviousActiveTab();
+    removeCurrentActiveTab();
+    activateNewTab(tab);
+    storeCurrentActiveTab();
+    
+    var oldTab = koboldAdventureStorageManagerPreviousTab;
+    var newTab = koboldAdventureStorageManagerCurrentTab;
+    saveScrollPosition(oldTab);
+    fromStorage(newTab);
 }
