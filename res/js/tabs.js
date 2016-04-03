@@ -69,6 +69,16 @@ function genericTabOnclick() {
     removeCurrentActiveTab();
     activateNewTab(this);
     storeCurrentActiveTab();
+    
+    // If the previous tab was the scene tab, then we need to call the scene's own ontabout function.
+    if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventurescenetab'){
+        ontabout();
+    }
+    
+    // If the next tab is the scene tab, then we need to call the scene's own ontabin function.
+    if(koboldAdventureStorageManagerCurrentTab.attr("id") === 'koboldadventurescenetab'){
+        ontabin();
+    }
 }
 
 /**
