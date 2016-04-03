@@ -85,3 +85,7 @@ a:link, a:visited{
 .koboldadventureforest .koboldadventuresaveslotdivider{
     background-color: white;    /* Text */
 }
+
+.koboldadventureforest .koboldadventuresaveslotcommentinput{
+    background-color: #5E2612;  /* Main */
+}

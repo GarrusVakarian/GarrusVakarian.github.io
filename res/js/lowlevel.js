@@ -602,6 +602,16 @@ var koboldAdventureSaveManagerSceneNameLocation = "scenename";
 var koboldAdventureSaveManagerCommentLocation = "comment";
 
 
+// REMOVE A SAVE
+
+function removeSave(slotNumber){
+    var slotName = "slot" + slotNumber;
+    localStorage.removeItem(slotName + koboldAdventureSaveManagerKoboldLocation);
+    localStorage.removeItem(slotName + koboldAdventureSaveManagerSceneLocation);
+    localStorage.removeItem(slotName + koboldAdventureSaveManagerSceneNameLocation);
+    localStorage.removeItem(slotName + koboldAdventureSaveManagerCommentLocation);
+}
+
 // SAVE TO A SLOT
 
 /**
@@ -643,6 +653,8 @@ function saveCommentToSlot(slotName, comment){
  * @param comment An optional user specified comment.
  */
 function saveGameToSlot(slotNumber, comment){
+    showSaveIcon();
+    
     if(typeof comment === 'undefined')
         comment = "";
     
@@ -651,6 +663,14 @@ function saveGameToSlot(slotNumber, comment){
     saveSceneToSlot(slotName);
     saveSceneNameToSlot(slotName);
     saveCommentToSlot(slotName, comment);
+    
+    unbindSaveSlotFunctions();
+    populateSaveSlots($(".koboldadventuremain .koboldadventuresaveslot"));
+    bindSaveSlotUIFunctions();
+    bindSaveToSaveSlots();
+    
+    // Delay hiding the save icon so the user definitely saw his game getting saved
+    setTimeout(hideSaveIcon, 600); 
 }
 
 // LOAD FROM A SLOT

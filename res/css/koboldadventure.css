@@ -31,7 +31,7 @@ p, h1, h2, h3, h4, h5, h6{
     margin: 0px;
 }
 
-button:focus{
+button:focus, textarea:focus{
     outline: 0;
 }
 
@@ -398,13 +398,25 @@ button:focus{
 }
 
 .koboldadventuresaveslotcomment{
-    left: 150px;
-    top: 123px;
+    left: 152px;
+    top: 127px;
     width: 580px;
     height: 60px;
     font-size: 20px;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    font-family: monospace;
+}
+
+.koboldadventuresaveslotcommentinput{
+    left: 150px;
+    top: 122px;
+    width: 580px;
+    height: 54px;
+    border: 0px;
+    font-size: 20px;
+    padding-top: 5px;
+    -webkit-appearance: none;
+    font-family: monospace;
+    background-color: #003C6C;  /* Main */
 }
 
 .koboldadventurecontent{
