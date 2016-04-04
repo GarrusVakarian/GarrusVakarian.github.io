@@ -388,10 +388,12 @@ function selectedOptionStyling(element){
  * Fetch the contents from a specified scene storage container and appends them
  * to the current scene. A scene storage container can only be gotten once
  * using this method. If you wish to fetch a scene storage container multiple
- * times, use the Copy version of this function.
+ * times, use the Copy version of this function. The fetched segment is run 
+ * through the preprocessor first.
  * @param containerClass The class of the container to fetch.
  */
 function getFromSceneStorage(containerClass){
+    $(".koboldadventuremain .koboldadventurestorage ." + containerClass).html(preProcess($(".koboldadventuremain .koboldadventurestorage ." + containerClass).html()));
     $(".koboldadventuremain .koboldadventurestorage").before($(".koboldadventuremain .koboldadventurestorage ." + containerClass));
 }
 
@@ -403,6 +405,7 @@ function getFromSceneStorage(containerClass){
  * @param containerClass The class of the container to fetch.
  */
 function getFromSceneStorageAnimated(containerClass){
+    $(".koboldadventuremain .koboldadventurestorage ." + containerClass).html(preProcess($(".koboldadventuremain .koboldadventurestorage ." + containerClass).html()));
     $(".koboldadventuremain .koboldadventurestorage").before($(".koboldadventuremain .koboldadventurestorage ." + containerClass)); 
     $(".koboldadventuremain ." + containerClass).fadeOut(0);
     $(".koboldadventuremain ." + containerClass).fadeIn(400);
@@ -417,6 +420,7 @@ function getFromSceneStorageAnimated(containerClass){
  * @param containerClass The class of the container to fetch.
  */
 function getFromSceneStorageCopy(containerClass){
+    $(".koboldadventuremain .koboldadventurestorage ." + containerClass).html(preProcess($(".koboldadventuremain .koboldadventurestorage ." + containerClass).html()));
     $(".koboldadventuremain .koboldadventurestorage").before($(".koboldadventuremain .koboldadventurestorage ." + containerClass).clone());
 }
 
@@ -429,8 +433,9 @@ function getFromSceneStorageCopy(containerClass){
  * @param containerClass The class of the container to fetch.
  */
 function getFromSceneStorageAnimatedCopy(containerClass){
+    $(".koboldadventuremain .koboldadventurestorage ." + containerClass).html(preProcess($(".koboldadventuremain .koboldadventurestorage ." + containerClass).html()));
     $(".koboldadventuremain .koboldadventurestorage").before($(".koboldadventuremain .koboldadventurestorage ." + containerClass).clone()); 
-    $(".koboldadventuremain ." + containerClass).not($(".koboldadventuremain .koboldadventurestorage ." + containerClass)).fadeOut(400);
+    $(".koboldadventuremain ." + containerClass).not($(".koboldadventuremain .koboldadventurestorage ." + containerClass)).fadeOut(0);
     $(".koboldadventuremain ." + containerClass).not($(".koboldadventuremain .koboldadventurestorage ." + containerClass)).fadeIn(400);
 }
 

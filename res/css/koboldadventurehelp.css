@@ -214,3 +214,35 @@ button:focus{
 .koboldadventurehelppagebutton:active{
     background-color: #191919;
 }
+
+.koboldadventurehelppagetable{
+    background-color: #191919;
+    border: 4px solid #005AA1;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.koboldadventurehelppagetablecentercolumn{
+    width: 300px;
+}
+
+.koboldadventurehelppagetablerightcolumn{
+    text-align: center;
+}
+
+.koboldadventurehelppagetable th{
+    font-weight: bold;
+    border: 2px solid #005AA1;
+    border-bottom: 4px solid #005AA1;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.koboldadventurehelppagetablenewsection{
+    border-top: 4px solid #005AA1;
+}
+
+.koboldadventurehelppagetable td{
+    border: 2px solid #005AA1;
+    padding: 5px;
+}

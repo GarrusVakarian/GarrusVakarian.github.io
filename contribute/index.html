@@ -70,6 +70,309 @@
 
                 <code class="todo">TODO: FINISH THIS SECTION</code>
 
+                <h2 class="koboldadventurehelppagesubsubtitle">
+                    Kobold preprocessor
+                </h2>
+
+                <p class="koboldadventurehelppagetext">
+                    The Kobold preprocessor allows you to make your scenes a more dynamic by letting you write JavaScript code inside of regular text. 
+                </p>
+
+                <table class="koboldadventurehelppagetable">
+                    
+                    <tr>
+                        <th>
+                            Token
+                        </th>
+                        <th class="koboldadventurehelppagetablecentercolumn">
+                            Use
+                        </th>
+                        <th>
+                            Effect
+                        </th>
+                    </tr>
+                    
+                    
+                    <tr class="koboldadventurehelppagetablenewsection">
+                        <td>
+                            $print()
+                        </td>
+                        <td>
+                            Any JavaScript. "Show stuff"
+                        </td>
+                        <td rowspan="8" class="koboldadventurehelppagetablerightcolumn">
+                            Anything between the braces will be parsed as JavaScript. The result will be printed into the scene. 
+                            Can theoretically be used to do anything, but should only be used if no other, more specific token is available.
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $pri()
+                        </td>
+                        <td>
+                            Shorthand for $print().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $p()
+                        </td>
+                        <td>
+                            Shorthand for $pri().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $show()
+                        </td>
+                        <td>
+                            Alias for $print().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $sh()
+                        </td>
+                        <td>
+                            Shorthand for $show().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $function()
+                        </td>
+                        <td>
+                            Regular functions. Alias for $print().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $fun()
+                        </td>
+                        <td>
+                            Shorthand for $function().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $unf()
+                        </td>
+                        <td>
+                            Alias for $fun().
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr class="koboldadventurehelppagetablenewsection">
+                        <td>
+                            $method()
+                        </td>
+                        <td>
+                            Regular methods. "Do stuff"
+                        </td>
+                        <td rowspan="4" class="koboldadventurehelppagetablerightcolumn">
+                            Anything between the braces will be parsed as JavaScript. The result will be discarded. 
+                            Should only be used if no other, more specific token is available.
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $meth()
+                        </td>
+                        <td>
+                            Shorthand for $method().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $do()
+                        </td>
+                        <td>
+                            Alias for $method().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $d()
+                        </td>
+                        <td>
+                            Shorthand for $do().
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr class="koboldadventurehelppagetablenewsection">
+                        <td>
+                            $kobold()
+                        </td>
+                        <td>
+                            Kobold object functions and variables.
+                        </td>
+                        <td rowspan="3" class="koboldadventurehelppagetablerightcolumn">
+                            Anything between the braces will be parsed as a kobold object function or variable.
+                            Variables will be printed. Functions will be executed and then the result will be printed.
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $kob()
+                        </td>
+                        <td>
+                            Shorthand for $kobold().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $k()
+                        </td>
+                        <td>
+                            Shorthand for $kob().
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr class="koboldadventurehelppagetablenewsection">
+                        <td>
+                            $nobold()
+                        </td>
+                        <td>
+                            Kobold object methods.
+                        </td>
+                        <td rowspan="3" class="koboldadventurehelppagetablerightcolumn">
+                            Anything between the braces will be parsed as a kobold object method.
+                            The method will be executed. The result will not be printed.
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $nob()
+                        </td>
+                        <td>
+                            Shorthand for $nobold().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $n()
+                        </td>
+                        <td>
+                            Shorthand for $nob().
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr class="koboldadventurehelppagetablenewsection">
+                        <td>
+                            $scene()
+                        </td>
+                        <td>
+                            Scene object functions.
+                        </td>
+                        <td rowspan="3" class="koboldadventurehelppagetablerightcolumn">
+                            Anything between the braces will be parsed as a scene object function or variable.
+                            Variables will be printed. Functions will be executed and then the result will be printed.
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $sc()
+                        </td>
+                        <td>
+                            Shorthand for $scene().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $s()
+                        </td>
+                        <td>
+                            Shorthand for $sc().
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr class="koboldadventurehelppagetablenewsection">
+                        <td>
+                            $scenem()
+                        </td>
+                        <td>
+                            Scene object methods.
+                        </td>
+                        <td rowspan="6" class="koboldadventurehelppagetablerightcolumn">
+                            Anything between the braces will be parsed as a scene object method.
+                            The method will be executed. The result will not be printed.
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $scenedo()
+                        </td>
+                        <td>
+                            Alias for $scenem().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $scdo()
+                        </td>
+                        <td>
+                            Shorthand for $scenedo().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $sdo()
+                        </td>
+                        <td>
+                            Shorthand for $scdo().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $sc2()
+                        </td>
+                        <td>
+                            Alias for $scdo().
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            $s2()
+                        </td>
+                        <td>
+                            Shorthand for $sc2().
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+                <p class="koboldadventurehelppagetext">
+                    NOTE: do NOT put any unclosed parenthesis inside of preprocessor directive. Not even within strings. This breaks the preprocessor.
+                    Closed parenthesis are fine. Example: $show("I like (.)(.)") is fine. $show("I am sad :(") will break. $do(myFunction("I am happy :)")) will break.
+                </p>
+
+                <code class="todo">TODO: FINISH THIS SECTION</code>
 
                 <h2 class="koboldadventurehelppagesubsubtitle">
                     init.js
