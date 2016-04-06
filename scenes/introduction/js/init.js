@@ -172,7 +172,7 @@ scene.nameSelectionProcessChoice = function() {
  */
 scene.registerListeners = function () {
     registerSimpleChoice("introductiongenderchoice", scene.genderSelectionProcessChoice, scene.genderSelectionFetchNext);
-    registerSimpleTextInput("introductionnameinput", "introductionnameconfirm", scene.nameSelectionFetchNext, scene.nameSelectionProcessChoice);
+    registerSimpleTextInput("introductionnameinput", "introductionnameconfirm", scene.nameSelectionFetchNext, scene.nameSelectionProcessChoice, 2);
 };
 
 /**

@@ -396,10 +396,16 @@ function loadSimpleTextInput(textfieldClass, buttonClass, fetchNext) {
  * and kobold objects, and potentially to autosave.
  * @param fetchNext The scene-defined function to call to fetch the next segment
  * of the scene, depending on the choice that was made.
+ * @param minLength Optional parameter. The minimum length of the entered text.
  */
-function simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext) {
+function simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, minLength) {
     var textField = $(".koboldadventuremain ." + textfieldClass).not(".koboldadventurestorage");
     var button = $(".koboldadventuremain ." + buttonClass).not(".koboldadventurestorage");
+    
+    // If we have a minimum length requirement, and the current value is smaller than the length, just return
+    if(typeof minLength !== "undefined" && textField.val().length < minLength)
+        return;
+    
     button.prop('disabled', true); // Disable the button
     textField.prop('disabled', true); // Disable the textfield
     scene[textfieldClass] = textField.val(); // Store value of the textfield element in scene object
@@ -424,10 +430,11 @@ function simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext) 
  * and kobold objects, and potentially to autosave.
  * @param fetchNext The scene-defined function to call to fetch the next segment
  * of the scene, depending on the choice that was made.
+ * @param minLength Optional parameter. The minimum length of the entered text.
  */
-function registerSimpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext) {
+function registerSimpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, minLength) {
     $(".koboldadventuremain ." + buttonClass + ":not([disabled])").not(".koboldadventurestorage").click(function () {
-        simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext);
+        simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, minLength);
     });
 }
 
