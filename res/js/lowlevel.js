@@ -902,6 +902,62 @@ function changeTabInstantNoStore(tabName) {
     if (koboldAdventureStorageManagerCurrentTab.attr("id") === 'koboldadventurescenetab') {
         ontabin();
     }
+    
+    // If the previous tab was the inventory tab, then we need to clear it.
+    if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventureinventorytab'){
+        unpopulateInventoryTab();
+    }
+}
+
+/**
+ * Clears the inventory tab of equipment and items.
+ */
+function unpopulateInventoryTab(){
+    $(".koboldadventuremain .koboldadventureinventory").html("");
+    $(".koboldadventuremain .koboldadventureequipment").html("");
+}
+
+/**
+ * Populates the inventory tab with equipment.
+ */
+function populateInventoryTabEquipment(){
+    var equipment = $("#koboldadventureinventorytabstorage .koboldadventureequipment");
+    if(isNaked()){
+        equipment.html('<p class="koboldadventuresubtitle center"><span class="bold">You are completely naked.</span></p>');
+        return;
+    }
+}
+
+/**
+ * Returns true if the kobold has items. False otherwise.
+ * @returns True if the kobold has items. False otherwise.
+ */
+function hasItems(){
+    var hasStuff = false;
+    $.each(kobold.inventory, function(index, value) {
+        if(notEmpty(value) && value > 0)
+            hasStuff = true;
+    });
+    return hasStuff;
+}
+
+/**
+ * Populates the inventory tab with items.
+ */
+function populateInventoryTabItems(){
+    var inventory = $("#koboldadventureinventorytabstorage .koboldadventureinventory");
+    if(!hasItems()){
+        inventory.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no belongings on you.</span></p>');
+        return;
+    }
+}
+
+/**
+ * Populates the inventory tab with equipment and items.
+ */
+function populateInventoryTab(){
+    populateInventoryTabEquipment();
+    populateInventoryTabItems();
 }
 
 

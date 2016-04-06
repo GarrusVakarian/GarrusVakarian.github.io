@@ -9,6 +9,21 @@ var kobold = new Object();
 
 kobold.name = "";
 kobold.gender = "";
+kobold.inventory = {};
+kobold.inventory["Coins"] = 0;
+kobold.equipment = {};
+kobold.equipment["Arms"] = "";
+kobold.equipment["Legs"] = "";
+kobold.equipment["Chest"] = "";
+kobold.equipment["Groin"] = "";
+kobold.equipment["Feet"] = "";
+kobold.equipment["Tail"] = "";
+kobold.equipment["Hands"] = "";
+kobold.equipment["Back"] = "";
+kobold.equipment["Shoulders"] = "";
+kobold.equipment["Head"] = "";
+kobold.equipment["Face"] = "";
+
 
 function makeMyKoboldDoStuff(){
     

@@ -96,6 +96,10 @@ button:focus, textarea:focus{
     display: none;
 }
 
+.center{
+    text-align: center;
+}
+
 .todo{
     color: red;
     background-color: yellow;

@@ -74,6 +74,11 @@ function genericTabOnclick() {
     if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventurescenetab'){
         ontabout();
     }
+    
+    // If the previous tab was the inventory tab, then we need to clear it.
+    if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventureinventorytab'){
+        unpopulateInventoryTab();
+    }
 }
 
 /**
@@ -101,7 +106,12 @@ function statusTabOnclick() {
  * The onclick function for the inventory tab.
  */
 function inventoryTabOnclick() {
-
+    // If cancelled, do nothing.
+    if(koboldAdventureStorageManagerCancelFurtherOnclicks)
+        return;
+    
+    // Populate the inventory tab before tabbing it in
+    populateInventoryTab();
 }
 
 /**

@@ -531,3 +531,20 @@ function getFromSceneStorageAnimatedCopy(containerClass) {
 function notEmpty(variable) {
     return notNull(variable) && variable !== "";
 }
+
+
+/** INVENTORY **/
+
+
+/**
+ * Returns true if the kobold is naked. False otherwise.
+ * @returns True if the kobold is naked. False otherwise.
+ */
+function isNaked(){
+    var naked = true;
+    $.each(kobold.equipment, function(index, value) {
+        if(notEmpty(value))
+            naked = false;
+    });
+    return naked;
+}
