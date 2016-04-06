@@ -417,7 +417,7 @@ function simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, 
  * Registers a simple textual input. Will automatically update the UI to 
  * indicate input was provided. Calls fetchNext to allow the user to fetch the 
  * next segment. Calls processChoice to allow the user to update the scene and 
- * kobold elements.
+ * kobold elements. Will also allow for the enter key to enter the choice.
  * 
  * Sets scene[textfieldClass] to the input value. This value can later be 
  * accessed via scene.textfieldClass. Note: do not change this value after it is 
@@ -436,6 +436,13 @@ function registerSimpleTextInput(textfieldClass, buttonClass, processChoice, fet
     $(".koboldadventuremain ." + buttonClass + ":not([disabled])").not(".koboldadventurestorage").click(function () {
         simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, minLength);
     });
+    
+    // On enter, simulate click
+    $(".koboldadventuremain ." + textfieldClass + ":not([disabled])").not(".koboldadventurestorage").keypress(function(e) {
+    if(e.which == 13) {
+        $(".koboldadventuremain ." + buttonClass + ":not([disabled])").not(".koboldadventurestorage").click();
+    }
+});
 }
 
 /**
