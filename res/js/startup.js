@@ -15,6 +15,7 @@ kobold.equipment = {};
 kobold.equipment["Arms"] = "";
 kobold.equipment["Legs"] = "";
 kobold.equipment["Chest"] = "";
+kobold.equipment["Upper body"] = "";
 kobold.equipment["Groin"] = "";
 kobold.equipment["Feet"] = "";
 kobold.equipment["Tail"] = "";

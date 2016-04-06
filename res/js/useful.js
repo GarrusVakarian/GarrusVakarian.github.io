@@ -401,11 +401,11 @@ function loadSimpleTextInput(textfieldClass, buttonClass, fetchNext) {
 function simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, minLength) {
     var textField = $(".koboldadventuremain ." + textfieldClass).not(".koboldadventurestorage");
     var button = $(".koboldadventuremain ." + buttonClass).not(".koboldadventurestorage");
-    
+
     // If we have a minimum length requirement, and the current value is smaller than the length, just return
-    if(typeof minLength !== "undefined" && textField.val().length < minLength)
+    if (typeof minLength !== "undefined" && textField.val().length < minLength)
         return;
-    
+
     button.prop('disabled', true); // Disable the button
     textField.prop('disabled', true); // Disable the textfield
     scene[textfieldClass] = textField.val(); // Store value of the textfield element in scene object
@@ -537,13 +537,139 @@ function notEmpty(variable) {
 
 
 /**
+ * Adds a certain item to the inventory. Will simply increment the item count
+ * if the same item is already present.
+ * @param toAdd The item to add.
+ */
+function addItem(toAdd) {
+
+}
+
+/**
+ * Removes a certain item to the inventory. If howMany is not set, will remove
+ * all of the matching items.
+ * @param toAdd The item to remove. May be a string or an object.
+ * @param howMany Optional parameter. How many of the item to remove.
+ */
+function removeItem(toAdd, howMany) {
+
+}
+
+/**
+ * Returns true if the kobold has the item. False otherwise.
+ * @param item The item. May be the item name as a string, or the item object.
+ * @returns True if the kobold has the item. False otherwise.
+ */
+function hasItem(item) {
+
+}
+
+/**
+ * Returns how many of the item the kobold has.
+ * @param item The item. May be the item name as a string, or the item object.
+ * @returns How much of the item the kobold has.
+ */
+function hasHowMany(item) {
+
+}
+
+/**
+ * Returns true if the kobold has or is wearing the item. False otherwise.
+ * @param item The item. May be the item name as a string, or the item object.
+ * @returns True if the kobold has the item. False otherwise.
+ */
+function hasOrIsWearingItem(item) {
+
+}
+
+/**
+ * Returns how many of the item the kobold has, including what he/she is wearing.
+ * @param item The item. May be the item name as a string, or the item object.
+ * @returns How much of the item the kobold has, including wearables.
+ */
+function hasOrIsWearingHowMany(item) {
+
+}
+
+/**
+ * Creates a new inventory item and returns it.
+ * @param amount How much of the item to make.
+ * @param name The name of the piece of equipment.
+ * @param description The description of the piece of equipment.
+ * @param value The value of the item, in coins.
+ * @param thickness The thickness of the piece of equipment. How thick it is. Zero for underwear. 1-3 for cloth, 3-5 for leather, 5-7 for chainmail, 7-10 for plate.
+ * @param coarseness The coarseness of the piece of equipment. How rough it is. Zero for underwear. 3-5 for cloth. 1-3 for leather. 5-7 for chainmail. 5-7 for plate.
+ * @param intimidation The intimidation factor of the piece of equipment. Negative values for humiliating apparel. Positive values for armor pieces.
+ * @param defence The defence value of the piece of equipment. Zero for underwear, 1-3 for cloth, 3-5 for leather, 5-7 for chainmail, 7-10 for plate.
+ * @returns
+ */
+function createItem(amount, name, description, value, thickness, coarseness, intimidation, defence) {
+    var item = {};
+    item.amount = amount;
+    item.name = name;
+    item.desc = description;
+    item.val = value;
+    item.thick = thickness;
+    item.coarse = coarseness;
+    item.intim = intimidation;
+    item.defence = defence;
+    return item;
+}
+
+/**
+ * Take off a piece of clothing. It is added to the inventory.
+ * @param bodyArea What body area to take clothing off of.
+ */
+function takeOff(bodyArea) {
+    var equipment = kobold.equipment[bodyArea];
+    kobold.equipment[bodyArea] = "";
+    var item = createItem(1, equipment.name, equipment.desc, equipment.val, equipment.thick, equipment.coarse, equipment.intim, equipment.defence);
+    addItem(item);
+}
+
+/**
+ * Puts on a certain item. Takes the item from the inventory. If you want to
+ * put on a new item, use the kobold.equipment associative array/object 
+ * directly.
+ * @param bodyArea What body area to put the item on.
+ * @param item The item to put on. Must be in the inventory. Can be the name
+ * of the item, or an object representing the item.
+ */
+function putOn(bodyArea, item) {
+
+}
+
+/**
+ * Creates a new piece of equipment and returns it.
+ * @param name The name of the piece of equipment.
+ * @param description The description of the piece of equipment.
+ * @param value The value of the item, in coins.
+ * @param thickness The thickness of the piece of equipment. How thick it is. Zero for underwear. 1-3 for cloth, 3-5 for leather, 5-7 for chainmail, 7-10 for plate.
+ * @param coarseness The coarseness of the piece of equipment. How rough it is. Zero for underwear. 3-5 for cloth. 1-3 for leather. 5-7 for chainmail. 5-7 for plate.
+ * @param intimidation The intimidation factor of the piece of equipment. Negative values for humiliating apparel. Positive values for armor pieces.
+ * @param defence The defence value of the piece of equipment. Zero for underwear, 1-3 for cloth, 3-5 for leather, 5-7 for chainmail, 7-10 for plate.
+ * @returns
+ */
+function createPieceOfEquipment(name, description, value, thickness, coarseness, intimidation, defence) {
+    var equipment = {};
+    equipment.name = name;
+    equipment.desc = description;
+    equipment.val = value;
+    equipment.thick = thickness;
+    equipment.coarse = coarseness;
+    equipment.intim = intimidation;
+    equipment.defence = defence;
+    return equipment;
+}
+
+/**
  * Returns true if the kobold is naked. False otherwise.
  * @returns True if the kobold is naked. False otherwise.
  */
-function isNaked(){
+function isNaked() {
     var naked = true;
-    $.each(kobold.equipment, function(index, value) {
-        if(notEmpty(value))
+    $.each(kobold.equipment, function (index, value) {
+        if (notEmpty(value))
             naked = false;
     });
     return naked;

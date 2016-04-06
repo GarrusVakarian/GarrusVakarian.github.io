@@ -122,10 +122,15 @@ scene.genderSelectionProcessChoice = function() {
     var value = scene.introductiongenderchoice;
     
     // Update kobold object to reflect choice
-    if(value === "M")
+    if(value === "M"){
         kobold.gender = "Male";
-    else
+        kobold.equipment["Groin"] = createPieceOfEquipment("Simple loincloth", "It covers your groin quite well.", "2", "0", "0", "0", "0");
+    }
+    else {
         kobold.gender = "Female";
+        kobold.equipment["Chest"] = createPieceOfEquipment("Small chest wrap", "It barely covers your chest!", "1", "0", "0", "0", "0");
+        kobold.equipment["Groin"] = createPieceOfEquipment("Ragged loincloth", "It's slowly unravelling.", "1", "0", "0", "0", "0");
+    }
     
     // Update scene object to point towards the correct next scene
     if(value === "M")
