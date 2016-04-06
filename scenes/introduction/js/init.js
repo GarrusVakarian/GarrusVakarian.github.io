@@ -52,11 +52,15 @@ function init() {
  * init() and the ontabin() functions.
  */
 function load() {
-    scene.registerListeners();
-    
     // If our gender selection choice is not empty, we have passed gender selection
     if(notEmpty(scene.introductiongenderchoice))
-        loadSimpleChoice("introductiongenderchoice", scene.genderSelectionFetchNext); // And thus we may load the choice.
+        loadSimpleChoice("introductiongenderchoice", scene.genderSelectionFetchNext); // And thus we may load the choice
+    
+    // If our name selection choice is not empty, we have passed name selection
+    if(notEmpty(scene.introductiongenderchoice))
+        loadSimpleTextInput("introductionnameinput", "introductionnameconfirm", scene.nameSelectionFetchNext); // And thus we may load the name
+    
+    scene.registerListeners();
 }
 
 /**
@@ -95,10 +99,17 @@ scene.genderSelectionFetchNext = function(){
     // Fetch value
     var value = scene.introductiongenderchoice;
     
+    // Depending on the value, we load different scene parts
     if(value === "M")
         getFromSceneStorageAnimated("introductionmale");
     else
         getFromSceneStorageAnimated("introductionfemale");
+    
+    // Regardless of the value, we load the name ask dialogue
+    getFromSceneStorageAnimated("introductionnameask");
+    
+    // Reregister listeners
+    scene.registerListeners();
 };
 
 /**
@@ -116,8 +127,37 @@ scene.genderSelectionProcessChoice = function() {
     else
         kobold.gender = "Female";
     
+    // Update scene object to point towards the correct next scene
+    if(value === "M")
+        scene.nextScene = "varanarbusygatestart";
+    else
+        scene.nextScene = "foreststart";
+    
     // Save the game
     autoSave("Gender picked.");
+};
+
+/**
+ * Fetches the next scene once a name has been entered.
+ */
+scene.nameSelectionFetchNext = function() {
+    alert("Fetching next. Entered name: " + scene.introductionnameinput);
+};
+
+/**
+ * Processes an input name. Doesn't need any parameters.
+ * Takes the value it needs from the scene object directly. The value was put
+ * there by the simpleTextInput framework.
+ */
+scene.nameSelectionProcessChoice = function() {
+    // Fetch value
+    var value = scene.introductionnameinput;
+    
+    // Update kobold object to reflect choice
+    kobold.name = value;
+    
+    // Save the game
+    autoSave("Name chosen.");
 };
 
 
@@ -132,6 +172,7 @@ scene.genderSelectionProcessChoice = function() {
  */
 scene.registerListeners = function () {
     registerSimpleChoice("introductiongenderchoice", scene.genderSelectionProcessChoice, scene.genderSelectionFetchNext);
+    registerSimpleTextInput("introductionnameinput", "introductionnameconfirm", scene.nameSelectionFetchNext, scene.nameSelectionProcessChoice);
 };
 
 /**

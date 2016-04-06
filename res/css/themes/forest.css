@@ -112,3 +112,13 @@ a:link, a:visited{
 .koboldadventureforest .koboldadventuresaveslotcommentinput{
     background-color: #5E2612;  /* Main */
 }
+
+.koboldadventureforest .koboldadventuretextinput:disabled{
+    color: white;               /* Text */
+    background-color: #3B5323;  /* Background */ 
+}
+
+.koboldadventureforest .koboldadventureshorttextinput:disabled{
+    color: white;               /* Text */
+    background-color: #3B5323;  /* Background */ 
+}

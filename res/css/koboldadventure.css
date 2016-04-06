@@ -465,9 +465,8 @@ button:focus, textarea:focus{
 .koboldadventureinlinechoiceheader{
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 10px;
     float: left;
-    margin-right: 20px;
+    margin-right: 40px;
 }
 
 .koboldadventuretext{
@@ -560,6 +559,42 @@ button:focus, textarea:focus{
     margin-right: 30px;
     margin-top: 5px;
     margin-bottom: 0px;
+}
+
+.koboldadventuretextinputheader{
+    font-size: 20px;
+    font-weight: bold;
+    float: left;
+    margin-right: 40px;
+    line-height: 50px;
+}
+
+.koboldadventuretextinput{
+    font-size: 20px;
+    border: 0px;
+    padding: 5px;
+}
+
+.koboldadventureshorttextinput{
+    font-size: 20px;
+    border: 0px;
+    padding: 5px;
+    width: 200px;
+}
+
+.koboldadventuretextinput:disabled{
+    color: white;               /* Text */
+    background-color: #191919;  /* Background */      
+}
+
+.koboldadventureshorttextinput:disabled{
+    color: white;               /* Text */
+    background-color: #191919;  /* Background */  
+}
+
+.koboldadventuretextinputbutton{
+    font-size: 20px;
+    padding: 5px;
 }
 
 .koboldadventuresummation{
