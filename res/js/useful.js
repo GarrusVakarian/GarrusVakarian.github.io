@@ -436,13 +436,13 @@ function registerSimpleTextInput(textfieldClass, buttonClass, processChoice, fet
     $(".koboldadventuremain ." + buttonClass + ":not([disabled])").not(".koboldadventurestorage").click(function () {
         simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, minLength);
     });
-    
+
     // On enter, simulate click
-    $(".koboldadventuremain ." + textfieldClass + ":not([disabled])").not(".koboldadventurestorage").keypress(function(e) {
-    if(e.which == 13) {
-        $(".koboldadventuremain ." + buttonClass + ":not([disabled])").not(".koboldadventurestorage").click();
-    }
-});
+    $(".koboldadventuremain ." + textfieldClass + ":not([disabled])").not(".koboldadventurestorage").keypress(function (e) {
+        if (e.which == 13) {
+            $(".koboldadventuremain ." + buttonClass + ":not([disabled])").not(".koboldadventurestorage").click();
+        }
+    });
 }
 
 /**
@@ -544,22 +544,108 @@ function notEmpty(variable) {
 
 
 /**
- * Adds a certain item to the inventory. Will simply increment the item count
- * if the same item is already present.
- * @param toAdd The item to add.
+ * Removes EVERYTHING from the kobold. Inventory, weapons and equipment will ALL
+ * be cleared.
  */
-function addItem(toAdd) {
-
+function removeEverything() {
+    kobold.inventory = [];
+    kobold.equipment = {};
+    kobold.equipment["Arms"] = "";
+    kobold.equipment["Legs"] = "";
+    kobold.equipment["Chest"] = "";
+    kobold.equipment["Upper body"] = "";
+    kobold.equipment["Groin"] = "";
+    kobold.equipment["Feet"] = "";
+    kobold.equipment["Tail"] = "";
+    kobold.equipment["Hands"] = "";
+    kobold.equipment["Back"] = "";
+    kobold.equipment["Shoulders"] = "";
+    kobold.equipment["Head"] = "";
+    kobold.equipment["Face"] = "";
+    kobold.weapons = [];
 }
 
 /**
- * Removes a certain item to the inventory. If howMany is not set, will remove
- * all of the matching items.
- * @param toAdd The item to remove. May be a string or an object.
+ * Removes all equipment from the kobold.
+ */
+function stripNaked() {
+    kobold.equipment = {};
+    kobold.equipment["Arms"] = "";
+    kobold.equipment["Legs"] = "";
+    kobold.equipment["Chest"] = "";
+    kobold.equipment["Upper body"] = "";
+    kobold.equipment["Groin"] = "";
+    kobold.equipment["Feet"] = "";
+    kobold.equipment["Tail"] = "";
+    kobold.equipment["Hands"] = "";
+    kobold.equipment["Back"] = "";
+    kobold.equipment["Shoulders"] = "";
+    kobold.equipment["Head"] = "";
+    kobold.equipment["Face"] = "";
+}
+
+/**
+ * Removes all weapons from the kobold.
+ */
+function disarm() {
+    kobold.weapons = [];
+}
+
+/**
+ * Removes all items from the kobold.
+ */
+function loseItems() {
+    kobold.inventory = [];
+}
+
+/**
+ * Adds a certain item to the inventory. Will simply increase the item count
+ * if the same item is already present. Note that there is no amount parameter
+ * because the item object should already have an amount.
+ * @param toAdd The item to add.
+ */
+function addItem(toAdd) {
+    // If the kobold already has the item, increase the item count.
+    if (hasItem(toAdd)) {
+        var index = getItemIndex(toAdd);
+        var item = kobold.inventory[index];
+        item.amount = item.amount + toAdd.amount;
+        kobold.inventory[index] = item;
+    } else {
+        // Else, add the item.
+        kobold.inventory.push(toAdd);
+    }
+}
+
+/**
+ * Removes a certain item to the inventory. If the resulting amount is less than
+ *  or equal to 0, the item is removed completely. If howMany is not set, will 
+ *  remove all of the matching items.
+ * @param toRemove The item to remove. May be a string or an object.
  * @param howMany Optional parameter. How many of the item to remove.
  */
-function removeItem(toAdd, howMany) {
+function removeItem(toRemove, howMany) {
+    // If we don't have the item, return
+    if (!hasItem(toRemove))
+        return;
 
+    // Get the index of the item
+    var index = getItemIndex(toRemove);
+
+    // If no amount was passed, just delete the item
+    if (typeof howMany === "undefined") {
+        kobold.inventory.splice(index, 1);
+    } else {
+        // Get the item
+        var item = kobold.inventory[index];
+        // Decrease the count
+        item.amount = item.amount - howMany;
+        // If the resulting amount if less than or equal to 0, remove it completely
+        if (item.amount <= 0)
+            kobold.inventory.splice(index, 1);
+        else
+            kobold.inventory[index] = item;
+    }
 }
 
 /**
@@ -568,16 +654,25 @@ function removeItem(toAdd, howMany) {
  * @returns True if the kobold has the item. False otherwise.
  */
 function hasItem(item) {
-
+    return getItemIndex(item) !== -1;
 }
 
 /**
  * Returns how many of the item the kobold has.
  * @param item The item. May be the item name as a string, or the item object.
- * @returns How much of the item the kobold has.
+ * @returns How much of the item the kobold has. 0 if the kobold does not have 
+ * the item.
  */
 function hasHowMany(item) {
-
+    // If we don't have the item, return 0
+    if (!hasItem(item))
+        return 0;
+    // Else fetch the index
+    var index = getItemIndex(item);
+    // Fetch the item
+    var item = kobold.inventory[index];
+    // Return the amount
+    return item.amount;
 }
 
 /**
@@ -586,7 +681,7 @@ function hasHowMany(item) {
  * @returns True if the kobold has the item. False otherwise.
  */
 function hasOrIsWearingItem(item) {
-
+    return isWearing(item) || hasItem(item);
 }
 
 /**
@@ -595,7 +690,21 @@ function hasOrIsWearingItem(item) {
  * @returns How much of the item the kobold has, including wearables.
  */
 function hasOrIsWearingHowMany(item) {
+    var amount = hasHowMany(item);
+    if (isWearing(item))
+        amount++;
+    return amount;
+}
 
+/**
+ * Returns true if the kobold is wearing the piece of equipment.
+ * @param equipment The piece of equipment or the name of the piece of equipment
+ * to check for.
+ * @returns True if the kobold is wearing the piece of equipment, false 
+ * otherwise.
+ */
+function isWearing(equipment) {
+    return notEmpty(getEquipmentSlot(equipment));
 }
 
 /**
@@ -608,7 +717,7 @@ function hasOrIsWearingHowMany(item) {
  * @param coarseness The coarseness of the piece of equipment. How rough it is. Zero for underwear. 3-5 for cloth. 1-3 for leather. 5-7 for chainmail. 5-7 for plate.
  * @param intimidation The intimidation factor of the piece of equipment. Negative values for humiliating apparel. Positive values for armor pieces.
  * @param defence The defence value of the piece of equipment. Zero for underwear, 1-3 for cloth, 3-5 for leather, 5-7 for chainmail, 7-10 for plate.
- * @returns
+ * @returns The created item.
  */
 function createItem(amount, name, description, value, thickness, coarseness, intimidation, defence) {
     var item = {};
@@ -637,13 +746,16 @@ function takeOff(bodyArea) {
 /**
  * Puts on a certain item. Takes the item from the inventory. If you want to
  * put on a new item, use the kobold.equipment associative array/object 
- * directly.
+ * directly. Will discard the current worn item. Take it off first if you want
+ * to keep it.
  * @param bodyArea What body area to put the item on.
  * @param item The item to put on. Must be in the inventory. Can be the name
  * of the item, or an object representing the item.
  */
 function putOn(bodyArea, item) {
-
+    var equipment = createEquipment(item.name, item.desc, item.val, item.thick, item.coarse, item.intim, item.defence);
+    kobold.equipment[bodyArea] = equipment;
+    removeItem(item, 1);
 }
 
 /**
@@ -655,7 +767,7 @@ function putOn(bodyArea, item) {
  * @param coarseness The coarseness of the piece of equipment. How rough it is. Zero for underwear. 3-5 for cloth. 1-3 for leather. 5-7 for chainmail. 5-7 for plate.
  * @param intimidation The intimidation factor of the piece of equipment. Negative values for humiliating apparel. Positive values for armor pieces.
  * @param defence The defence value of the piece of equipment. Zero for underwear, 1-3 for cloth, 3-5 for leather, 5-7 for chainmail, 7-10 for plate.
- * @returns
+ * @returns The created piece of equipment.
  */
 function createPieceOfEquipment(name, description, value, thickness, coarseness, intimidation, defence) {
     var equipment = {};
@@ -667,6 +779,88 @@ function createPieceOfEquipment(name, description, value, thickness, coarseness,
     equipment.intim = intimidation;
     equipment.defence = defence;
     return equipment;
+}
+
+/**
+ * Removes a weapon. The passed weapon may be a weapon object or a string
+ * denoting the weapon's name.
+ * @param weapon An object of type weapon or a string containing the weapon's name.
+ */
+function removeWeapon(weapon) {
+    // If we don't have the weapon, return
+    if (!hasItem(weapon))
+        return;
+
+    // Get the index of the weapon
+    var index = getWeaponIndex(weapon);
+
+    // Delete the weapon
+    kobold.inventory.splice(index, 1);
+}
+
+/**
+ * Adds a weapon. The passed weapon must be a weapon
+ * @param weapon An object of type weapon or a string containing the weapon's name.
+ */
+function addWeapon(weapon) {
+    kobold.weapons.push(weapon);
+}
+
+/**
+ * Returns true if the kobold has the weapon, or false otherwise.
+ * @param weapon An object of type weapon or a string containing the weapon's 
+ * name.
+ * @return True if the kobold has the weapon, or false otherwise.
+ */
+function hasWeapon(weapon) {
+    return getWeaponIndex(weapon) !== -1;
+}
+
+/**
+ * Returns true if the kobold has a weapon with the specified tag, or false 
+ * otherwise.
+ * @param tag The tag to search for.
+ * @return True if the kobold has such a weapon. False otherwise.
+ */
+function hasWeaponWithTag(tag) {
+    return getWeaponIndexByTag(tag) !== -1;
+}
+
+/**
+ * Returns a weapon the kobold has with the specified tag, or null if no such 
+ * weapon exists.
+ * @param tag The tag to search for.
+ * @return A weapon the kobold has with the specified tag, or null if no such
+ * weapon exists.
+ */
+function getWeaponWithTag(tag) {
+    var index = getWeaponIndexByTag(tag);
+    // If we don't have the weapon, return null
+    if (index === -1)
+        return null;
+    // Return the weapon
+    return kobold.weapons[index];
+}
+
+
+
+/**
+ * Creates a new weapon and returns it.
+ * @param name The name of the weapon.
+ * @param description The description of the weapon.
+ * @param value The value of the weapon, in coins.
+ * @param tags The tags of the weapon. Be sure to include plenty of these.
+ * @param intimidation The intimidation factor of the piece of equipment. Negative values for humiliating apparel. Positive values for armor pieces.
+ * @returns The created weapon.
+ */
+function createWeapon(name, description, value, tags, intimidation) {
+    var weapon = {};
+    weapon.name = name;
+    weapon.desc = description;
+    weapon.val = value;
+    weapon.tags = tags;
+    weapon.intim = intimidation;
+    return weapon;
 }
 
 /**

@@ -526,7 +526,7 @@ function switchAndShowSceneContent(data) {
 
     $(".koboldadventuremain").html(data);
     $("#koboldadventurescenetabstorage").html(data);
-    
+
     // Preprocess scene
     $(".koboldadventuremain").not(".koboldadventurestorage").html(preProcess($(".koboldadventuremain").not(".koboldadventurestorage").html()));
 
@@ -536,7 +536,7 @@ function switchAndShowSceneContent(data) {
         init();
 
     sceneParams = new Object();
-    
+
     $(".koboldadventuremain .koboldadventurecontent").fadeOut(0);
     $(".koboldadventuremain .koboldadventurecontent").fadeIn(400);
     $.get(buildSceneFilePath("/js/afterload.js"))
@@ -902,9 +902,9 @@ function changeTabInstantNoStore(tabName) {
     if (koboldAdventureStorageManagerCurrentTab.attr("id") === 'koboldadventurescenetab') {
         ontabin();
     }
-    
+
     // If the previous tab was the inventory tab, then we need to clear it.
-    if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventureinventorytab'){
+    if (koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventureinventorytab') {
         unpopulateInventoryTab();
     }
 }
@@ -912,52 +912,215 @@ function changeTabInstantNoStore(tabName) {
 /**
  * Clears the inventory tab of equipment and items.
  */
-function unpopulateInventoryTab(){
+function unpopulateInventoryTab() {
     $(".koboldadventuremain .koboldadventureinventory").html("");
     $(".koboldadventuremain .koboldadventureequipment").html("");
-}
-
-/**
- * Populates the inventory tab with equipment.
- */
-function populateInventoryTabEquipment(){
-    var equipment = $("#koboldadventureinventorytabstorage .koboldadventureequipment");
-    if(isNaked()){
-        equipment.html('<p class="koboldadventuresubtitle center"><span class="bold">You are completely naked.</span></p>');
-        return;
-    }
+    $(".koboldadventuremain .koboldadventureweapons").html("");
 }
 
 /**
  * Returns true if the kobold has items. False otherwise.
  * @returns True if the kobold has items. False otherwise.
  */
-function hasItems(){
+function hasItems() {
     var hasStuff = false;
-    $.each(kobold.inventory, function(index, value) {
-        if(notEmpty(value) && value > 0)
+    $.each(kobold.inventory, function (index, value) {
+        if (notEmpty(value) && value > 0)
             hasStuff = true;
     });
     return hasStuff;
 }
 
 /**
- * Populates the inventory tab with items.
+ * Gets the index of an item. Returns -1 if the item was not found.
+ * @param item The item or the name of the item to look for.
+ * @returns The index of the item or -1 if the item was not found.
  */
-function populateInventoryTabItems(){
-    var inventory = $("#koboldadventureinventorytabstorage .koboldadventureinventory");
-    if(!hasItems()){
-        inventory.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no belongings on you.</span></p>');
-        return;
-    }
+function getItemIndex(item) {
+    var needle;
+    if (typeof item === "string")
+        needle = item;
+    else
+        needle = item.name;
+
+    // The result
+    var result = -1;
+
+    // For each item in the inventory
+    $.each(kobold.inventory, function (index, value) {
+        // If the item is what we're looking for
+        if (value.name === needle) {
+            // Set our result
+            result = index;
+            // Break from the $.each
+            return false;
+        }
+    });
+
+    return result;
 }
 
 /**
- * Populates the inventory tab with equipment and items.
+ * Gets the slot of a piece of equipment. Returns an empty string if the 
+ * kobold is not wearing the piece of equipment.
+ * @param equipment The piece of equipment, or the name of the piece of 
+ * equipment.
+ * @returns The slot the piece of equipment is being worn in, or the empty
+ * string if the kobold does not have the piece of equipment equipped.
  */
-function populateInventoryTab(){
+function getEquipmentSlot(equipment) {
+    var needle;
+
+    if (typeof equipment === "string")
+        needle = equipment;
+    else
+        needle = equipment.name;
+
+    // The result
+    var slot = "";
+
+    // For each piece of equipment
+    $.each(kobold.equipment, function (index, value) {
+        // If the piece of equipment is what we're looking for
+        if (value.name === needle) {
+            // Set our result
+            slot = index;
+            // Break from the $.each
+            return false;
+        }
+    });
+
+    return slot;
+}
+
+/**
+ * Gets the index of a weapon Returns -1 if the kobold does not have the weapon.
+ * @param weapon The weapon, or the name of the weapon.
+ * @returns The index of the weapon, or -1 if the kobold does not have the 
+ * weapon.
+ */
+function getWeaponIndex(weapon) {
+    var needle;
+
+    if (typeof weapon === "string")
+        needle = weapon;
+    else
+        needle = weapon.name;
+
+    // The result
+    var toReturn = -1;
+
+    // For each piece of equipment
+    $.each(kobold.weapons, function (index, value) {
+        // If the weapon is what we're looking for
+        if (value.name === needle) {
+            // Set our result
+            toReturn = index;
+            // Break from the $.each
+            return false;
+        }
+    });
+
+    return toReturn;
+}
+
+/**
+ * Gets the index of a weapon by its tag. Returns -1 if the kobold does not 
+ * have the weapon.
+ * @param tag The tag to search for.
+ * @returns The index of the tag, or -1 if the kobold does not have the 
+ * weapon.
+ */
+function getWeaponIndexByTag(tag) {
+    // The result
+    var toReturn = -1;
+
+    // For each piece of equipment
+    $.each(kobold.weapons, function (index, value) {
+        // If the weapon is what we're looking for
+        if ($.inArray(tag, value.tags)) {
+            // Set our result
+            toReturn = index;
+            // Break from the $.each
+            return false;
+        }
+    });
+
+    return toReturn;
+}
+
+/**
+ * Populates the inventory tab with weapons.
+ */
+function populateInventoryTabWeapons() {
+    var weapons = $("#koboldadventureinventorytabstorage .koboldadventureweapons");
+    if (kobold.weapons.length <= 0) {
+        weapons.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no weapons.</span></p>');
+        return;
+    }
+
+    var toAppend = '<ul>';
+    $.each(kobold.weapons, function (index, value) {
+        toAppend += '<li>';
+        toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc + ' Tags: ';
+        $.each(value.tags, function (index, value) {
+            toAppend += '[' + value + '] ';
+        });
+        toAppend += '</li>';
+    });
+    toAppend += '</ul>';
+    weapons.append(toAppend);
+}
+
+/**
+ * Populates the inventory tab with equipment.
+ */
+function populateInventoryTabEquipment() {
+    var equipment = $("#koboldadventureinventorytabstorage .koboldadventureequipment");
+    if (isNaked()) {
+        equipment.html('<p class="koboldadventuresubtitle center"><span class="bold">You are completely naked.</span></p>');
+        return;
+    }
+    
+    var toAppend = '<ul>';
+    $.each(kobold.equipment, function (index, value) {
+        if (notEmpty(value)) {
+            toAppend += '<li>';
+            toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc;
+            toAppend += '</li>';
+        }
+    });
+    toAppend += '</ul>';
+    equipment.append(toAppend);
+}
+
+/**
+ * Populates the inventory tab with items.
+ */
+function populateInventoryTabItems() {
+    var inventory = $("#koboldadventureinventorytabstorage .koboldadventureinventory");
+    if (!hasItems()) {
+        inventory.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no belongings on you.</span></p>');
+        return;
+    }
+    
+    var toAppend = '<ul>';
+    $.each(kobold.inventory, function (index, value) {
+        toAppend += '<li>';
+        toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc;
+        toAppend += '</li>';
+    });
+    toAppend += '</ul>';
+    inventory.append(toAppend);
+}
+
+/**
+ * Populates the inventory tab with equipment, items and weapons.
+ */
+function populateInventoryTab() {
     populateInventoryTabEquipment();
     populateInventoryTabItems();
+    populateInventoryTabWeapons();
 }
 
 
@@ -1120,35 +1283,35 @@ function preProcessorGetEndIndex(text) {
     var index = localText.indexOf("(") + 1;
     localText = localText.substr(localText.indexOf("(") + 1); // Get right after the (
     var unclosedPar = 1; // How many unclosed parenthesis we have
-    
-    while(unclosedPar > 0){
+
+    while (unclosedPar > 0) {
         var nextClosing = localText.indexOf(")");
         var nextOpening = localText.indexOf("(");
-        
+
         // If we still have parenthesis to close, yet no more closing parenthesis, then we have an error
-        if(nextClosing === -1)
+        if (nextClosing === -1)
             return -1;
-        
+
         // If we have no more opening parenthesis, we skip past the next closing parenthesis and update our index
-        if(nextOpening === -1){
+        if (nextOpening === -1) {
             index += nextClosing + 1;
             unclosedPar--; // We of course have one less closing parenthesis after this.
-            localText = localText.substr(nextClosing+1);
+            localText = localText.substr(nextClosing + 1);
             continue;
         }
-        
+
         // If we have both opening and closing parenthesis remaining, we skip past the next set of parenthesis and update our index
-        if(nextOpening < nextClosing){
+        if (nextOpening < nextClosing) {
             index += nextOpening + 1;
             unclosedPar++; // We of course have one more unclosed parenthesis after this.
-            localText = localText.substr(nextOpening+1);
+            localText = localText.substr(nextOpening + 1);
         } else {
             index += nextClosing + 1;
             unclosedPar--; // We of course have one less closing parenthesis after this.
-            localText = localText.substr(nextClosing+1);
+            localText = localText.substr(nextClosing + 1);
         }
     }
-    
+
     return index;
 }
 
@@ -1157,8 +1320,8 @@ function preProcessorGetEndIndex(text) {
  * @param token The token whose type to return.
  * @returns The type of the token: method or function.
  */
-function preProcessorGetType(token){
-    if(token === "$scenem" || token === "$nobold" || token === "$method")
+function preProcessorGetType(token) {
+    if (token === "$scenem" || token === "$nobold" || token === "$method")
         return "method";
     else
         return "function";
@@ -1169,13 +1332,13 @@ function preProcessorGetType(token){
  * @param token The token.
  * @returns What should be prepended to the JavaScript prior to execution.
  */
-function preProcessorGetPrepend(token){
-    if(token === "$scenem" || token === "$scene")
+function preProcessorGetPrepend(token) {
+    if (token === "$scenem" || token === "$scene")
         return "scene.";
-    
-    if(token === "$kobold" || token === "$nobold")
+
+    if (token === "$kobold" || token === "$nobold")
         return "kobold.";
-    
+
     return "";
 }
 
@@ -1188,20 +1351,20 @@ function preProcessorGetPrepend(token){
  * @returns The executed JavaScript's result, or the empty string depending on 
  * the token. The empty string if the JavaScript returned undefined.
  */
-function preProcessorExecute(token, js){
+function preProcessorExecute(token, js) {
     var type = preProcessorGetType(token);
-    
+
     var prepend = preProcessorGetPrepend(token);
     js = prepend.concat(js);
-    
+
     var result = eval(js);
-    
-    if(typeof result === "undefined")
+
+    if (typeof result === "undefined")
         return "";
-    
-    if(type === "method")
+
+    if (type === "method")
         return "";
-    
+
     return result;
 }
 
@@ -1222,12 +1385,12 @@ function preProcessorExecuteAndReplace(text) {
         var startIndex = text.indexOf("("); // Where the JavaScript begins
         var endIndex = preProcessorGetEndIndex(text); // Where the JavaScript ends
         // If the JavaScript doesn't end, we have a problem.
-        if(endIndex === -1){   
+        if (endIndex === -1) {
             alert("Kobold Preprocessor error! No closing parenthesis found. Did you use ( or ) within a string? Location:" + text);
             break;
         }
         var token = text.substr(0, startIndex); // Extract the token
-        var javaScript = text.substr(startIndex+1, endIndex-startIndex-2); // Extract the JavaScript
+        var javaScript = text.substr(startIndex + 1, endIndex - startIndex - 2); // Extract the JavaScript
         processedText = processedText.concat(preProcessorExecute(token, javaScript)); // Execute the JavaScript and concatenate
         text = text.substr(endIndex); // Substring until right after the JavaScript's end and continue
     }

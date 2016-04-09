@@ -57,7 +57,7 @@ function load() {
         loadSimpleChoice("introductiongenderchoice", scene.genderSelectionFetchNext); // And thus we may load the choice
     
     // If our name selection choice is not empty, we have passed name selection
-    if(notEmpty(scene.introductiongenderchoice))
+    if(notEmpty(scene.introductionnameinput))
         loadSimpleTextInput("introductionnameinput", "introductionnameconfirm", scene.nameSelectionFetchNext); // And thus we may load the name
     
     scene.registerListeners();

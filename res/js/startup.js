@@ -9,8 +9,7 @@ var kobold = new Object();
 
 kobold.name = "";
 kobold.gender = "";
-kobold.inventory = {};
-kobold.inventory["Coins"] = 0;
+kobold.inventory = [];
 kobold.equipment = {};
 kobold.equipment["Arms"] = "";
 kobold.equipment["Legs"] = "";
@@ -24,11 +23,28 @@ kobold.equipment["Back"] = "";
 kobold.equipment["Shoulders"] = "";
 kobold.equipment["Head"] = "";
 kobold.equipment["Face"] = "";
+kobold.weapons = [];
 
-
+/**
+ * Adds functionality to the kobold. This functionality can't be stored via
+ * AJAX, and thus it needs to be added manually.
+ */
 function makeMyKoboldDoStuff(){
-    
+    kobold.isNaked = isNaked;
+    kobold.createPieceOfEquipment = createPieceOfEquipment;
+    kobold.putOn = putOn;
+    kobold.takeOff = takeOff;
+    kobold.createItem = createItem;
+    kobold.isWearing = isWearing;
+    kobold.hasOrIsWearingHowMany = hasOrIsWearingHowMany;
+    kobold.hasOrIsWearingItem = hasOrIsWearingItem;
+    kobold.hasHowMany = hasHowMany;
+    kobold.hasItem = hasItem;
+    kobold.removeItem = removeItem;
+    kobold.addItem = addItem;
 }
+
+makeMyKoboldDoStuff();
 
 var scene = new Object();
 
