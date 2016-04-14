@@ -540,6 +540,128 @@ function notEmpty(variable) {
 }
 
 
+/** STATUS **/
+
+
+/**
+ * Removes a status by name from the specified category. Does nothing if the
+ * status category doesn't exist.
+ * @param toRemove The exact contents of the status to remove.
+ * @param categoryName The name of the status category to remove the status from.
+ */
+function removeStatusFromCategory(toRemove, categoryName) {
+    // If the category doesn't exist, do nothing.
+    if (!statusCategoryExists(categoryName))
+        return;
+
+    // Run through the category array and remove all occurrences of toRemove.
+    for (var i = kobold.status[categoryName].length - 1; i >= 0; i--) {
+        if (kobold.status[categoryName][i] === toRemove) {
+            kobold.status[categoryName].splice(i, 1);
+        }
+    }
+}
+
+/**
+ * Removes a status by name, from all categories.
+ * @param toRemove The exact contents of the status to remove.
+ */
+function removeStatus(toRemove) {
+    // For each category, remove the status
+    $.each(kobold.status, function (index, value) {
+        removeStatusFromCategory(toRemove, index);
+    });
+}
+
+/**
+ * Removes a status by something it contains from the specified category. Does 
+ * nothing if the status category doesn't exist.
+ * @param toRemove Something the status you want to remove contains.
+ * @param categoryName The name of the status category to remove the status from.
+ */
+function removeStatusFromCategoryContains(toRemove, categoryName) {
+    // If the category doesn't exist, do nothing.
+    if (!statusCategoryExists(categoryName))
+        return;
+
+    // Run through the category array and remove all occurrences of toRemove.
+    for (var i = kobold.status[categoryName].length - 1; i >= 0; i--) {
+        if (kobold.status[categoryName][i].indexOf(toRemove) !== -1) {
+            kobold.status[categoryName].splice(i, 1);
+        }
+    }
+}
+
+/**
+ * Removes a status by something it contains, from all categories.
+ * @param toRemove Something the status you want to remove contains.
+ */
+function removeStatusContains(toRemove) {
+    // For each category, remove the status
+    $.each(kobold.status, function (index, value) {
+        removeStatusFromCategoryContains(toRemove, index);
+    });
+}
+
+/**
+ * Completely removes a status category. Note that the mental and physical 
+ * categories are protected and may NOT be removed under ANY circumstances.
+ * @param categoryName The name of the category to remove. May NOT be "Physical" 
+ * or "Mental".
+ */
+function removeStatusCategory(categoryName) {
+    if (categoryName === "Physical" || categoryName === "Mental") {
+        return;
+    }
+
+    if (statusCategoryExists(categoryName))
+        delete kobold.status[categoryName];
+}
+
+/**
+ * Clears a status category.
+ * @param categoryName The name of the category to clear.
+ */
+function clearStatusCategory(categoryName) {
+    if (!statusCategoryExists(categoryName))
+        return;
+    kobold.status[categoryName] = [];
+}
+
+/**
+ * Checks whether or not the category with the passed name exists.
+ * @param categoryName The name of the category.
+ * @returns True if the category exists, false otherwise.
+ */
+function statusCategoryExists(categoryName) {
+    return kobold.status[categoryName] !== undefined;
+}
+
+/**
+ * Creates a status category in the kobold's status object. Does nothing if a 
+ * category by that name already exists.
+ * @param categoryName The name of the new category.
+ */
+function createStatusCategory(categoryName) {
+    if (statusCategoryExists(categoryName))
+        return;
+
+    kobold.status[categoryName] = [];
+}
+
+/**
+ * Adds a status to a status category. Will create the status if it does not exist.
+ * @param categoryName The name of the category.
+ * @param status The status to add.
+ */
+function addStatusToCategory(categoryName, status) {
+    if (!statusCategoryExists(categoryName))
+        createStatusCategory(categoryName);
+
+    kobold.status[categoryName].push(status);
+}
+
+
 /** INVENTORY **/
 
 

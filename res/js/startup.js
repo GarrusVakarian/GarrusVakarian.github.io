@@ -9,6 +9,9 @@ var kobold = new Object();
 
 kobold.name = "";
 kobold.gender = "";
+kobold.status = {};
+kobold.status["Physical"] = [];
+kobold.status["Mental"] = [];
 kobold.inventory = [];
 kobold.equipment = {};
 kobold.equipment["Arms"] = "";

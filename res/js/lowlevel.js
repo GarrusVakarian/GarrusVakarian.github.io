@@ -879,6 +879,141 @@ function stripSaveSlot(slot) {
 
 
 /**
+ * Clears the status tab of statuses.
+ */
+function unpopulateStatusTab(){
+    var status = $(".koboldadventuremain .koboldadventurestatuscontainer");
+    status.html("");
+}
+
+/**
+ * Gets the contents of the category, formatted as a string.
+ * @param category The category array/pseudoobject. The empty string if the
+ * category is not an array. 'You are feeling fine.' if the category is empty.
+ * @returns The category formatted as a string.
+ */
+function getStatusCategoryContent(category){
+    var toReturn = "";
+    
+    // If it's not an array, return the empty string.
+    if(!(category instanceof Array)){
+        return toReturn;
+    }
+    
+    // If it's empty, return 'You are feeling fine.'
+    if(category.length <= 0){
+        return "You are feeling fine.";
+    }
+    
+    // If it's an array and it's not empty, iterate over it and return every 
+    // value concatenated.
+    $.each(category, function(index, value){
+        toReturn += value;
+        toReturn += " ";
+    });
+    
+    return toReturn;
+}
+
+/**
+ * Populates the status tab.
+ */
+function populateStatusTab(){
+    var status = $("#koboldadventurestatustabstorage .koboldadventurestatuscontainer");
+    var content = "";
+    // For each status category
+    $.each(kobold.status, function(index, value){
+        // Add the category title
+        content += '<h2 class="koboldadventuresubtitle">' + index + '</h2>';
+        content += '<p class="koboldadventuretext">' + getStatusCategoryContent(value) + '</p>';
+    });
+    status.html(content);
+}
+
+/**
+ * Populates the inventory tab with weapons.
+ */
+function populateInventoryTabWeapons() {
+    var weapons = $("#koboldadventureinventorytabstorage .koboldadventureweapons");
+    if (kobold.weapons.length <= 0) {
+        weapons.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no weapons.</span></p>');
+        return;
+    }
+
+    var toAppend = '<ul>';
+    $.each(kobold.weapons, function (index, value) {
+        toAppend += '<li>';
+        toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc + ' Tags: ';
+        $.each(value.tags, function (index, value) {
+            toAppend += '[' + value + '] ';
+        });
+        toAppend += '</li>';
+    });
+    toAppend += '</ul>';
+    weapons.append(toAppend);
+}
+
+/**
+ * Populates the inventory tab with equipment.
+ */
+function populateInventoryTabEquipment() {
+    var equipment = $("#koboldadventureinventorytabstorage .koboldadventureequipment");
+    if (isNaked()) {
+        equipment.html('<p class="koboldadventuresubtitle center"><span class="bold">You are completely naked.</span></p>');
+        return;
+    }
+    
+    var toAppend = '<ul>';
+    $.each(kobold.equipment, function (index, value) {
+        if (notEmpty(value)) {
+            toAppend += '<li>';
+            toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc;
+            toAppend += '</li>';
+        }
+    });
+    toAppend += '</ul>';
+    equipment.append(toAppend);
+}
+
+/**
+ * Populates the inventory tab with items.
+ */
+function populateInventoryTabItems() {
+    var inventory = $("#koboldadventureinventorytabstorage .koboldadventureinventory");
+    if (!hasItems()) {
+        inventory.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no belongings on you.</span></p>');
+        return;
+    }
+    
+    var toAppend = '<ul>';
+    $.each(kobold.inventory, function (index, value) {
+        toAppend += '<li>';
+        toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc;
+        toAppend += '</li>';
+    });
+    toAppend += '</ul>';
+    inventory.append(toAppend);
+}
+
+/**
+ * Populates the inventory tab with equipment, items and weapons.
+ */
+function populateInventoryTab() {
+    populateInventoryTabEquipment();
+    populateInventoryTabItems();
+    populateInventoryTabWeapons();
+}
+
+/**
+ * Clears the inventory tab of equipment and items.
+ */
+function unpopulateInventoryTab() {
+    $(".koboldadventuremain .koboldadventureinventory").html("");
+    $(".koboldadventuremain .koboldadventureequipment").html("");
+    $(".koboldadventuremain .koboldadventureweapons").html("");
+}
+
+/**
  * Instantly switches to the specified tab. Doesn't store the current tab in 
  * storage. For reasons. You probably shouldn't be using this function.
  * @param tabName The name of the tab. "scene", "statss", "status", etc.
@@ -909,14 +1044,9 @@ function changeTabInstantNoStore(tabName) {
     }
 }
 
-/**
- * Clears the inventory tab of equipment and items.
- */
-function unpopulateInventoryTab() {
-    $(".koboldadventuremain .koboldadventureinventory").html("");
-    $(".koboldadventuremain .koboldadventureequipment").html("");
-    $(".koboldadventuremain .koboldadventureweapons").html("");
-}
+
+/** INVENTORY MANAGEMENT **/
+
 
 /**
  * Returns true if the kobold has items. False otherwise.
@@ -1047,80 +1177,6 @@ function getWeaponIndexByTag(tag) {
     });
 
     return toReturn;
-}
-
-/**
- * Populates the inventory tab with weapons.
- */
-function populateInventoryTabWeapons() {
-    var weapons = $("#koboldadventureinventorytabstorage .koboldadventureweapons");
-    if (kobold.weapons.length <= 0) {
-        weapons.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no weapons.</span></p>');
-        return;
-    }
-
-    var toAppend = '<ul>';
-    $.each(kobold.weapons, function (index, value) {
-        toAppend += '<li>';
-        toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc + ' Tags: ';
-        $.each(value.tags, function (index, value) {
-            toAppend += '[' + value + '] ';
-        });
-        toAppend += '</li>';
-    });
-    toAppend += '</ul>';
-    weapons.append(toAppend);
-}
-
-/**
- * Populates the inventory tab with equipment.
- */
-function populateInventoryTabEquipment() {
-    var equipment = $("#koboldadventureinventorytabstorage .koboldadventureequipment");
-    if (isNaked()) {
-        equipment.html('<p class="koboldadventuresubtitle center"><span class="bold">You are completely naked.</span></p>');
-        return;
-    }
-    
-    var toAppend = '<ul>';
-    $.each(kobold.equipment, function (index, value) {
-        if (notEmpty(value)) {
-            toAppend += '<li>';
-            toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc;
-            toAppend += '</li>';
-        }
-    });
-    toAppend += '</ul>';
-    equipment.append(toAppend);
-}
-
-/**
- * Populates the inventory tab with items.
- */
-function populateInventoryTabItems() {
-    var inventory = $("#koboldadventureinventorytabstorage .koboldadventureinventory");
-    if (!hasItems()) {
-        inventory.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no belongings on you.</span></p>');
-        return;
-    }
-    
-    var toAppend = '<ul>';
-    $.each(kobold.inventory, function (index, value) {
-        toAppend += '<li>';
-        toAppend += '<span class="bold">' + value.name + '</span>' + '&emsp;&emsp;' + value.desc;
-        toAppend += '</li>';
-    });
-    toAppend += '</ul>';
-    inventory.append(toAppend);
-}
-
-/**
- * Populates the inventory tab with equipment, items and weapons.
- */
-function populateInventoryTab() {
-    populateInventoryTabEquipment();
-    populateInventoryTabItems();
-    populateInventoryTabWeapons();
 }
 
 

@@ -441,20 +441,20 @@ button:focus, textarea:focus{
 }
 
 .koboldadventuresubtitle{
-    font-size: 24px;
+    font-size: 32px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .koboldadventuresubsubtitle{
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     margin-top: 15px;
     margin-bottom: 15px;
 }
 
 .koboldadventuresubsubsubtitle{
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 10px;

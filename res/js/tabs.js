@@ -79,6 +79,11 @@ function genericTabOnclick() {
     if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventureinventorytab'){
         unpopulateInventoryTab();
     }
+    
+    // If the previous tab was the status tab, then we need to clear it.
+    if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventurestatustab'){
+        unpopulateStatusTab();
+    }
 }
 
 /**
@@ -99,7 +104,12 @@ function statsTabOnclick() {
  * The onclick function for the status tab.
  */
 function statusTabOnclick() {
-
+    // If cancelled, do nothing.
+    if(koboldAdventureStorageManagerCancelFurtherOnclicks)
+        return;
+    
+    // Populate the status tab before tabbing it in
+    populateStatusTab();
 }
 
 /**
