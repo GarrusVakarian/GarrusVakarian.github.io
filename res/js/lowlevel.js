@@ -879,9 +879,331 @@ function stripSaveSlot(slot) {
 
 
 /**
+ * Clears the stats tab of status.
+ */
+function unpopulateStatsTab() {
+    var stats = $(".koboldadventuremain .koboldadventurestatscontainer");
+    stats.html("");
+}
+
+/**
+ * Returns a well formatted HTML string representing the kobold's attributes, 
+ * with a fitting header.
+ * @returns a well formatted HTML string representing the kobold's attributes, 
+ * with a fitting header.
+ */
+function populateStatsTabGetAttributes() {
+    var toReturn = '<h2 class="koboldadventuresubtitle">' + "Attributes" + '</h2>';
+
+    $.each(kobold.stats.attr, function (index, value) {
+        toReturn += '<div class="koboldadventurehalf"><span class="bold">' + index + '</span>: ' + value + '</div>';
+    });
+
+    return toReturn;
+}
+
+/**
+ * Returns a well formatted HTML string representing the kobold's derived 
+ * attributes, with a fitting header.
+ * @returns a well formatted HTML string representing the kobold's derived 
+ * attributes, with a fitting header.
+ */
+function populateStatsTabGetDerivedAttributes() {
+    var toReturn = '<h2 class="koboldadventuresubtitle">' + "Derived Attributes" + '</h2>';
+
+    return toReturn;
+}
+
+/**
+ * Returns a well formatted HTML string representing how many times the kobold 
+ * has been fucked, with a fitting header.
+ * @returns a well formatted HTML string representing how many times the kobold 
+ * has been fucked, with a fitting header.
+ */
+function populateStatsTabGetSex() {
+    var toReturn = '<h2 class="koboldadventuresubtitle">' + "Sexual" + '</h2>';
+
+    if (kobold.stats.consensual === 0)
+        toReturn += "<p>You haven't ever had consensual sex.</p>";
+    if (kobold.stats.consensual === 1)
+        toReturn += "<p>You have had consensual sex before.</p>";
+    if (kobold.stats.consensual > 1)
+        toReturn += "<p>You had consensual sex " + kobold.stats.consensual + " times.</p>";
+
+    if (kobold.stats.formoney === 0)
+        toReturn += "<p>You haven't ever had sex for money.</p>";
+    if (kobold.stats.formoney === 1)
+        toReturn += "<p>You have had sex for money once before.</p>";
+    if (kobold.stats.formoney > 1)
+        toReturn += "<p>You have had sex for money " + kobold.stats.formoney + " times.</p>";
+
+    if (kobold.stats.prostitute === 0)
+        toReturn += "<p>You haven't ever fucked a prostitute.</p>";
+    if (kobold.stats.prostitute === 1)
+        toReturn += "<p>You've fucked a prostitute once before.</p>";
+    if (kobold.stats.prostitute > 1)
+        toReturn += "<p>You have fucked " + kobold.stats.prostitute + " hookers.</p>";
+
+    if (kobold.stats.beenraped === 0)
+        toReturn += "<p>You've never been raped before.</p>";
+    if (kobold.stats.beenraped === 1)
+        toReturn += "<p>You've been raped once before.</p>";
+    if (kobold.stats.beenraped > 1)
+        toReturn += "<p>You have been raped " + kobold.stats.beenraped + " times.</p>";
+
+    if (kobold.stats.rape === 0)
+        toReturn += "<p>You haven't ever raped someone.</p>";
+    if (kobold.stats.rape === 1)
+        toReturn += "<p>You've raped someone before.</p>";
+    if (kobold.stats.rape > 1)
+        toReturn += "<p>You have raped " + kobold.stats.rape + " people.</p>";
+    
+    if (kobold.stats.came.Times === 0)
+        toReturn += "<p>You haven't climaxed recently.</p>";
+    if (kobold.stats.cameTimes === 1)
+        toReturn += "<p>You've reached your climax recently.</p>";
+    if (kobold.stats.came.Times > 1)
+        toReturn += "<p>You have came " + kobold.stats.came.Times + " times recently.</p>";
+
+
+    toReturn += '<h3 class="koboldadventuresubsubtitle">' + "Receiving" + '</h3>';
+
+    if (kobold.stats.sex.Hands === 0)
+        toReturn += "<p>You haven't ever given a handjob.</p>";
+    if (kobold.stats.sex.Hands === 1)
+        toReturn += "<p>You have given one handjob before.</p>";
+    if (kobold.stats.sex.Hands > 1)
+        toReturn += "<p>You have given " + kobold.stats.sex.Hands + " handjobs.</p>";
+
+    if (kobold.stats.sex.Mouth === 0)
+        toReturn += "<p>You haven't ever given a blowjob.</p>";
+    if (kobold.stats.sex.Mouth === 1)
+        toReturn += "<p>You have given one blowjob before.</p>";
+    if (kobold.stats.sex.Mouth > 1)
+        toReturn += "<p>You have given " + kobold.stats.sex.Mouth + " blowjobs.</p>";
+
+    if (kobold.gender === "Male") {
+        if (kobold.stats.sex.Cockslit === 0)
+            toReturn += "<p>You haven't ever been fucked in your cockslit.</p>";
+        if (kobold.stats.sex.Cockslit === 1)
+            toReturn += "<p>You have been fucked in your cockslit once before.</p>";
+        if (kobold.stats.sex.Cockslit > 1)
+            toReturn += "<p>Your cockslit been fucked " + kobold.stats.sex.Cockslit + " times.</p>";
+    }
+
+    if (kobold.gender === "Female") {
+        if (kobold.stats.sex.Cunt === 0)
+            toReturn += "<p>You haven't ever been fucked.</p>";
+        if (kobold.stats.sex.Cunt === 1)
+            toReturn += "<p>You have been fucked once before.</p>";
+        if (kobold.stats.sex.Cunt > 1)
+            toReturn += "<p>You have been fucked " + kobold.stats.sex.Cunt + " times.</p>";
+    }
+
+    if (kobold.stats.sex.Ass === 0)
+        toReturn += "<p>You haven't ever had anal sex.</p>";
+    if (kobold.stats.sex.Ass === 1)
+        toReturn += "<p>You've been fucked up the butt once.</p>";
+    if (kobold.stats.sex.Ass > 1)
+        toReturn += "<p>You have been fucked in the ass " + kobold.stats.sex.Ass + " times.</p>";
+
+    if (kobold.stats.sex.Tail === 0)
+        toReturn += "<p>You haven't ever given a tailjob.</p>";
+    if (kobold.stats.sex.Tail === 1)
+        toReturn += "<p>You have given one tailjob before.</p>";
+    if (kobold.stats.sex.Tail > 1)
+        toReturn += "<p>You have given " + kobold.stats.sex.Tail + " tailjobs.</p>";
+
+    if (kobold.stats.sex.Other === 0)
+        toReturn += "<p>You haven't ever had unconventional sex.</p>";
+    if (kobold.stats.sex.Other === 1)
+        toReturn += "<p>You have had unconventional sex once before.</p>";
+    if (kobold.stats.sex.Other > 1)
+        toReturn += "<p>You have had unconventional sex " + kobold.stats.sex.Other + " times.</p>";
+
+    if (kobold.stats.cum.Face === 0)
+        toReturn += "<p>You haven't ever received a facial.</p>";
+    if (kobold.stats.cum.Face === 1)
+        toReturn += "<p>You have had unconventional sex once before.</p>";
+    if (kobold.stats.cum.Face > 1)
+        toReturn += "<p>You have had unconventional sex " + kobold.stats.sex.Other + " times.</p>";
+
+    if (kobold.stats.cum.Body === 0)
+        toReturn += "<p>Your body has never been came on.</p>";
+    if (kobold.stats.cum.Body === 1)
+        toReturn += "<p>You've been came on before.</p>";
+    if (kobold.stats.cum.Body > 1)
+        toReturn += "<p>You've been came on " + kobold.stats.cum.Body + " times.</p>";
+
+    if (kobold.gender === "Male") {
+        if (kobold.stats.cum.Cockslit === 0)
+            toReturn += "<p>Your cockslit has never been came in before.</p>";
+        if (kobold.stats.cum.Cockslit === 1)
+            toReturn += "<p>Your cockslit has been came in before.</p>";
+        if (kobold.stats.cum.Cockslit > 1)
+            toReturn += "<p>Your cockslit has been came in " + kobold.stats.cum.Cockslit + " times before.</p>";
+    }
+    
+    if (kobold.gender === "Female") {
+        if (kobold.stats.cum.Cunt === 0)
+            toReturn += "<p>You have has never been came in before.</p>";
+        if (kobold.stats.cum.Cunt === 1)
+            toReturn += "<p>You have been came in before.</p>";
+        if (kobold.stats.cum.Cunt > 1)
+            toReturn += "<p>You have been came in " + kobold.stats.cum.Cunt + " times before.</p>";
+    }
+    
+    if (kobold.stats.cum.Ass === 0)
+        toReturn += "<p>Your ass has never been came in.</p>";
+    if (kobold.stats.cum.Ass === 1)
+        toReturn += "<p>Your ass has been came in before.</p>";
+    if (kobold.stats.cum.Ass > 1)
+        toReturn += "<p>Your ass has been came in " + kobold.stats.cum.Ass + " times.</p>";
+    
+    if (kobold.stats.cum.Feet === 0)
+        toReturn += "<p>Your feet have never been came on.</p>";
+    if (kobold.stats.cum.Feet === 1)
+        toReturn += "<p>Your feet have been came on before.</p>";
+    if (kobold.stats.cum.Feet > 1)
+        toReturn += "<p>Your feet have been came on " + kobold.stats.cum.Feet + " times.</p>";
+    
+    
+    if (kobold.stats.gotfucked.male.Human === 0)
+        toReturn += "<p>You've never been fucked by a man.</p>";
+    if (kobold.stats.gotfucked.male.Human === 1)
+        toReturn += "<p>You've been fucked by a single man.</p>";
+    if (kobold.stats.gotfucked.male.Human > 1)
+        toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.male.Human + " men.</p>";
+    
+    if (kobold.stats.gotfucked.female.Human === 0)
+        toReturn += "<p>You've never been fucked by a woman before.</p>";
+    if (kobold.stats.gotfucked.female.Human === 1)
+        toReturn += "<p>You've been fucked by a single woman.</p>";
+    if (kobold.stats.gotfucked.female.Human > 1)
+        toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.female.Human + " women.</p>";
+    
+    if (kobold.stats.gotfucked.male.Kobold === 0)
+        toReturn += "<p>You've never been fucked by a male kobold.</p>";
+    if (kobold.stats.gotfucked.male.Kobold === 1)
+        toReturn += "<p>You've been fucked by a male kobold before.</p>";
+    if (kobold.stats.gotfucked.male.Kobold > 1)
+        toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.male.Kobold + " male kobolds.</p>";
+    
+    if (kobold.stats.gotfucked.female.Kobold === 0)
+        toReturn += "<p>You've never been fucked by a female kobold.</p>";
+    if (kobold.stats.gotfucked.female.Kobold === 1)
+        toReturn += "<p>You've been fucked by a female kobold before.</p>";
+    if (kobold.stats.gotfucked.female.Kobold > 1)
+        toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.female.Kobold + " female kobolds.</p>";
+    
+    if (kobold.stats.gotfucked.male.Dragon === 0)
+        toReturn += "<p>You've never been fucked by a male dragon.</p>";
+    if (kobold.stats.gotfucked.male.Dragon === 1)
+        toReturn += "<p>You've been fucked by a male dragon before.</p>";
+    if (kobold.stats.gotfucked.male.Dragon > 1)
+        toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.male.Dragon + " male dragons.</p>";
+    
+    if (kobold.stats.gotfucked.female.Dragon === 0)
+        toReturn += "<p>You've never been fucked by a female dragon.</p>";
+    if (kobold.stats.gotfucked.female.Dragon === 1)
+        toReturn += "<p>You've been fucked by a female dragon before.</p>";
+    if (kobold.stats.gotfucked.female.Dragon > 1)
+        toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.female.Dragon + " female dragons.</p>";
+    
+    if (kobold.stats.gotfucked.male.Beast === 0)
+        toReturn += "<p>You've never been fucked by a male beast.</p>";
+    if (kobold.stats.gotfucked.male.Beast === 1)
+        toReturn += "<p>You've been fucked by a male beast before.</p>";
+    if (kobold.stats.gotfucked.male.Beast > 1)
+        toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.male.Beast + " male beasts.</p>";
+    
+    if (kobold.stats.gotfucked.female.Beast === 0)
+        toReturn += "<p>You've never been fucked by a female beast.</p>";
+    if (kobold.stats.gotfucked.female.Beast === 1)
+        toReturn += "<p>You've been fucked by a female beast before.</p>";
+    if (kobold.stats.gotfucked.female.Beast > 1)
+        toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.female.Beast + " female beasts.</p>";
+    
+
+    toReturn += '<h3 class="koboldadventuresubsubtitle">' + "Giving" + '</h3>';
+
+    if (kobold.stats.fucked.male.Human === 0)
+        toReturn += "<p>You've never fucked a man before.</p>";
+    if (kobold.stats.fucked.male.Human === 1)
+        toReturn += "<p>You've fucked a single man.</p>";
+    if (kobold.stats.fucked.male.Human > 1)
+        toReturn += "<p>You've fucked " + kobold.stats.fucked.male.Human + " men.</p>";
+    
+    if (kobold.stats.fucked.female.Human === 0)
+        toReturn += "<p>You've never fucked a woman before.</p>";
+    if (kobold.stats.fucked.female.Human === 1)
+        toReturn += "<p>You've fucked a single woman.</p>";
+    if (kobold.stats.fucked.female.Human > 1)
+        toReturn += "<p>You've fucked " + kobold.stats.fucked.female.Human + " women.</p>";
+    
+    if (kobold.stats.fucked.male.Kobold === 0)
+        toReturn += "<p>You've never fucked a male kobold.</p>";
+    if (kobold.stats.fucked.male.Kobold === 1)
+        toReturn += "<p>You've fucked a male kobold before.</p>";
+    if (kobold.stats.fucked.male.Kobold > 1)
+        toReturn += "<p>You've fucked " + kobold.stats.fucked.male.Kobold + " male kobolds.</p>";
+    
+    if (kobold.stats.fucked.female.Kobold === 0)
+        toReturn += "<p>You've never fucked a female kobold.</p>";
+    if (kobold.stats.fucked.female.Kobold === 1)
+        toReturn += "<p>You've fucked a female kobold before.</p>";
+    if (kobold.stats.fucked.female.Kobold > 1)
+        toReturn += "<p>You've fucked " + kobold.stats.fucked.female.Kobold + " female kobolds.</p>";
+    
+    if (kobold.stats.fucked.male.Dragon === 0)
+        toReturn += "<p>You've never fucked a male dragon.</p>";
+    if (kobold.stats.fucked.male.Dragon === 1)
+        toReturn += "<p>You've fucked a male dragon before.</p>";
+    if (kobold.stats.fucked.male.Dragon > 1)
+        toReturn += "<p>You've fucked " + kobold.stats.fucked.male.Dragon + " male dragons.</p>";
+    
+    if (kobold.stats.fucked.female.Dragon === 0)
+        toReturn += "<p>You've never fucked a female dragon.</p>";
+    if (kobold.stats.fucked.female.Dragon === 1)
+        toReturn += "<p>You've fucked a female dragon before.</p>";
+    if (kobold.stats.fucked.female.Dragon > 1)
+        toReturn += "<p>You've fucked " + kobold.stats.fucked.female.Dragon + " female dragons.</p>";
+    
+    if (kobold.stats.fucked.male.Beast === 0)
+        toReturn += "<p>You've never fucked a male beast.</p>";
+    if (kobold.stats.fucked.male.Beast === 1)
+        toReturn += "<p>You've fucked a male beast before.</p>";
+    if (kobold.stats.fucked.male.Beast > 1)
+        toReturn += "<p>You've fucked " + kobold.stats.fucked.male.Beast + " male beasts.</p>";
+    
+    if (kobold.stats.fucked.female.Beast === 0)
+        toReturn += "<p>You've never fucked a female beast.</p>";
+    if (kobold.stats.fucked.female.Beast === 1)
+        toReturn += "<p>You've fucked a female beast before.</p>";
+    if (kobold.stats.fucked.female.Beast > 1)
+        toReturn += "<p>You've fucked " + kobold.stats.fucked.female.Beast + " female beasts.</p>";
+
+    return toReturn;
+}
+
+/**
+ * Populates the stats tab.
+ */
+function populateStatsTab() {
+    var stats = $("#koboldadventurestatstabstorage .koboldadventurestatscontainer");
+    var content = "";
+
+    content += populateStatsTabGetAttributes();
+    content += populateStatsTabGetDerivedAttributes();
+    content += populateStatsTabGetSex();
+
+    stats.html(content);
+}
+
+/**
  * Clears the status tab of statuses.
  */
-function unpopulateStatusTab(){
+function unpopulateStatusTab() {
     var status = $(".koboldadventuremain .koboldadventurestatuscontainer");
     status.html("");
 }
@@ -892,37 +1214,37 @@ function unpopulateStatusTab(){
  * category is not an array. 'You are feeling fine.' if the category is empty.
  * @returns The category formatted as a string.
  */
-function getStatusCategoryContent(category){
+function getStatusCategoryContent(category) {
     var toReturn = "";
-    
+
     // If it's not an array, return the empty string.
-    if(!(category instanceof Array)){
+    if (!(category instanceof Array)) {
         return toReturn;
     }
-    
+
     // If it's empty, return 'You are feeling fine.'
-    if(category.length <= 0){
+    if (category.length <= 0) {
         return "You are feeling fine.";
     }
-    
+
     // If it's an array and it's not empty, iterate over it and return every 
     // value concatenated.
-    $.each(category, function(index, value){
+    $.each(category, function (index, value) {
         toReturn += value;
         toReturn += " ";
     });
-    
+
     return toReturn;
 }
 
 /**
  * Populates the status tab.
  */
-function populateStatusTab(){
+function populateStatusTab() {
     var status = $("#koboldadventurestatustabstorage .koboldadventurestatuscontainer");
     var content = "";
     // For each status category
-    $.each(kobold.status, function(index, value){
+    $.each(kobold.status, function (index, value) {
         // Add the category title
         content += '<h2 class="koboldadventuresubtitle">' + index + '</h2>';
         content += '<p class="koboldadventuretext">' + getStatusCategoryContent(value) + '</p>';
@@ -962,7 +1284,7 @@ function populateInventoryTabEquipment() {
         equipment.html('<p class="koboldadventuresubtitle center"><span class="bold">You are completely naked.</span></p>');
         return;
     }
-    
+
     var toAppend = '<ul>';
     $.each(kobold.equipment, function (index, value) {
         if (notEmpty(value)) {
@@ -984,7 +1306,7 @@ function populateInventoryTabItems() {
         inventory.html('<p class="koboldadventuresubtitle center"><span class="bold">You have no belongings on you.</span></p>');
         return;
     }
-    
+
     var toAppend = '<ul>';
     $.each(kobold.inventory, function (index, value) {
         toAppend += '<li>';

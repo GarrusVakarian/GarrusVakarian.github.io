@@ -80,6 +80,11 @@ function genericTabOnclick() {
         unpopulateInventoryTab();
     }
     
+    // If the previous tab was the stats tab, then we need to clear it.
+    if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventurestatstab'){
+        unpopulateStatsTab();
+    }
+    
     // If the previous tab was the status tab, then we need to clear it.
     if(koboldAdventureStorageManagerPreviousTab.attr("id") === 'koboldadventurestatustab'){
         unpopulateStatusTab();
@@ -97,7 +102,12 @@ function sceneTabOnclick() {
  * The onclick function for the stats tab.
  */
 function statsTabOnclick() {
-
+    // If cancelled, do nothing.
+    if(koboldAdventureStorageManagerCancelFurtherOnclicks)
+        return;
+    
+    // Populate the stats tab before tabbing it in
+    populateStatsTab();
 }
 
 /**

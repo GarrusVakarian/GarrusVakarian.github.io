@@ -621,3 +621,8 @@ button:focus, textarea:focus{
 .koboldadventurestorage{
     display: none;
 }
+
+.koboldadventurehalf{
+    width: 50%;
+    float: left;
+}
