@@ -325,6 +325,9 @@ function loadSimpleChoice(choiceGroup, fetchNext) {
  * accessed via scene.choiceGroup. Note: do not change this value after it is 
  * set. If you must alter it, use a different field for that.
  * 
+ * Will create the load stack if it does not yet exist, and will push the choice
+ * to the load stack.
+ * 
  * @param clicked The clicked object.
  * @param choiceGroup The mutual class of the choicegroup.
  * @param processChoice The scene-defined function to call to update the scene
@@ -336,6 +339,10 @@ function simpleChoice(clicked, choiceGroup, processChoice, fetchNext) {
     $(".koboldadventuremain ." + choiceGroup).not(".koboldadventurestorage").prop('disabled', true); // Disable the buttons
     selectedOptionStyling(clicked); // Style the selected option
     scene[choiceGroup] = clicked.attr("value"); // Store value of the clicked element in scene object
+    // Create load stack if not available
+    makeLoadStackIfNotPresent();
+    // Push choice to load stack
+    scene.loadStack.push('loadSimpleChoice("' + choiceGroup  + '", ' + fetchNext + ');');
     processChoice(); // Process the choice
     fetchNext(); // Fetch the next segment
 }
@@ -390,6 +397,9 @@ function loadSimpleTextInput(textfieldClass, buttonClass, fetchNext) {
  * accessed via scene.textfieldClass. Note: do not change this value after it is 
  * set. If you must alter it, use a different field for that.
  * 
+ * Will create the load stack if it does not yet exist, and will push the choice
+ * to the load stack.
+ * 
  * @param textfieldClass The class of the textfield.
  * @param buttonClass The class of the button.
  * @param processChoice The scene-defined function to call to update the scene
@@ -405,6 +415,11 @@ function simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, 
     // If we have a minimum length requirement, and the current value is smaller than the length, just return
     if (typeof minLength !== "undefined" && textField.val().length < minLength)
         return;
+    
+    // Create load stack if not available
+    makeLoadStackIfNotPresent();
+    // Push choice to load stack
+    scene.loadStack.push('loadSimpleTextInput("' + textfieldClass  + '", "' + buttonClass + '", ' + fetchNext + ');' );
 
     button.prop('disabled', true); // Disable the button
     textField.prop('disabled', true); // Disable the textfield
@@ -465,6 +480,17 @@ function selectedOptionStyling(element) {
     $(element).addClass("koboldadventureselectedoption");
 }
 
+/**
+ * Loads the scene from the Load Stack. Requires the Load Stack to be enabled.
+ */
+function loadFromStack(){
+    if(scene.loadStack === undefined)
+        return;
+    
+    $.each(scene.loadStack, function(index, value){
+        eval(value);
+    });
+}
 
 /** FETCH FROM STORAGE **/
 
@@ -996,4 +1022,92 @@ function isNaked() {
             naked = false;
     });
     return naked;
+}
+
+
+/** DERIVED STATS **/
+
+
+/**
+ * Returns the total intimidation value of the kobold.
+ * @eturn The total intimidation value of the kobold.
+ */
+function calculateIntimidation(){
+    // Calculate intimidation in function of strength and all item and mark modifiers
+    return kobold.stats.attr.Strength + countTotalGearAndMarkIntimidation();
+}
+
+/**
+ * Returns the total reflexes of the kobold.
+ * @returns The reflexes of the kobold.
+ */
+function calculateReflexes(){
+    return kobold.stats.attr.Agility + countTotalGearThickness();
+}
+
+
+/**
+ * Returns how slick the kobold is.
+ * @returns How slick the kobold is.
+ */
+function calculateSlickness(){
+    return kobold.stats.attr.Agility - countTotalGearCoarseness();
+}
+
+/**
+ * Returns how powerful the kobold is.
+ * @returns How powerful the kobold is.
+ */
+function calculateProwess(){
+    return kobold.stats.attr.Strength + kobold.stats.attr.Agility + kobold.stats.attr.Endurance + kobold.stats.attr.Stamina + kobold.stats.attr.Magic * 10;
+}
+
+
+/** STATUS **/
+
+
+/**
+ * Adds a new marking to the kobold.
+ * @param name The name of the marking.
+ * @param description The description of the marking.
+ * @param intimidation The intimidation factor of the marking. Ussually 
+ * negative.
+ * @param easilywashable Boolean. Whether or not the marking will be removed 
+ * upon contact with water.
+ * @param washable Boolean. Whether or not the marking can be removed by 
+ * intently washing up.
+ */
+function addMarking(name, description, intimidation, easilywashable, washable) {
+    var mark = {};
+    mark.name = name;
+    mark.desc = description;
+    mark.intim = intimidation;
+    mark.easy = easilywashable;
+    mark.wash = easilywashable;
+    
+    kobold.markings.push(mark);
+}
+
+/**
+ * Removes all easily washable markings from the kobold.
+ */
+function inWater(){
+    // Run through the markings array and remove all washable marks.
+    for (var i = kobold.markings.length - 1; i >= 0; i--) {
+        if (notEmpty(kobold.markings[i]) && kobold.markings[i].easy) {
+            kobold.markings.splice(i, 1);
+        }
+    }
+}
+
+/**
+ * Removes all easily washable and all washable markings from the kobold.
+ */
+function washUp(){
+    // Run through the markings array and remove all washable or easily washable marks.
+    for (var i = kobold.markings.length - 1; i >= 0; i--) {
+        if (notEmpty(kobold.markings[i]) && (kobold.markings[i].easy || kobold.markings[i].wash)) {
+            kobold.markings.splice(i, 1);
+        }
+    }
 }

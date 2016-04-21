@@ -1,38 +1,40 @@
 <div class="koboldadventurecontent">
-
-    <div class="introductionstart">
-        <div class="koboldadventuretext">
-            You are a kobold. You are small, flexible, nimble and rather stealthy when you want to be. On the other hand you are na&iuml;ve, not very strong, kind of a 
-            pushover and generally not very good in a fight.
-        </div>
-
-        <div class="koboldadventuretext">
-            The world is mostly predominated with humans, who see you as a lesser species. Kobolds officially have no rights, so the sight of one of your kind getting raped, 
-            beaten or even killed in broad daylight is unfortunately for you not so uncommon.
-        </div>
-
-        <div class="koboldadventuretext">
-            Luckily, you have managed to avoid the worst, by making your home in the outstretched woods surrounding the human capital of <span class="bold">Varanar</span>.
-            Many beasts lurk here, including dragons and feral animals of all kinds. There are even some rumors of a hulking mass of tentacles skulking through the darkness, 
-            violating whatever it gets in its grip.
-        </div>
-
-        <div class="koboldadventuretext">
-            On top of the feral dangers, there are various bands of bandits which have made these woods their home. They prey on unsuspecting victims, to rob them of their 
-            riches, their decency, their life or all three.
-        </div>
-
-        <div class="koboldadventuredualchoicecontainer">
-            <div class="koboldadventuredualchoiceheader">
-                You are:
+    
+    <div class="koboldadventureceneintro">
+        <div class="introductionstart">
+            <div class="koboldadventuretext">
+                You are a kobold. You are small, flexible, nimble and rather stealthy when you want to be. On the other hand you are na&iuml;ve, not very strong, kind of a 
+                pushover and generally not very good in a fight.
             </div>
-            <button class="koboldadventurebutton koboldadventuredualchoice fasttransition introductiongenderchoice" value="M">
-                Male
-            </button>
-            <hr class="koboldadventuredualchoiceseparator">
-            <button class="koboldadventurebutton koboldadventuredualchoice fasttransition introductiongenderchoice" value="F">
-                Female
-            </button>
+
+            <div class="koboldadventuretext">
+                The world is mostly predominated with humans, who see you as a lesser species. Kobolds officially have no rights, so the sight of one of your kind getting raped, 
+                beaten or even killed in broad daylight is unfortunately for you not so uncommon.
+            </div>
+
+            <div class="koboldadventuretext">
+                Luckily, you have managed to avoid the worst, by making your home in the outstretched woods surrounding the human capital of <span class="bold">Varanar</span>.
+                Many beasts lurk here, including dragons and feral animals of all kinds. There are even some rumors of a hulking mass of tentacles skulking through the darkness, 
+                violating whatever it gets in its grip.
+            </div>
+
+            <div class="koboldadventuretext">
+                On top of the feral dangers, there are various bands of bandits which have made these woods their home. They prey on unsuspecting victims, to rob them of their 
+                riches, their decency, their life or all three.
+            </div>
+
+            <div class="koboldadventuredualchoicecontainer">
+                <div class="koboldadventuredualchoiceheader">
+                    You are:
+                </div>
+                <button class="koboldadventurebutton koboldadventuredualchoice fasttransition introductiongenderchoice" value="M">
+                    Male
+                </button>
+                <hr class="koboldadventuredualchoiceseparator">
+                <button class="koboldadventurebutton koboldadventuredualchoice fasttransition introductiongenderchoice" value="F">
+                    Female
+                </button>
+            </div>
         </div>
     </div>
 
@@ -54,16 +56,10 @@
             <div class="koboldadventuretext">
                 Thanks to your isolation, you have managed to avoid abuse thus far. As a result, you are still a virgin. You have never had sex, and you hope things will stay this way unless you finally find the kobold of your dreams.
             </div>
-            <div class="koboldadventuretext">
-                You are wearing a small chest wrap which covers up your rather flat bosom quite nicely. Down below, a simple loincloth provides you with some decency. The piece of clothing has seen better days, and your rather active lifestyle has left it somewhat ragged. 
-            </div>
-            <div class="koboldadventuretext">
-                You are returning from a trip to Varanar, where you sold some trinkets you found on an old, abandoned graveyard. Sadly enough, you only managed to earn enough coins to pay for a single meal. It was some of the tastiest bunny you’ve ever eaten, but it wasn’t worth three whole days of scavenging.
-            </div>
         </div>
 
-        <div class="introductionnameask">
-            <div class="koboldadventureinlinechoiceheader">
+        <div class="introductionnameask koboldadventurechoicecontainer">
+            <div class="koboldadventuretextchoiceheader">
                 Your name is:
             </div>
             <input type="text" class="koboldadventureshorttextinput fasttransition introductionnameinput" placeholder="Two letter minimum" maxlength="10">
@@ -72,7 +68,25 @@
             </button>
         </div>
 
-        <div class="femalepostname">
+        <div class="introductionmalepostname">
+            <div class="koboldadventuretext">
+                Males have no content yet.
+            </div>
+        </div>
+
+        <div class="introductionfemalepostname">
+            <div class="koboldadventuretext">
+                Your name is $kobold(name). You are wearing a small chest wrap which covers up your rather flat bosom quite nicely. Down below, a simple loincloth provides you with some decency. The piece of clothing has seen better days, and your rather active lifestyle has left it somewhat ragged. 
+            </div>
+            <div class="koboldadventuretext">
+                You are returning from a trip to Varanar, where you sold some trinkets you found on an old, abandoned graveyard. Sadly enough, you only managed to earn enough coins to pay for a single meal. It was some of the tastiest bunny you’ve ever eaten, but it wasn’t worth three whole days of scavenging.
+            </div>
+            <button class="koboldadventurebutton koboldadventurebigbutton slowtransition" onclick="loadScene('femalestart');">
+                Next scene
+            </button>
+        </div>
+
+        <div class="introductiontempfemalepostname">
             <div class="koboldadventuretext">
                 As you are walking down the dirt road back towards your small shack in the woods, you come across a band of humans making camp for the night along the side of the road. You are wary of them, as you are of all humans. You hide in the bushes to spy on them for a moment. There seem to be four men and a woman in this particular group. They also seem to have a pet, a dog to be more precise, which is currently sleeping next to the small campfire they have set up. 
             </div>

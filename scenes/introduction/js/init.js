@@ -52,14 +52,20 @@ function init() {
  * init() and the ontabin() functions.
  */
 function load() {
+    // MANUAL LOADING
+    /*
     // If our gender selection choice is not empty, we have passed gender selection
-    if(notEmpty(scene.introductiongenderchoice))
+    if (notEmpty(scene.introductiongenderchoice))
         loadSimpleChoice("introductiongenderchoice", scene.genderSelectionFetchNext); // And thus we may load the choice
-    
+
     // If our name selection choice is not empty, we have passed name selection
-    if(notEmpty(scene.introductionnameinput))
+    if (notEmpty(scene.introductionnameinput))
         loadSimpleTextInput("introductionnameinput", "introductionnameconfirm", scene.nameSelectionFetchNext); // And thus we may load the name
-    
+    */
+   
+   // LOAD STACK LOADING
+    loadFromStack();
+
     scene.registerListeners();
 }
 
@@ -95,19 +101,19 @@ function ontabin() {
  * parameters. Takes the value it needs from the scene object directly. The
  * value was put there by the simpleChoice framework.
  */
-scene.genderSelectionFetchNext = function(){
+scene.genderSelectionFetchNext = function () {
     // Fetch value
     var value = scene.introductiongenderchoice;
-    
+
     // Depending on the value, we load different scene parts
-    if(value === "M")
+    if (value === "M")
         getFromSceneStorageAnimated("introductionmale");
     else
         getFromSceneStorageAnimated("introductionfemale");
-    
+
     // Regardless of the value, we load the name ask dialogue
     getFromSceneStorageAnimated("introductionnameask");
-    
+
     // Reregister listeners
     scene.registerListeners();
 };
@@ -117,12 +123,12 @@ scene.genderSelectionFetchNext = function(){
  * Takes the value it needs from the scene object directly. The value was put
  * there by the simpleChoice framework.
  */
-scene.genderSelectionProcessChoice = function() {
+scene.genderSelectionProcessChoice = function () {
     // Fetch value
     var value = scene.introductiongenderchoice;
-    
+
     // Update kobold object to reflect choice
-    if(value === "M"){
+    if (value === "M") {
         kobold.gender = "Male";
         kobold.equipment["Groin"] = createPieceOfEquipment("Simple loincloth", "It covers your groin quite well.", "2", "0", "0", "0", "0");
     }
@@ -130,14 +136,16 @@ scene.genderSelectionProcessChoice = function() {
         kobold.gender = "Female";
         kobold.equipment["Chest"] = createPieceOfEquipment("Small chest wrap", "It barely covers your chest!", "1", "0", "0", "0", "0");
         kobold.equipment["Groin"] = createPieceOfEquipment("Ragged loincloth", "It's slowly unravelling.", "1", "0", "0", "0", "0");
+        kobold.stats.attr.Strength--;
+        kobold.stats.attr.Agility++;
     }
-    
+
     // Update scene object to point towards the correct next scene
-    if(value === "M")
+    if (value === "M")
         scene.nextScene = "varanarbusygatestart";
     else
         scene.nextScene = "foreststart";
-    
+
     // Save the game
     autoSave("Gender picked.");
 };
@@ -145,8 +153,18 @@ scene.genderSelectionProcessChoice = function() {
 /**
  * Fetches the next scene once a name has been entered.
  */
-scene.nameSelectionFetchNext = function() {
-    alert("Fetching next. Entered name: " + scene.introductionnameinput);
+scene.nameSelectionFetchNext = function () {
+    // Fetch value
+    var value = scene.introductiongenderchoice;
+
+    // Depending on the value, we load different scene parts
+    if (value === "M")
+        getFromSceneStorageAnimated("introductionmalepostname");
+    else
+        getFromSceneStorageAnimated("introductionfemalepostname");
+
+    // Reregister listeners
+    scene.registerListeners();
 };
 
 /**
@@ -154,13 +172,13 @@ scene.nameSelectionFetchNext = function() {
  * Takes the value it needs from the scene object directly. The value was put
  * there by the simpleTextInput framework.
  */
-scene.nameSelectionProcessChoice = function() {
+scene.nameSelectionProcessChoice = function () {
     // Fetch value
     var value = scene.introductionnameinput;
-    
+
     // Update kobold object to reflect choice
     kobold.name = value;
-    
+
     // Save the game
     autoSave("Name chosen.");
 };
@@ -177,7 +195,7 @@ scene.nameSelectionProcessChoice = function() {
  */
 scene.registerListeners = function () {
     registerSimpleChoice("introductiongenderchoice", scene.genderSelectionProcessChoice, scene.genderSelectionFetchNext);
-    registerSimpleTextInput("introductionnameinput", "introductionnameconfirm", scene.nameSelectionFetchNext, scene.nameSelectionProcessChoice, 2);
+    registerSimpleTextInput("introductionnameinput", "introductionnameconfirm", scene.nameSelectionProcessChoice, scene.nameSelectionFetchNext, 2);
 };
 
 /**

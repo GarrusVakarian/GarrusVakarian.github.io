@@ -79,6 +79,10 @@ button:focus, textarea:focus{
     margin-bottom: 0px !important;
 }
 
+.whitespaceafter{
+    margin-bottom: 10px;
+}
+
 .indent{
     margin-left: 40px !important;
 }
@@ -532,6 +536,12 @@ button:focus, textarea:focus{
     margin-top: 30px;
 }
 
+.koboldadventurechoicecontainer{
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .koboldadventuredualchoicecontainer{
     width: 100%;
     overflow: auto;
@@ -571,6 +581,14 @@ button:focus, textarea:focus{
     float: left;
     margin-right: 40px;
     line-height: 50px;
+}
+
+.koboldadventuretextchoiceheader{
+    font-size: 20px;
+    font-weight: bold;
+    float: left;
+    margin-right: 40px;
+    margin-top: 5px;
 }
 
 .koboldadventuretextinput{

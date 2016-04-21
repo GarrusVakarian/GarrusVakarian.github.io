@@ -528,7 +528,7 @@ function switchAndShowSceneContent(data) {
     $("#koboldadventurescenetabstorage").html(data);
 
     // Preprocess scene
-    $(".koboldadventuremain").not(".koboldadventurestorage").html(preProcess($(".koboldadventuremain").not(".koboldadventurestorage").html()));
+    $(".koboldadventuremain .koboldadventuresceneintro").html(preProcess($(".koboldadventuremain .koboldadventureceneintro").html()));
 
     if (koboldAdventureSceneLoaderFromSave)
         load();
@@ -895,11 +895,79 @@ function unpopulateStatsTab() {
 function populateStatsTabGetAttributes() {
     var toReturn = '<h2 class="koboldadventuresubtitle">' + "Attributes" + '</h2>';
 
+    toReturn += '<div class="koboldadventuretwopanecontainer">';
     $.each(kobold.stats.attr, function (index, value) {
         toReturn += '<div class="koboldadventurehalf"><span class="bold">' + index + '</span>: ' + value + '</div>';
     });
+    toReturn += '<div style="clear: both;"></div>';
+    toReturn += '</div>';
+
 
     return toReturn;
+}
+
+/**
+ * Sums up all the intimidation values for all currently worn pieces of gear,
+ * weaponry and markings. Returns the value.
+ * @returns The sum of all intimidation values for all currently worn pieces of
+ * gear and weaponry.
+ */
+function countTotalGearAndMarkIntimidation() {
+    var total = 0;
+
+    // Add all equipment intimidation
+    $.each(kobold.equipment, function (index, value) {
+        if (notEmpty(value))
+            total += parseInt(value.intim);
+    });
+    // Add all weapon intimidation
+    $.each(kobold.weapons, function (index, value) {
+        if (notEmpty(value))
+            total += parseInt(value.intim);
+    });
+    // Add all mark intimidation
+    $.each(kobold.markings, function (index, value) {
+        if (notEmpty(value))
+            total += parseInt(value.intim);
+    });
+
+    return total;
+}
+
+/**
+ * Sums up all the thickness values for all currently worn pieces of gear. 
+ * Returns the value.
+ * @returns The sum of all the thickness values for all currently worn pieces 
+ * of gear. 
+ */
+function countTotalGearThickness() {
+    var total = 0;
+
+    // Add all equipment thickness
+    $.each(kobold.equipment, function (index, value) {
+        if (notEmpty(value))
+            total += parseInt(value.thick);
+    });
+
+    return total;
+}
+
+/**
+ * Sums up all the coarseness values for all currently worn pieces of gear.
+ * Returns the value.
+ * @returns The sum of all the coarseness values for all currently worn pieces 
+ * of gear.
+ */
+function countTotalGearCoarseness() {
+    var total = 0;
+
+    // Add all equipment thickness
+    $.each(kobold.equipment, function (index, value) {
+        if (notEmpty(value))
+            total += value.coarse;
+    });
+
+    return total;
 }
 
 /**
@@ -910,6 +978,20 @@ function populateStatsTabGetAttributes() {
  */
 function populateStatsTabGetDerivedAttributes() {
     var toReturn = '<h2 class="koboldadventuresubtitle">' + "Derived Attributes" + '</h2>';
+
+    var intimidation = calculateIntimidation();
+    toReturn += '<div class="koboldadventurehalf"><span class="bold">Intimidation</span>: ' + intimidation + '</div>';
+
+    var reflexes = calculateReflexes();
+    toReturn += '<div class="koboldadventurehalf"><span class="bold">Reflexes</span>: ' + reflexes + '</div>';
+
+    var slickness = calculateSlickness();
+    toReturn += '<div class="koboldadventurehalf"><span class="bold">Slickness</span>: ' + slickness + '</div>';
+
+    var prowess = calculateProwess();
+    toReturn += '<div class="koboldadventurehalf"><span class="bold">Combat prowess</span>: ' + prowess + '</div>';
+
+    toReturn += '<div style="clear: both;"></div>';
 
     return toReturn;
 }
@@ -923,65 +1005,84 @@ function populateStatsTabGetDerivedAttributes() {
 function populateStatsTabGetSex() {
     var toReturn = '<h2 class="koboldadventuresubtitle">' + "Sexual" + '</h2>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.consensual === 0)
         toReturn += "<p>You haven't ever had consensual sex.</p>";
     if (kobold.stats.consensual === 1)
         toReturn += "<p>You have had consensual sex before.</p>";
     if (kobold.stats.consensual > 1)
         toReturn += "<p>You had consensual sex " + kobold.stats.consensual + " times.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.formoney === 0)
         toReturn += "<p>You haven't ever had sex for money.</p>";
     if (kobold.stats.formoney === 1)
         toReturn += "<p>You have had sex for money once before.</p>";
     if (kobold.stats.formoney > 1)
         toReturn += "<p>You have had sex for money " + kobold.stats.formoney + " times.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.prostitute === 0)
         toReturn += "<p>You haven't ever fucked a prostitute.</p>";
     if (kobold.stats.prostitute === 1)
         toReturn += "<p>You've fucked a prostitute once before.</p>";
     if (kobold.stats.prostitute > 1)
         toReturn += "<p>You have fucked " + kobold.stats.prostitute + " hookers.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.beenraped === 0)
         toReturn += "<p>You've never been raped before.</p>";
     if (kobold.stats.beenraped === 1)
         toReturn += "<p>You've been raped once before.</p>";
     if (kobold.stats.beenraped > 1)
         toReturn += "<p>You have been raped " + kobold.stats.beenraped + " times.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.rape === 0)
         toReturn += "<p>You haven't ever raped someone.</p>";
     if (kobold.stats.rape === 1)
         toReturn += "<p>You've raped someone before.</p>";
     if (kobold.stats.rape > 1)
         toReturn += "<p>You have raped " + kobold.stats.rape + " people.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.came.Times === 0)
         toReturn += "<p>You haven't climaxed recently.</p>";
     if (kobold.stats.cameTimes === 1)
         toReturn += "<p>You've reached your climax recently.</p>";
     if (kobold.stats.came.Times > 1)
         toReturn += "<p>You have came " + kobold.stats.came.Times + " times recently.</p>";
+    toReturn += '</div>';
+
+    toReturn += '<div style="clear: both;"></div>';
 
 
     toReturn += '<h3 class="koboldadventuresubsubtitle">' + "Receiving" + '</h3>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.sex.Hands === 0)
         toReturn += "<p>You haven't ever given a handjob.</p>";
     if (kobold.stats.sex.Hands === 1)
         toReturn += "<p>You have given one handjob before.</p>";
     if (kobold.stats.sex.Hands > 1)
         toReturn += "<p>You have given " + kobold.stats.sex.Hands + " handjobs.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.sex.Mouth === 0)
         toReturn += "<p>You haven't ever given a blowjob.</p>";
     if (kobold.stats.sex.Mouth === 1)
         toReturn += "<p>You have given one blowjob before.</p>";
     if (kobold.stats.sex.Mouth > 1)
         toReturn += "<p>You have given " + kobold.stats.sex.Mouth + " blowjobs.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.gender === "Male") {
         if (kobold.stats.sex.Cockslit === 0)
             toReturn += "<p>You haven't ever been fucked in your cockslit.</p>";
@@ -999,42 +1100,56 @@ function populateStatsTabGetSex() {
         if (kobold.stats.sex.Cunt > 1)
             toReturn += "<p>You have been fucked " + kobold.stats.sex.Cunt + " times.</p>";
     }
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.sex.Ass === 0)
         toReturn += "<p>You haven't ever had anal sex.</p>";
     if (kobold.stats.sex.Ass === 1)
         toReturn += "<p>You've been fucked up the butt once.</p>";
     if (kobold.stats.sex.Ass > 1)
         toReturn += "<p>You have been fucked in the ass " + kobold.stats.sex.Ass + " times.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.sex.Tail === 0)
         toReturn += "<p>You haven't ever given a tailjob.</p>";
     if (kobold.stats.sex.Tail === 1)
         toReturn += "<p>You have given one tailjob before.</p>";
     if (kobold.stats.sex.Tail > 1)
         toReturn += "<p>You have given " + kobold.stats.sex.Tail + " tailjobs.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf whitespaceafter">';
     if (kobold.stats.sex.Other === 0)
         toReturn += "<p>You haven't ever had unconventional sex.</p>";
     if (kobold.stats.sex.Other === 1)
         toReturn += "<p>You have had unconventional sex once before.</p>";
     if (kobold.stats.sex.Other > 1)
         toReturn += "<p>You have had unconventional sex " + kobold.stats.sex.Other + " times.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div style="clear: both;"></div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.cum.Face === 0)
         toReturn += "<p>You haven't ever received a facial.</p>";
     if (kobold.stats.cum.Face === 1)
         toReturn += "<p>You have had unconventional sex once before.</p>";
     if (kobold.stats.cum.Face > 1)
         toReturn += "<p>You have had unconventional sex " + kobold.stats.sex.Other + " times.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.cum.Body === 0)
         toReturn += "<p>Your body has never been came on.</p>";
     if (kobold.stats.cum.Body === 1)
         toReturn += "<p>You've been came on before.</p>";
     if (kobold.stats.cum.Body > 1)
         toReturn += "<p>You've been came on " + kobold.stats.cum.Body + " times.</p>";
+    toReturn += '</div>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.gender === "Male") {
         if (kobold.stats.cum.Cockslit === 0)
             toReturn += "<p>Your cockslit has never been came in before.</p>";
@@ -1043,7 +1158,7 @@ function populateStatsTabGetSex() {
         if (kobold.stats.cum.Cockslit > 1)
             toReturn += "<p>Your cockslit has been came in " + kobold.stats.cum.Cockslit + " times before.</p>";
     }
-    
+
     if (kobold.gender === "Female") {
         if (kobold.stats.cum.Cunt === 0)
             toReturn += "<p>You have has never been came in before.</p>";
@@ -1052,136 +1167,178 @@ function populateStatsTabGetSex() {
         if (kobold.stats.cum.Cunt > 1)
             toReturn += "<p>You have been came in " + kobold.stats.cum.Cunt + " times before.</p>";
     }
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.cum.Ass === 0)
         toReturn += "<p>Your ass has never been came in.</p>";
     if (kobold.stats.cum.Ass === 1)
         toReturn += "<p>Your ass has been came in before.</p>";
     if (kobold.stats.cum.Ass > 1)
         toReturn += "<p>Your ass has been came in " + kobold.stats.cum.Ass + " times.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf whitespaceafter">';
     if (kobold.stats.cum.Feet === 0)
         toReturn += "<p>Your feet have never been came on.</p>";
     if (kobold.stats.cum.Feet === 1)
         toReturn += "<p>Your feet have been came on before.</p>";
     if (kobold.stats.cum.Feet > 1)
         toReturn += "<p>Your feet have been came on " + kobold.stats.cum.Feet + " times.</p>";
-    
-    
+    toReturn += '</div>';
+
+    toReturn += '<div style="clear: both;"></div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.gotfucked.male.Human === 0)
         toReturn += "<p>You've never been fucked by a man.</p>";
     if (kobold.stats.gotfucked.male.Human === 1)
         toReturn += "<p>You've been fucked by a single man.</p>";
     if (kobold.stats.gotfucked.male.Human > 1)
         toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.male.Human + " men.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.gotfucked.female.Human === 0)
         toReturn += "<p>You've never been fucked by a woman before.</p>";
     if (kobold.stats.gotfucked.female.Human === 1)
         toReturn += "<p>You've been fucked by a single woman.</p>";
     if (kobold.stats.gotfucked.female.Human > 1)
         toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.female.Human + " women.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.gotfucked.male.Kobold === 0)
         toReturn += "<p>You've never been fucked by a male kobold.</p>";
     if (kobold.stats.gotfucked.male.Kobold === 1)
         toReturn += "<p>You've been fucked by a male kobold before.</p>";
     if (kobold.stats.gotfucked.male.Kobold > 1)
         toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.male.Kobold + " male kobolds.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.gotfucked.female.Kobold === 0)
         toReturn += "<p>You've never been fucked by a female kobold.</p>";
     if (kobold.stats.gotfucked.female.Kobold === 1)
         toReturn += "<p>You've been fucked by a female kobold before.</p>";
     if (kobold.stats.gotfucked.female.Kobold > 1)
         toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.female.Kobold + " female kobolds.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.gotfucked.male.Dragon === 0)
         toReturn += "<p>You've never been fucked by a male dragon.</p>";
     if (kobold.stats.gotfucked.male.Dragon === 1)
         toReturn += "<p>You've been fucked by a male dragon before.</p>";
     if (kobold.stats.gotfucked.male.Dragon > 1)
         toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.male.Dragon + " male dragons.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.gotfucked.female.Dragon === 0)
         toReturn += "<p>You've never been fucked by a female dragon.</p>";
     if (kobold.stats.gotfucked.female.Dragon === 1)
         toReturn += "<p>You've been fucked by a female dragon before.</p>";
     if (kobold.stats.gotfucked.female.Dragon > 1)
         toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.female.Dragon + " female dragons.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.gotfucked.male.Beast === 0)
         toReturn += "<p>You've never been fucked by a male beast.</p>";
     if (kobold.stats.gotfucked.male.Beast === 1)
         toReturn += "<p>You've been fucked by a male beast before.</p>";
     if (kobold.stats.gotfucked.male.Beast > 1)
         toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.male.Beast + " male beasts.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.gotfucked.female.Beast === 0)
         toReturn += "<p>You've never been fucked by a female beast.</p>";
     if (kobold.stats.gotfucked.female.Beast === 1)
         toReturn += "<p>You've been fucked by a female beast before.</p>";
     if (kobold.stats.gotfucked.female.Beast > 1)
         toReturn += "<p>You've been fucked by " + kobold.stats.gotfucked.female.Beast + " female beasts.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div style="clear: both;"></div>';
+
 
     toReturn += '<h3 class="koboldadventuresubsubtitle">' + "Giving" + '</h3>';
 
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.fucked.male.Human === 0)
         toReturn += "<p>You've never fucked a man before.</p>";
     if (kobold.stats.fucked.male.Human === 1)
         toReturn += "<p>You've fucked a single man.</p>";
     if (kobold.stats.fucked.male.Human > 1)
         toReturn += "<p>You've fucked " + kobold.stats.fucked.male.Human + " men.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.fucked.female.Human === 0)
         toReturn += "<p>You've never fucked a woman before.</p>";
     if (kobold.stats.fucked.female.Human === 1)
         toReturn += "<p>You've fucked a single woman.</p>";
     if (kobold.stats.fucked.female.Human > 1)
         toReturn += "<p>You've fucked " + kobold.stats.fucked.female.Human + " women.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.fucked.male.Kobold === 0)
         toReturn += "<p>You've never fucked a male kobold.</p>";
     if (kobold.stats.fucked.male.Kobold === 1)
         toReturn += "<p>You've fucked a male kobold before.</p>";
     if (kobold.stats.fucked.male.Kobold > 1)
         toReturn += "<p>You've fucked " + kobold.stats.fucked.male.Kobold + " male kobolds.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.fucked.female.Kobold === 0)
         toReturn += "<p>You've never fucked a female kobold.</p>";
     if (kobold.stats.fucked.female.Kobold === 1)
         toReturn += "<p>You've fucked a female kobold before.</p>";
     if (kobold.stats.fucked.female.Kobold > 1)
         toReturn += "<p>You've fucked " + kobold.stats.fucked.female.Kobold + " female kobolds.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.fucked.male.Dragon === 0)
         toReturn += "<p>You've never fucked a male dragon.</p>";
     if (kobold.stats.fucked.male.Dragon === 1)
         toReturn += "<p>You've fucked a male dragon before.</p>";
     if (kobold.stats.fucked.male.Dragon > 1)
         toReturn += "<p>You've fucked " + kobold.stats.fucked.male.Dragon + " male dragons.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.fucked.female.Dragon === 0)
         toReturn += "<p>You've never fucked a female dragon.</p>";
     if (kobold.stats.fucked.female.Dragon === 1)
         toReturn += "<p>You've fucked a female dragon before.</p>";
     if (kobold.stats.fucked.female.Dragon > 1)
         toReturn += "<p>You've fucked " + kobold.stats.fucked.female.Dragon + " female dragons.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.fucked.male.Beast === 0)
         toReturn += "<p>You've never fucked a male beast.</p>";
     if (kobold.stats.fucked.male.Beast === 1)
         toReturn += "<p>You've fucked a male beast before.</p>";
     if (kobold.stats.fucked.male.Beast > 1)
         toReturn += "<p>You've fucked " + kobold.stats.fucked.male.Beast + " male beasts.</p>";
-    
+    toReturn += '</div>';
+
+    toReturn += '<div class="koboldadventurehalf">';
     if (kobold.stats.fucked.female.Beast === 0)
         toReturn += "<p>You've never fucked a female beast.</p>";
     if (kobold.stats.fucked.female.Beast === 1)
         toReturn += "<p>You've fucked a female beast before.</p>";
     if (kobold.stats.fucked.female.Beast > 1)
         toReturn += "<p>You've fucked " + kobold.stats.fucked.female.Beast + " female beasts.</p>";
+    toReturn += '</div>';
+
+    toReturn += '<div style="clear: both;"></div>';
 
     return toReturn;
 }
@@ -1249,6 +1406,20 @@ function populateStatusTab() {
         content += '<h2 class="koboldadventuresubtitle">' + index + '</h2>';
         content += '<p class="koboldadventuretext">' + getStatusCategoryContent(value) + '</p>';
     });
+    content += '<h2 class="koboldadventuresubtitle">Markings</h2>';
+
+    content += '<p class="koboldadventuretext">';
+    // If we have no markings, so be it.
+    if (kobold.markings.length < 1) {
+        content += 'You have no markings.';
+    } else {
+        $.each(kobold.markings, function (index, value) {
+            content += value.desc;
+            content += " ";
+        });
+    }
+    content += '</p>';
+
     status.html(content);
 }
 
@@ -1555,6 +1726,8 @@ function execute(js) {
  * @returns The text, with all occurences toReplace replaced.
  */
 function replaceAll(text, toReplace, replacement) {
+    if(!notNull(text))
+        return "";
     return text.split(toReplace).join(replacement);
 }
 
@@ -1729,7 +1902,7 @@ function preProcessorGetPrepend(token) {
  * @returns The executed JavaScript's result, or the empty string depending on 
  * the token. The empty string if the JavaScript returned undefined.
  */
-function preProcessorExecute(token, js) {
+function preProcessorExecute(token, js) {    
     var type = preProcessorGetType(token);
 
     var prepend = preProcessorGetPrepend(token);
@@ -1787,4 +1960,17 @@ function preProcess(text) {
     text = preProcessorReplaceAlias(text);
     text = preProcessorExecuteAndReplace(text);
     return text;
+}
+
+
+/** SIMPLE CHOICE FRAMEWORK **/
+
+
+/**
+ * Creates the loadstack if it does not exist.
+ */
+function makeLoadStackIfNotPresent(){
+    if(!exists(scene.loadStack)){
+        scene.loadStack = [];
+    }
 }

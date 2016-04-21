@@ -65,6 +65,7 @@ kobold.stats.fucked.female["Beast"] = 0;
 kobold.status = {};
 kobold.status["Physical"] = [];
 kobold.status["Mental"] = [];
+kobold.markings = [];
 kobold.inventory = [];
 kobold.equipment = {};
 kobold.equipment["Arms"] = "";
