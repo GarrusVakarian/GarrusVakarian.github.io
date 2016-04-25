@@ -85,8 +85,10 @@ kobold.weapons = [];
 /**
  * Adds functionality to the kobold. This functionality can't be stored via
  * AJAX, and thus it needs to be added manually.
+ * DISABLED TEMPORARILY. NEEDS TO BE ADDED TO.
  */
 function makeMyKoboldDoStuff(){
+    /*
     kobold.isNaked = isNaked;
     kobold.createPieceOfEquipment = createPieceOfEquipment;
     kobold.putOn = putOn;
@@ -99,6 +101,8 @@ function makeMyKoboldDoStuff(){
     kobold.hasItem = hasItem;
     kobold.removeItem = removeItem;
     kobold.addItem = addItem;
+    */
+    // NEEDS TO BE ADDED TO
 }
 
 makeMyKoboldDoStuff();

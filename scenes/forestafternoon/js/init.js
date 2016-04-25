@@ -51,7 +51,10 @@ function init() {
  * create a separate function for this, as you will also need to do this in the 
  * init() and the ontabin() functions.
  */
-function load() {
+function load() { 
+   // LOAD STACK LOADING
+    loadFromStack();
+
     scene.registerListeners();
 }
 
@@ -83,57 +86,45 @@ function ontabin() {
 
 
 /**
- * Updates the kobold object based on the selected gender. Doesn't need any
- * parameters. Takes the value it needs from the scene object directly.
+ * Fetches the next scene once a gender has been selected. Doesn't need any
+ * parameters. Takes the value it needs from the scene object directly. The
+ * value was put there by the simpleChoice framework.
  */
-scene.genderSelectionUpdateKobold = function(){
-    if(scene.chosenGender === "M")
-        kobold.gender = "Male";
+scene.preCampFetchNext = function () {
+    // Fetch value
+    var value = scene.foreststartchoice;
+
+    // Depending on the value, we load different scene parts  
+    if(value === "stay")
+        getFromSceneStorageAnimated("forestafternooncampstay")
+    else if(value === "go")
+        getFromSceneStorageAnimated("forestafternooncampgo");
     else
-        kobold.gender = "Female";
+        getFromSceneStorageAnimated("forestafternooncampsneak");
+
+    // Reregister listeners
+    scene.registerListeners();
 };
 
 /**
- * Updates the scene's UI based on what gender what was picked.
+ * Processes a selected pre camp action based on its value. Doesn't need any parameters.
+ * Takes the value it needs from the scene object directly. The value was put
+ * there by the simpleChoice framework.
  */
-scene.genderSelectionUIupdate = function(){
-    var selectedObject;
+scene.preCampProcessChoice = function () {
+    // Fetch value
+    var value = scene.foreststartchoice;
+
+    // Update kobold object to reflect choice
     
-    if(scene.chosenGender === "M")
-        selectedObject = $("#introductionmalebutton");
+
+    // Save the game
+    if(value === "stay")
+        autoSave("Observing human camp.")
+    else if(value === "go")
+        autoSave("Circumventing human camp.");
     else
-        selectedObject = $("#introductionfemalebutton");
-    
-    scene.disableGenderSelection(); // Disable further gender selection
-    selectedOptionStyling($(this)); // Style the selected option accordingly
-};
-
-/**
- * Processes a selected gender based on its value. Doesn't need any parameters.
- * Takes the value it needs from the scene object directly.
- */
-scene.genderSelectionProcessing = function() {
-    var value = scene.chosenGender;
-    
-};
-
-/**
- * Disables both gender selection buttons.
- */
-scene.disableGenderSelection = function(){
-    $("#introductionmalebutton, #introductionfemalebutton").prop('disabled', true); // Disable both buttons
-};
-
-/**
- * Onclick function for gender selection.
- */
-scene.genderSelection = function () {
-    var clicked = $(this); // The button that got clicked on
-    var value = clicked.attr("value"); // The value of that button
-    scene.chosenGender = value; // Set the value in our scene object
-    scene.genderSelectionProcessing(); // Process the gender selection
-    scene.genderSelectionUpdateKobold(); // Update the kobold
-    autoSave("Gender chosen."); // Save our progress
+        autoSave("Sneaking towards human camp.");
 };
 
 
@@ -144,10 +135,10 @@ scene.genderSelection = function () {
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Registers all requires object listeners for this scene to function.
+ * Registers all required object listeners for this scene to function.
  */
 scene.registerListeners = function () {
-    $("#introductionmalebutton, #introductionfemalebutton").click(scene.genderSelection);
+    registerSimpleChoice("foreststartchoice", scene.preCampProcessChoice, scene.preCampFetchNext);
 };
 
 /**
@@ -157,9 +148,11 @@ scene.registerListeners = function () {
  * scene object. Remember to call this function prior to changing scenes.
  */
 scene.cleanup = function () {
-    unloadStyleSheet(scene.cssPath); // Uncomment this if you load a custom CSS file.
+    //unloadStyleSheet(scene.cssPath); // Uncomment this if you load a custom CSS file.
+    removeTheme(); // Uncomment this if you use a custom theme
 };
 
 // If you wish to load a custom CSS file, uncomment these lines, as well as the one in scene.cleanup.
-scene.cssPath = "scenes/introduction/css/custom.css";
-loadStyleSheet(scene.cssPath);  
+// Don't forget to call cleanup yourself prior to changing scenes.
+//scene.cssPath = "scenes/forestafternoon/css/custom.css";
+//loadStyleSheet(scene.cssPath);  

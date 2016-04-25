@@ -75,6 +75,10 @@ button:focus, textarea:focus{
     font-weight: bold;
 }
 
+.italic {
+    font-style: italic;
+}
+
 .nowhitespaceafter{
     margin-bottom: 0px !important;
 }
@@ -513,6 +517,29 @@ button:focus, textarea:focus{
     transition: all 1s ease;
 }
 
+.koboldadventurecontinuebutton{
+    padding: 20px;
+    margin-left: 560px;
+    margin-top: 20px;
+    font-size: 32px;
+    border-width: 5px;
+    background-color: #005AA1;  /* Detail */
+    border-color: #FF6EC7;      /* Rare */
+}
+
+.koboldadventurecontinuebutton:hover{
+    border-color: #FF6EC7;      /* Rare */
+    background-color: #191919;  /* Background */
+}
+
+.koboldadventurecontinuebutton:active{
+    background-color: #FF6EC7 !important;  /* Rare */
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
 .koboldadventureselectedoption{
     border-color: #FF6EC7 !important;      /* Rare */
 }
@@ -540,6 +567,14 @@ button:focus, textarea:focus{
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.koboldadventurechoice{
+    width: 240px;
+    height: 50px;
+    margin-right: 20px;
+    float: left;
 }
 
 .koboldadventuredualchoicecontainer{

@@ -140,12 +140,6 @@ scene.genderSelectionProcessChoice = function () {
         kobold.stats.attr.Agility++;
     }
 
-    // Update scene object to point towards the correct next scene
-    if (value === "M")
-        scene.nextScene = "varanarbusygatestart";
-    else
-        scene.nextScene = "foreststart";
-
     // Save the game
     autoSave("Gender picked.");
 };
@@ -205,9 +199,11 @@ scene.registerListeners = function () {
  * scene object. Remember to call this function prior to changing scenes.
  */
 scene.cleanup = function () {
-    unloadStyleSheet(scene.cssPath); // Uncomment this if you load a custom CSS file.
+    //unloadStyleSheet(scene.cssPath); // Uncomment this if you load a custom CSS file.
+    //removeTheme(); // Uncomment this if you use a custom theme
 };
 
 // If you wish to load a custom CSS file, uncomment these lines, as well as the one in scene.cleanup.
-scene.cssPath = "scenes/introduction/css/custom.css";
-loadStyleSheet(scene.cssPath);  
+// Don't forget to call cleanup yourself prior to changing scenes.
+//scene.cssPath = "scenes/introduction/css/custom.css";
+//loadStyleSheet(scene.cssPath);  

@@ -342,7 +342,7 @@ function simpleChoice(clicked, choiceGroup, processChoice, fetchNext) {
     // Create load stack if not available
     makeLoadStackIfNotPresent();
     // Push choice to load stack
-    scene.loadStack.push('loadSimpleChoice("' + choiceGroup  + '", ' + fetchNext + ');');
+    scene.loadStack.push('loadSimpleChoice("' + choiceGroup + '", ' + fetchNext + ');');
     processChoice(); // Process the choice
     fetchNext(); // Fetch the next segment
 }
@@ -415,11 +415,11 @@ function simpleTextInput(textfieldClass, buttonClass, processChoice, fetchNext, 
     // If we have a minimum length requirement, and the current value is smaller than the length, just return
     if (typeof minLength !== "undefined" && textField.val().length < minLength)
         return;
-    
+
     // Create load stack if not available
     makeLoadStackIfNotPresent();
     // Push choice to load stack
-    scene.loadStack.push('loadSimpleTextInput("' + textfieldClass  + '", "' + buttonClass + '", ' + fetchNext + ');' );
+    scene.loadStack.push('loadSimpleTextInput("' + textfieldClass + '", "' + buttonClass + '", ' + fetchNext + ');');
 
     button.prop('disabled', true); // Disable the button
     textField.prop('disabled', true); // Disable the textfield
@@ -483,11 +483,11 @@ function selectedOptionStyling(element) {
 /**
  * Loads the scene from the Load Stack. Requires the Load Stack to be enabled.
  */
-function loadFromStack(){
-    if(scene.loadStack === undefined)
+function loadFromStack() {
+    if (scene.loadStack === undefined)
         return;
-    
-    $.each(scene.loadStack, function(index, value){
+
+    $.each(scene.loadStack, function (index, value) {
         eval(value);
     });
 }
@@ -1032,7 +1032,7 @@ function isNaked() {
  * Returns the total intimidation value of the kobold.
  * @eturn The total intimidation value of the kobold.
  */
-function calculateIntimidation(){
+function calculateIntimidation() {
     // Calculate intimidation in function of strength and all item and mark modifiers
     return kobold.stats.attr.Strength + countTotalGearAndMarkIntimidation();
 }
@@ -1041,7 +1041,7 @@ function calculateIntimidation(){
  * Returns the total reflexes of the kobold.
  * @returns The reflexes of the kobold.
  */
-function calculateReflexes(){
+function calculateReflexes() {
     return kobold.stats.attr.Agility + countTotalGearThickness();
 }
 
@@ -1050,7 +1050,7 @@ function calculateReflexes(){
  * Returns how slick the kobold is.
  * @returns How slick the kobold is.
  */
-function calculateSlickness(){
+function calculateSlickness() {
     return kobold.stats.attr.Agility - countTotalGearCoarseness();
 }
 
@@ -1058,7 +1058,7 @@ function calculateSlickness(){
  * Returns how powerful the kobold is.
  * @returns How powerful the kobold is.
  */
-function calculateProwess(){
+function calculateProwess() {
     return kobold.stats.attr.Strength + kobold.stats.attr.Agility + kobold.stats.attr.Endurance + kobold.stats.attr.Stamina + kobold.stats.attr.Magic * 10;
 }
 
@@ -1084,14 +1084,14 @@ function addMarking(name, description, intimidation, easilywashable, washable) {
     mark.intim = intimidation;
     mark.easy = easilywashable;
     mark.wash = easilywashable;
-    
+
     kobold.markings.push(mark);
 }
 
 /**
  * Removes all easily washable markings from the kobold.
  */
-function inWater(){
+function inWater() {
     // Run through the markings array and remove all washable marks.
     for (var i = kobold.markings.length - 1; i >= 0; i--) {
         if (notEmpty(kobold.markings[i]) && kobold.markings[i].easy) {
@@ -1103,7 +1103,7 @@ function inWater(){
 /**
  * Removes all easily washable and all washable markings from the kobold.
  */
-function washUp(){
+function washUp() {
     // Run through the markings array and remove all washable or easily washable marks.
     for (var i = kobold.markings.length - 1; i >= 0; i--) {
         if (notEmpty(kobold.markings[i]) && (kobold.markings[i].easy || kobold.markings[i].wash)) {
