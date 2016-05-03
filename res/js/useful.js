@@ -1083,7 +1083,7 @@ function addMarking(name, description, intimidation, easilywashable, washable) {
     mark.desc = description;
     mark.intim = intimidation;
     mark.easy = easilywashable;
-    mark.wash = easilywashable;
+    mark.wash = washable;
 
     kobold.markings.push(mark);
 }

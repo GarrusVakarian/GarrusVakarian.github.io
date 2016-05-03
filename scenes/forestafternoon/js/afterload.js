@@ -6,5 +6,6 @@
  * optional.
  */
 
+addStatusToCategory("Mental", "You are hesitant.");
 autoSave("Near human camp.");
 changeTheme("koboldadventureforest");

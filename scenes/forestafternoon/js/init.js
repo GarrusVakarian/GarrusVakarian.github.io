@@ -51,8 +51,8 @@ function init() {
  * create a separate function for this, as you will also need to do this in the 
  * init() and the ontabin() functions.
  */
-function load() { 
-   // LOAD STACK LOADING
+function load() {
+    // LOAD STACK LOADING
     loadFromStack();
 
     scene.registerListeners();
@@ -86,7 +86,7 @@ function ontabin() {
 
 
 /**
- * Fetches the next scene once a gender has been selected. Doesn't need any
+ * Fetches the next scene once an action has been selected. Doesn't need any
  * parameters. Takes the value it needs from the scene object directly. The
  * value was put there by the simpleChoice framework.
  */
@@ -95,9 +95,9 @@ scene.preCampFetchNext = function () {
     var value = scene.foreststartchoice;
 
     // Depending on the value, we load different scene parts  
-    if(value === "stay")
+    if (value === "stay")
         getFromSceneStorageAnimated("forestafternooncampstay")
-    else if(value === "go")
+    else if (value === "go")
         getFromSceneStorageAnimated("forestafternooncampgo");
     else
         getFromSceneStorageAnimated("forestafternooncampsneak");
@@ -107,7 +107,7 @@ scene.preCampFetchNext = function () {
 };
 
 /**
- * Processes a selected pre camp action based on its value. Doesn't need any parameters.
+ * Processes a selected action based on its value. Doesn't need any parameters.
  * Takes the value it needs from the scene object directly. The value was put
  * there by the simpleChoice framework.
  */
@@ -116,17 +116,288 @@ scene.preCampProcessChoice = function () {
     var value = scene.foreststartchoice;
 
     // Update kobold object to reflect choice
-    
+    if (value === "stay") {
+        clearStatusCategory("Mental");
+        addStatusToCategory("Mental", "You are anxious.");
+    }
 
     // Save the game
-    if(value === "stay")
+    if (value === "stay")
         autoSave("Observing human camp.")
-    else if(value === "go")
+    else if (value === "go")
         autoSave("Circumventing human camp.");
     else
         autoSave("Sneaking towards human camp.");
 };
 
+/**
+ * Fetches the next scene once an action has been selected. Doesn't need any
+ * parameters. Takes the value it needs from the scene object directly. The
+ * value was put there by the simpleChoice framework.
+ */
+scene.campStayFetchNext = function () {
+    // Fetch value
+    var value = scene.forestcampstay;
+
+    // Depending on the value, we load different scene parts  
+    if (value === "stay")
+        getFromSceneStorageAnimated("forestafternoondogstay")
+    else if (value === "go")
+        getFromSceneStorageAnimated("forestafternoondoggo");
+    else
+        getFromSceneStorageAnimated("forestafternoondogsneak");
+
+    // Reregister listeners
+    scene.registerListeners();
+};
+
+/**
+ * Processes a selected action based on its value. Doesn't need any parameters.
+ * Takes the value it needs from the scene object directly. The value was put
+ * there by the simpleChoice framework.
+ */
+scene.campStayProcessChoice = function () {
+    // Fetch value
+    var value = scene.forestcampstay;
+
+    // Update kobold object to reflect choice
+    if (value === "stay") {
+        addStatusToCategory("Physical", "The rollercoaster of emotions has left you feeling nauseous.");
+        clearStatusCategory("Mental");
+        addStatusToCategory("Mental", "You feel somewhat relieved.");
+        addStatusToCategory("Sexual", "You are thinking dirty thoughts.");
+    }
+
+    // Save the game
+    if (value === "stay")
+        autoSave("Letting dog approach.")
+    else if (value === "go")
+        autoSave("Running from dog.");
+    else
+        autoSave("Scaring dog.");
+};
+
+/**
+ * Fetches the next scene once an action has been selected. Doesn't need any
+ * parameters. Takes the value it needs from the scene object directly. The
+ * value was put there by the simpleChoice framework.
+ */
+scene.dogStayFetchNext = function () {
+    // Fetch value
+    var value = scene.forestcampdogstay;
+
+    // Depending on the value, we load different scene parts  
+    if (value === "stay")
+        getFromSceneStorageAnimated("forestafternoondogpiss")
+    else if (value === "pet")
+        getFromSceneStorageAnimated("forestafternoondogpet");
+    else if (value === "kiss") {
+        getFromSceneStorageAnimated("forestafternoondogkiss");
+    } else if (value === "push") {
+        getFromSceneStorageAnimated("forestafternoondogpush");
+    }
+
+    // Reregister listeners
+    scene.registerListeners();
+};
+
+/**
+ * Processes a selected action based on its value. Doesn't need any parameters.
+ * Takes the value it needs from the scene object directly. The value was put
+ * there by the simpleChoice framework.
+ */
+scene.dogStayProcessChoice = function () {
+    // Fetch value
+    var value = scene.forestcampdogstay;
+
+    // Update kobold object to reflect choice
+    if (value === "stay") {
+        kobold.hiddenstats.faith--;
+        kobold.hiddenstats.animallove--;
+        kobold.hiddenstats.animalattraction++;
+        clearStatusCategory("Sexual");
+        clearStatusCategory("Physical");
+        addStatusToCategory("Physical", "The stench of dog piss is making you feel nauseous.");
+        clearStatusCategory("Mental");
+        addStatusToCategory("Mental", "You are mentally drained.");
+        addStatusToCategory("Mental", "You are disgusted.");
+        addStatusToCategory("Mental", "You are traumatized.");
+        addMarking("Dog piss", "The thick, acrid scent of canine piss lingers on your scales. You'll be smelling like this until you find something to wash up with. You hope it won't attract any unwanted attention.", -2, true, true);
+    } else if (value === "pet") {
+        kobold.hiddenstats.faith++;
+        kobold.hiddenstats.animallove++;
+        clearStatusCategory("Sexual");
+        clearStatusCategory("Physical");
+        clearStatusCategory("Mental");
+        addStatusToCategory("Mental", "You feel content.");
+    } else if (value === "kiss") {
+
+    } else if (value === "push") {
+
+    }
+
+    // Save the game
+    if (value === "stay")
+        autoSave("Staying perfectly still to hide from dog.")
+    else if (value === "pet")
+        autoSave("Petting dog.");
+    else if (value === "kiss")
+        autoSave("Kissing dog.");
+    else if (value === "push")
+        autoSave("Arousing dog.");
+};
+
+/**
+ * Fetches the next scene once an action has been selected. Doesn't need any
+ * parameters. Takes the value it needs from the scene object directly. The
+ * value was put there by the simpleChoice framework.
+ */
+scene.dogPissFetchNext = function () {
+    // Fetch value
+    var value = scene.forestcampdogpiss;
+
+    // Depending on the value, we load different scene parts  
+    if (value === "home")
+        getFromSceneStorageAnimated("forestafternoonpostpisshome")
+    else if (value === "river")
+        getFromSceneStorageAnimated("forestafternoonpostpissriver");
+    else if (value === "forest") {
+        getFromSceneStorageAnimated("forestafternoonpostpissforest");
+    }
+
+    // Reregister listeners
+    scene.registerListeners();
+};
+
+/**
+ * Processes a selected action based on its value. Doesn't need any parameters.
+ * Takes the value it needs from the scene object directly. The value was put
+ * there by the simpleChoice framework.
+ */
+scene.dogPissProcessChoice = function () {
+    // Fetch value
+    var value = scene.forestcampdogpiss;
+
+    // Update kobold object to reflect choice
+    if (value === "home") {
+        
+    } else if (value === "river") {
+
+    } else if (value === "forest") {
+
+    }
+
+    // Save the game
+    if (value === "home")
+        autoSave("Going home.")
+    else if (value === "river")
+        autoSave("Going to the river.");
+    else if (value === "forest")
+        autoSave("Running through the forest.");
+};
+
+/**
+ * Fetches the next scene once an action has been selected. Doesn't need any
+ * parameters. Takes the value it needs from the scene object directly. The
+ * value was put there by the simpleChoice framework.
+ */
+scene.dogPetFetchNext = function () {
+    // Fetch value
+    var value = scene.forestcampdogpet;
+
+    // Depending on the value, we load different scene parts  
+    if (value === "home")
+        getFromSceneStorageAnimated("forestafternoonsatisfiedhome")
+    else if (value === "campevening")
+        getFromSceneStorageAnimated("forestafternoonsatisfiedcamp");
+    else if (value === "forest") {
+        getFromSceneStorageAnimated("forestafternoonsatisfiedforest");
+    }
+
+    // Reregister listeners
+    scene.registerListeners();
+};
+
+/**
+ * Processes a selected action based on its value. Doesn't need any parameters.
+ * Takes the value it needs from the scene object directly. The value was put
+ * there by the simpleChoice framework.
+ */
+scene.dogPetProcessChoice = function () {
+    // Fetch value
+    var value = scene.forestcampdogpiss;
+
+    // Update kobold object to reflect choice
+    if (value === "home") {
+        
+    } else if (value === "river") {
+
+    } else if (value === "forest") {
+
+    }
+
+    // Save the game
+    if (value === "home")
+        autoSave("Going home.")
+    else if (value === "river")
+        autoSave("Going to the river.");
+    else if (value === "forest")
+        autoSave("Running through the forest.");
+};
+
+/**
+ * Cleans up the scene's assets and loads the home scene.
+ */
+scene.cleanupAndLoadHomeTraumatized = function(){
+    scene.cleanup();
+    sceneParams.mood = "Traumatized";
+    loadScene('homeeveningbandit');
+};
+
+/**
+ * Cleans up the scene's assets and loads the river scene.
+ */
+scene.cleanupAndLoadRiverTraumatized = function(){
+    scene.cleanup();
+    sceneParams.mood = "Traumatized";
+    loadScene('rivernightthief');
+};
+
+/**
+ * Cleans up the scene's assets and loads the forest scene.
+ */
+scene.cleanupAndLoadForestTraumatized = function(){
+    scene.cleanup();
+    sceneParams.mood = "Traumatized";
+    loadScene('forestnightwolf');
+};
+
+/**
+ * Cleans up the scene's assets and loads the home scene.
+ */
+scene.cleanupAndLoadHomeSatisfied = function(){
+    scene.cleanup();
+    sceneParams.mood = "Satisfied";
+    loadScene('homeeveningbandit');
+};
+
+/**
+ * Cleans up the scene's assets and loads the river scene.
+ */
+scene.cleanupAndLoadCampEveningSatisfied = function(){
+    scene.cleanup();
+    sceneParams.mood = "Satisfied";
+    loadScene('rivernightthief');
+};
+
+/**
+ * Cleans up the scene's assets and loads the forest scene.
+ */
+scene.cleanupAndLoadForestSatisfied = function(){
+    scene.cleanup();
+    sceneParams.mood = "Satisfied";
+    loadScene('forestnightwolf');
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // HIGHLY RECOMMENDED FUNCTIONS                                               //
@@ -139,6 +410,10 @@ scene.preCampProcessChoice = function () {
  */
 scene.registerListeners = function () {
     registerSimpleChoice("foreststartchoice", scene.preCampProcessChoice, scene.preCampFetchNext);
+    registerSimpleChoice("forestcampstay", scene.campStayProcessChoice, scene.campStayFetchNext);
+    registerSimpleChoice("forestcampdogstay", scene.dogStayProcessChoice, scene.dogStayFetchNext);
+    registerSimpleChoice("forestcampdogpiss", scene.dogPissProcessChoice, scene.dogPissFetchNext);
+    registerSimpleChoice("forestcampdogpet", scene.dogPetProcessChoice, scene.dogPetFetchNext);
 };
 
 /**

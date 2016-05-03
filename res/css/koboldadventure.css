@@ -610,6 +610,12 @@ button:focus, textarea:focus{
     margin-bottom: 0px;
 }
 
+.koboldadventurequadchoice{
+    width: 300px;
+    height: 70px;
+    float: left;
+}
+
 .koboldadventuretextinputheader{
     font-size: 20px;
     font-weight: bold;

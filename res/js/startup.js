@@ -62,9 +62,16 @@ kobold.stats.fucked.female["Human"] = 0;
 kobold.stats.fucked.female["Kobold"] = 0;
 kobold.stats.fucked.female["Dragon"] = 0;
 kobold.stats.fucked.female["Beast"] = 0;
+// Hidden stats all start at 5, increase or decrease them at will
+kobold.hiddenstats = {};
+kobold.hiddenstats.faith = 5; // Faith in the world, general mood
+kobold.hiddenstats.bandit = 5; // Thief (10) or hero (0)
+kobold.hiddenstats.animallove = 5; // Wants to marry a dog (10) or serial bunny killer (0)
+kobold.hiddenstats.animalattraction = 5; // Forest bride (10) or repugnant skunk (0)
 kobold.status = {};
 kobold.status["Physical"] = [];
 kobold.status["Mental"] = [];
+kobold.status["Sexual"] = [];
 kobold.markings = [];
 kobold.inventory = [];
 kobold.equipment = {};
